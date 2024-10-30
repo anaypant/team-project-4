@@ -5,4 +5,5 @@ public interface PostInterface {
   public Post[] getPosts();
   public int getUpvotes();
   public int getDownvotes();
+  public String getApprovalRating();
 }
