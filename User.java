@@ -1,7 +1,7 @@
 public class User {
   private int ID;
 
-  public User () {
+  public User () {}
 
     public int getID() {
       return ID;
@@ -9,4 +9,6 @@ public class User {
 
     public void setID(int ID) {
       this.ID = ID;
+    }
 }
+
