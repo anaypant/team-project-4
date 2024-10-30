@@ -1,7 +1,7 @@
 public interface UserInterface {
-  default String getUsername();
-  default Users[] getFriendsList();
-  private Users[] getBlockedList();
+  public String getUsername();
+  public ArrayList<User> getFriendsList();
+  private ArrayList<User> getBlockedList();
   private String getImagePath();
   private void setUsername(String username);
   private void setImagePath(String imagePath);
