@@ -1,12 +1,19 @@
+import java.util.ArrayList;
+
 public interface PostInterface {
-  private void createPost(String content);
-  private void createPost(String content, String image);
-  private void deletePost(Post post);
-  private void upvotePost(Post post);
-  private void downvotePost(Post post);
-  private ArrayList<Post> getPosts();
-  private int getUpvotes();
-  private int getDownvotes();
-  private void addComment(String comment);
-  private void deleteComment(String comment);
+    static final String filename = Constants.POST_DATABASE_PATH;
+
+    static void createPost(String content) {
+
+    }
+
+    void createPost(String content, String image);
+
+    void deletePost(Post post);
+
+    ArrayList<Post> getPosts();
+
+    void addComment(Post post, String comment);
+
+    void deleteComment(Post post, String comment);
 }
