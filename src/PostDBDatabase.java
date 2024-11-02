@@ -1,13 +1,13 @@
+package src;
+
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 
-public class PostDatabase implements PostInterface {
+public class PostDBDatabase implements PostDBInterface {
     private final BufferedReader bfr;
     private final PrintWriter pw;
 
-    public PostDatabase() throws IOException {
+    public PostDBDatabase() throws IOException {
         this.pw = new PrintWriter(new FileWriter(filename));
         this.bfr = new BufferedReader(new FileReader(filename));
     }

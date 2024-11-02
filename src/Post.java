@@ -1,8 +1,10 @@
+package src;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Post implements Serializable {
-    private User creator; // Holds User
+    private User creator; // Holds src.User
     private String caption; // Caption of post
     private String url; // URL to post Image
     private String dateCreated; // Date the post was created

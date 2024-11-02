@@ -5,14 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68b622b5-3ca7-4486-b966-bbdc050b6c5f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UserDBInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/PostDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/PostInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialMedia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user.txt" beforeDir="false" afterPath="$PROJECT_DIR$/user.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +26,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -45,26 +50,29 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2oDjtG1NVoz6H4bsB2isbot1Blm" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SocialMedia.executor&quot;: &quot;Run&quot;,
-    &quot;Application.fileAccess (1).executor&quot;: &quot;Run&quot;,
-    &quot;Application.fileAccess.executor&quot;: &quot;Run&quot;,
-    &quot;Application.onlineFile.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Client.executor": "Run",
+    "Application.Server.executor": "Run",
+    "Application.SocialMedia.executor": "Run",
+    "Application.fileAccess (1).executor": "Run",
+    "Application.fileAccess.executor": "Run",
+    "Application.onlineFile.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "updates",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\anayp\IdeaProjects\team-project-4" />
@@ -72,7 +80,7 @@
   </component>
   <component name="RunManager" selected="Compound.Main">
     <configuration name="Server" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Server" />
+      <option name="MAIN_CLASS_NAME" value="src.Server" />
       <module name="team-project-4" />
       <method v="2">
         <option name="Make" enabled="true" />

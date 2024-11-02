@@ -1,17 +1,18 @@
+package src;
+
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class Server implements Runnable {
     private Socket socket;
-    private UserDatabase userDb;
-    private PostDatabase postDb;
+    private UserDBDatabase userDb;
+    private PostDBDatabase postDb;
     private static ArrayList<Object> arr = new ArrayList<>();
     private Post selectedPost;
     private state s;
-    private User user = null;
+    private String activeUser = null;
     // 0         1        2           3
     // postBfr   postPw   userBfr     userPw
 
@@ -23,7 +24,7 @@ public class Server implements Runnable {
     // Like Selected Post
     // Dislike Selected Post
     // Comment Selected Post
-    private static final String[] commands = {
+    public static final String[] commands = {
             "help",
             "Create user",
             "Login user",
@@ -38,8 +39,8 @@ public class Server implements Runnable {
     public Server(Socket socket) throws IOException {
         this.socket = socket;
         if (userDb == null) {
-            userDb = new UserDatabase();
-            postDb = new PostDatabase();
+            userDb = new UserDBDatabase();
+            postDb = new PostDBDatabase();
             arr.add(new Object());
             arr.add(new Object());
         }
@@ -98,7 +99,7 @@ public class Server implements Runnable {
                             } else {
                                 // Expecting password
                                 String password = line;
-                                if (UserDatabase.createUser(tempUsername, password)) {
+                                if (UserDBDatabase.createUser(tempUsername, password)) {
                                     msg = "User created successfully. Returning to IDLE.";
 
                                 } else {
@@ -119,8 +120,11 @@ public class Server implements Runnable {
                         case LOGIN_USER_PASSWORD:
                             String password = line;
                             if (loginUsername != null) {
-                                this.user = UserDatabase.loginUser(loginUsername, password);
-                                msg = this.user != null ? "Login successful." : "Login failed.";
+                                User u = UserDBDatabase.loginUser(loginUsername, password);
+                                if (u != null) {
+                                    this.activeUser = u.getUsername();
+                                }
+                                msg = this.activeUser != null ? "Login successful." : "Login failed.";
                                 s = state.IDLE;
                                 break;
                             } else {
@@ -130,15 +134,14 @@ public class Server implements Runnable {
 
 
                         case CREATE_POST:
-                            String postContent = line;
-                            PostDatabase.createPost(postContent);
+                            PostDBDatabase.createPost(line);
                             msg = "Post created. Returning to IDLE.";
                             s = state.IDLE;
                             break;
 
                         case SELECT_POST:
                             int postId = Integer.parseInt(line);
-                            selectedPost = PostDatabase.selectPost(postId);
+                            selectedPost = PostDBDatabase.selectPost(postId);
                             if (selectedPost != null) {
                                 msg = "Post selected. You can now like, dislike, or comment.";
                                 s = state.IDLE;
@@ -171,7 +174,7 @@ public class Server implements Runnable {
 
     public static void main(String[] args) {
         try (ServerSocket mainSocket = new ServerSocket(Constants.PORT_NUMBER)) {
-            System.out.println("Server is listening on port " + Constants.PORT_NUMBER);
+            System.out.println("network.Server is listening on port " + Constants.PORT_NUMBER);
             while (true) {
                 Socket socket = mainSocket.accept();
                 System.out.println("New client connected");

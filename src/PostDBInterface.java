@@ -1,6 +1,8 @@
+package src;
+
 import java.util.ArrayList;
 
-public interface PostInterface {
+public interface PostDBInterface {
     static final String filename = Constants.POST_DATABASE_PATH;
 
     static void createPost(String content) {
