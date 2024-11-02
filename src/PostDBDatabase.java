@@ -12,10 +12,6 @@ public class PostDBDatabase implements PostDBInterface {
         this.bfr = new BufferedReader(new FileReader(filename));
     }
 
-    public static void createPost(String content) {
-
-    }
-
     public static Post selectPost(int postId) {
         return null;
     }
