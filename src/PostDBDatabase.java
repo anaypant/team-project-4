@@ -17,12 +17,14 @@ public class PostDBDatabase implements PostDBInterface {
         InitializePostCounter();
     }
 
-    public static void createPost(String content) {
+    public static boolean createPost(String content) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-            bw.write("PostID:" + 0 + "|Content:" + content + "|Image:null" );
+            Post p = new Post();
+//            bw.write(p.getID());
             bw.newLine();
+            return true;
         } catch (IOException e) {
-            //idk what to do in case of an error
+            return false;
         }
 
     }

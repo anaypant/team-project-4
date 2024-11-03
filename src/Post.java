@@ -2,10 +2,10 @@ package src;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Post implements Serializable {
-    private static int idCounter = 0;
-    private int id;
+    private String id;
     private User creator; // Holds User
     private String caption; // Caption of post
     private String url; // URL to post Image
@@ -15,7 +15,7 @@ public class Post implements Serializable {
     private ArrayList<String> comments; // An Array List of Comments on the POst
 
     public Post() {
-        this.id = idCounter++;
+        this.id = null;
         this.creator = null;
         this.caption = null;
         this.url = null;
@@ -26,7 +26,7 @@ public class Post implements Serializable {
     }
 
     public Post(User creator, String caption, String url, String dateCreated) {
-        this.id = idCounter++;
+        this.id = UUID.randomUUID().toString();
         this.creator = creator;
         this.caption = caption;
         this.url = url;
@@ -35,7 +35,7 @@ public class Post implements Serializable {
         this.downVotes = 0;
         this.comments = new ArrayList<>();
     }
-    public int getID() {
+    public String getID() {
         return id;
     }
 
@@ -98,9 +98,7 @@ public class Post implements Serializable {
     public boolean equals(Object o) {
         if (o instanceof Post) {
             Post newo = (Post) o;
-            if (this.id == newo.getID()) {
-                return true;
-            }
+            return this.id.equals(newo.getID());
         }
         return false;
     }
