@@ -1,12 +1,9 @@
 package src;
 
 import java.io.*;
-<<<<<<< HEAD:PostDatabase.java
 import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
-=======
->>>>>>> 4fbf31a9315134ae397084e712c77ca879325d55:src/PostDBDatabase.java
 import java.util.ArrayList;
 
 public class PostDBDatabase implements PostDBInterface {
@@ -14,18 +11,12 @@ public class PostDBDatabase implements PostDBInterface {
     private final PrintWriter pw;
     private int postIDcounter = 1; 
 
-<<<<<<< HEAD:PostDatabase.java
-    public PostDatabase() throws IOException {
-        this.pw = new PrintWriter(new FileWriter(filename, true));
-=======
     public PostDBDatabase() throws IOException {
-        this.pw = new PrintWriter(new FileWriter(filename));
->>>>>>> 4fbf31a9315134ae397084e712c77ca879325d55:src/PostDBDatabase.java
+        this.pw = new PrintWriter(new FileWriter(filename, true));
         this.bfr = new BufferedReader(new FileReader(filename));
         InitializePostCounter();
     }
 
-<<<<<<< HEAD:PostDatabase.java
     public static void createPost(String content) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
             bw.write("PostID:" + 0 + "|Content:" + content + "|Image:null" );
@@ -36,8 +27,6 @@ public class PostDBDatabase implements PostDBInterface {
 
     }
 
-=======
->>>>>>> 4fbf31a9315134ae397084e712c77ca879325d55:src/PostDBDatabase.java
     public static Post selectPost(int postId) {
         return null;
     }

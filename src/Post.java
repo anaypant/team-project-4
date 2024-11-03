@@ -4,13 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Post implements Serializable {
-<<<<<<< HEAD:Post.java
     private static int idCounter = 0;
     private int id;
     private User creator; // Holds User
-=======
-    private User creator; // Holds src.User
->>>>>>> 4fbf31a9315134ae397084e712c77ca879325d55:src/Post.java
     private String caption; // Caption of post
     private String url; // URL to post Image
     private String dateCreated; // Date the post was created
