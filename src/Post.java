@@ -94,5 +94,15 @@ public class Post implements Serializable {
     public void setComments(ArrayList<String> comments) {
         this.comments = comments;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Post) {
+            Post newo = (Post) o;
+            if (this.id == newo.getID()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
