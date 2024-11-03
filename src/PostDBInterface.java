@@ -10,8 +10,6 @@ public interface PostDBInterface {
 
     void deletePost(Post post);
 
-    ArrayList<Post> getPosts();
-
     void addComment(Post post, String comment);
 
     void deleteComment(Post post, String comment);

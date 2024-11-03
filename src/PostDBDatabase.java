@@ -5,59 +5,104 @@ import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class PostDBDatabase implements PostDBInterface {
-    private final BufferedReader bfr;
-    private final PrintWriter pw;
-    private int postIDcounter = 1;
+    private static BufferedReader bfr;
+    private static PrintWriter pw;
 
-    public PostDBDatabase() throws IOException {
-        this.pw = new PrintWriter(new FileWriter(filename, true));
-        this.bfr = new BufferedReader(new FileReader(filename));
+    private static void initialize() {
+        if (bfr == null) {
+            try {
+                bfr = new BufferedReader(new FileReader(filename));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        if (pw == null) {
+            try {
+                pw = new PrintWriter(new FileWriter(filename));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public static boolean createPost(String content) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-            Post p = new Post();
-//            bw.write(p.getID());
-            bw.newLine();
-            return true;
-        } catch (IOException e) {
+    private static void close() {
+        if (bfr != null) {
+            try {
+                bfr.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            bfr = null;
+        }
+        if (pw != null) {
+            pw.close();
+            pw = null;
+        }
+    }
+
+    public static synchronized boolean createPost(String username, String content, String image) {
+        try {
+            initialize();
+            String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+
+            Post p = new Post(username, content, image, date);
+            pw.println(p);
+            close();
+
+        } catch (Exception e) {
             return false;
         }
-
+        return true;
     }
 
-    public static Post selectPost(int postId) {
+    public static synchronized boolean createPost(String username, String content) {
+        return createPost(username, content, null);
+    }
+
+    public static synchronized Post selectPost(String postId) {
+        // find a post by it's id and return a post form of it
+        initialize();
+        try {
+            String line = bfr.readLine();
+            while (line != null) {
+                if (line.split(Constants.DELIMITER)[0].equals(postId)) {
+                    return Post.parseString(line);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
-    public void createPost(String content, String image) {
-
-    }
 
     public void deletePost(Post post) {
-        //this needs heavy checking
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-            ArrayList<Post> posts = getPosts();
-            for (Post check : posts) {
-                if (check.getID() == post.getID()) {
-                    posts.remove(check);
-                }
-            }
-            for (Post post1 : posts) {
-                bw.write("PostID:" + post1.getID() + "|Content:" + post1.getCaption() + "|Image:" + post1.getUrl()); // the getCaption def wrong use
-            }
+        // this needs heavy checking
+        // find a post and remove the line
 
-        } catch (IOException e) {
-            //idk what to do for exceptions
-        }
+//        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+//            ArrayList<Post> posts = getPosts();
+//            for (Post check : posts) {
+//                if (check.getID() == post.getID()) {
+//                    posts.remove(check);
+//                }
+//            }
+//            for (Post post1 : posts) {
+//                bw.write("PostID:" + post1.getID() + "|Content:" + post1.getCaption() + "|Image:" + post1.getUrl()); // the getCaption def wrong use
+//            }
+//
+//        } catch (IOException e) {
+//            //idk what to do for exceptions
+//        }
 
     }
 
-    public ArrayList<Post> getPosts() {
-        //this whole method is need to be redone will redo
-        //actually just dont understand what to do
+    private static Post getAndRemovePost() {
         return null;
     }
 
@@ -69,7 +114,6 @@ public class PostDBDatabase implements PostDBInterface {
                 check.getComments().add(comment);
             }
         }
-
 
 
     }

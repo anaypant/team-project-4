@@ -1,6 +1,7 @@
 package src;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Utils {
     public static void replaceLineInFile(String oldLine, String newLine, String fileName) throws IOException {
@@ -31,4 +32,31 @@ public class Utils {
             System.out.println("Could not rename temporary file.");
         }
     }
+
+    public static ArrayList<String> arrayFromString(String s) {
+        ArrayList<String> result = new ArrayList<>();
+        String st = s.substring(1, s.length() - 1);
+
+        String currentElement = "";
+        boolean inQuotes = false;
+
+        for (int i = 0; i < st.length(); i++) {
+            char c = st.charAt(i);
+
+            if (c == '"') {
+                inQuotes = !inQuotes;
+            } else if (c == ',' && !inQuotes) {
+                result.add(currentElement.trim());
+                currentElement = "";
+            } else {
+                currentElement += c;
+            }
+        }
+        if (!currentElement.isEmpty()) {
+            result.add(currentElement.trim());
+        }
+
+        return result;
+    }
+
 }

@@ -6,24 +6,16 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Server implements Runnable {
-    private Socket socket;
-    private UserDBDatabase userDb;
-    private PostDBDatabase postDb;
-    private static ArrayList<Object> arr = new ArrayList<>();
+
+    private final Socket socket;
+
+    // Individual Client parameters
     private Post selectedPost;
     private state s;
     private String activeUser = null;
-    // 0         1        2           3
-    // postBfr   postPw   userBfr     userPw
 
-    // Accepted commands:
-    // Create User
-    // Login User
-    // Create Post
-    // Select Post
-    // Like Selected Post
-    // Dislike Selected Post
-    // Comment Selected Post
+
+    // Accepted Commands
     public static final String[] commands = {
             "help",
             "Create user",
@@ -32,21 +24,14 @@ public class Server implements Runnable {
             "Select post"
     };
 
-    private static enum state {
+    private enum state {
         IDLE, CREATE_USER, LOGIN_USER, CREATE_POST, SELECT_POST, LOGIN_USER_PASSWORD,
     }
 
     public Server(Socket socket) throws IOException {
         this.socket = socket;
-        if (userDb == null) {
-            userDb = new UserDBDatabase();
-            postDb = new PostDBDatabase();
-            arr.add(new Object());
-            arr.add(new Object());
-        }
         this.selectedPost = null;
         this.s = state.IDLE;
-
     }
 
     @Override
@@ -58,6 +43,7 @@ public class Server implements Runnable {
             String line;
             String tempUsername = null; // Temporary storage for username during creation
             String loginUsername = null;
+
             while ((line = in.readLine()) != null) {
                 String msg = "NULL";
                 if (line.equals("help")) {
@@ -140,7 +126,7 @@ public class Server implements Runnable {
                             break;
 
                         case SELECT_POST:
-                            int postId = Integer.parseInt(line);
+                            String postId = line;
                             selectedPost = PostDBDatabase.selectPost(postId);
                             if (selectedPost != null) {
                                 msg = "Post selected. You can now like, dislike, or comment.";
