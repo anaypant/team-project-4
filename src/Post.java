@@ -4,7 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Post implements Serializable {
+<<<<<<< HEAD:Post.java
+    private static int idCounter = 0;
+    private int id;
+    private User creator; // Holds User
+=======
     private User creator; // Holds src.User
+>>>>>>> 4fbf31a9315134ae397084e712c77ca879325d55:src/Post.java
     private String caption; // Caption of post
     private String url; // URL to post Image
     private String dateCreated; // Date the post was created
@@ -13,6 +19,7 @@ public class Post implements Serializable {
     private ArrayList<String> comments; // An Array List of Comments on the POst
 
     public Post() {
+        this.id = idCounter++;
         this.creator = null;
         this.caption = null;
         this.url = null;
@@ -23,6 +30,7 @@ public class Post implements Serializable {
     }
 
     public Post(User creator, String caption, String url, String dateCreated) {
+        this.id = idCounter++;
         this.creator = creator;
         this.caption = caption;
         this.url = url;
@@ -30,6 +38,9 @@ public class Post implements Serializable {
         this.upVotes = 0;
         this.downVotes = 0;
         this.comments = new ArrayList<>();
+    }
+    public int getID() {
+        return id;
     }
 
     public User getCreator() {
@@ -87,4 +98,5 @@ public class Post implements Serializable {
     public void setComments(ArrayList<String> comments) {
         this.comments = comments;
     }
+
 }
