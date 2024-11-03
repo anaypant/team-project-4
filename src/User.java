@@ -66,7 +66,7 @@ public class User implements Serializable, UserInterface {
 
     @Override
     public String toString() {
-        return this.username + "," + this.password + "," + this.imagePath + "," + this.friends.toString() + "," + this.blocked.toString() + "," + this.posts.toString();
+        return this.username + Constants.DELIMITER + this.password + Constants.DELIMITER + this.imagePath + Constants.DELIMITER + this.friends.toString() + Constants.DELIMITER + this.blocked.toString() + Constants.DELIMITER + this.posts.toString();
     }
 
     private static ArrayList<String> arrFromStr(String str) {
@@ -79,7 +79,7 @@ public class User implements Serializable, UserInterface {
     }
 
     public static User parseUser(String s) {
-        String[] parsed = s.split(",");
+        String[] parsed = s.split(Constants.DELIMITER);
         arrFromStr(parsed[3]);
         return new User(parsed[0], parsed[1]);
     }

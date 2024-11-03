@@ -1,2 +1,1 @@
-anay,password,null,["1", "2", "3"],[],[]
-user2,password,null,[],[],[]
+anay:::password1:::null:::[]:::[]:::[]

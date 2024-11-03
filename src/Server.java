@@ -134,7 +134,7 @@ public class Server implements Runnable {
 
 
                         case CREATE_POST:
-                            PostDBDatabase.createPost(line);
+                            PostDBDatabase.createPost(line, null);
                             msg = "Post created. Returning to IDLE.";
                             s = state.IDLE;
                             break;

@@ -1,6 +1,7 @@
 package src;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class UserDBDatabase implements UserDBInterface {
     private static PrintWriter out;
@@ -58,7 +59,7 @@ public class UserDBDatabase implements UserDBInterface {
             try {
                 String line = in.readLine();
                 while (line != null) { // Parse the line and check if the first string (username) is the target username
-                    if (line.split(",")[0].equals(username)) {
+                    if (line.split(Constants.DELIMITER)[0].equals(username)) {
                         return false; // username already exists
                     }
                     line = in.readLine();
@@ -90,7 +91,7 @@ public class UserDBDatabase implements UserDBInterface {
             System.out.println("line:");
             System.out.println(line);
             while (line != null) {
-                String[] parsed = line.split(",");
+                String[] parsed = line.split(Constants.DELIMITER);
                 if (parsed[0].equals(loginUsername) && parsed[1].equals(password)) {
                     close();
                     return User.parseUser(line);
@@ -110,7 +111,7 @@ public class UserDBDatabase implements UserDBInterface {
         try {
             String line = in.readLine();
             while (line != null) {
-                String[] parsed = line.split(",");
+                String[] parsed = line.split(Constants.DELIMITER);
                 if (parsed[0].equals(username)) {
                     close();
                     return true;
