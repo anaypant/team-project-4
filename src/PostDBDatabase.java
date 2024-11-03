@@ -16,7 +16,7 @@ public class PostDBDatabase implements PostDBInterface {
         return null;
     }
 
-    public void createPost(String content, String image) {
+    public static void createPost(String content, String image) {
 
     }
 
