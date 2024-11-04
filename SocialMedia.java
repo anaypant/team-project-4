@@ -7,6 +7,18 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * A class that defines the menu where the user inputs commands for the social media platform.
+ * Connects to the server via host name and port number (localhost and specified port number)
+ * Interacts with Server in continuous loop, 'exit' to quit program
+ * This is where users actually interact with the platform
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ *
+ *
+ * @version November 3rd, 2024
+ *
+ **/
 
 public class SocialMedia {
     public static void main(String[] args) {
@@ -30,6 +42,7 @@ public class SocialMedia {
             while (true) {
                 System.out.print("You: ");
                 String msg = scanner.nextLine();
+                System.out.println();
 
                 // Exit condition
                 if (msg.equalsIgnoreCase("exit")) {
@@ -39,9 +52,15 @@ public class SocialMedia {
                 // Send message to the server
                 out.println(msg);
 
-                // Read response from server
-                String response = in.readLine();
-                System.out.println(response);
+                // Read the entire response from server
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = in.readLine()) != null && !line.equals("EOM")) {
+                    response.append(line).append("\n");
+                }
+
+                // Print the full response
+                System.out.print(response + "\n");
             }
 
             // Close resources
