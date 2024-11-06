@@ -1,0 +1,2 @@
+blockedUser:::password123:::null:::[]:::[]
+testUser:::password123:::null:::[]:::["blockedUser"]

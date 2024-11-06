@@ -5,8 +5,6 @@ import org.junit.Test;
 import src.Post;
 import src.PostDBDatabase;
 import src.UserDBDatabase;
-
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
