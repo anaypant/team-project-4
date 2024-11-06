@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @version November 3rd, 2024
  **/
 
-public class User implements Serializable, UserInterface {
+public class User implements UserInterface {
     private String username;
     private String imagePath;
     private ArrayList<String> friends;
