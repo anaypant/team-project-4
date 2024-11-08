@@ -1,11 +1,13 @@
 import src.Constants;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+
 
 /**
  * A class that defines the menu where the user inputs commands for the social media platform.
@@ -29,6 +31,7 @@ public class SocialMedia {
 
             // Create a socket to connect to the server
             Socket socket = new Socket(serverHostname, portNumber);
+            //JOptionPane.showMessageDialog(null, "Connected to server on port" + portNumber);
             System.out.println("Connected to server on port " + portNumber);
 
             // Set up input and output streams
@@ -37,11 +40,13 @@ public class SocialMedia {
             Scanner scanner = new Scanner(System.in);
 
             // Loop for continuous input and output
+
             System.out.println("Welcome to the social media app. Please enter a command: ");
 
             while (true) {
                 System.out.print("You: ");
                 String msg = scanner.nextLine();
+                //String msg = JOptionPane.showInputDialog(null, "Welcome to the social media app. Please enter a command:");
                 System.out.println();
 
                 // Exit condition
@@ -60,6 +65,9 @@ public class SocialMedia {
                 }
 
                 // Print the full response
+
+                //msg = JOptionPane.showInputDialog(null, response.toString());
+                //out.println(msg);
                 System.out.print(response + "\n");
             }
 
