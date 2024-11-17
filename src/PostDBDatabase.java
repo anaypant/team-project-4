@@ -17,14 +17,12 @@ import java.util.Date;
  **/
 
 public class PostDBDatabase implements PostDBInterface {
-    private static final String DB_PATH = "jdbc:sqlite:C:\\Users\\utsie\\Downloads\\sqlite-dump.db";
-
-
+    private static final String DB_PATH = "jdbc:sqlite:C:\\Users\\anayp\\Downloads\\sqlite-dump.db";
 
 
     // Gathers user's username, post content and image to create post
     public static synchronized boolean createPost(String username, String content, String image) {
-        Post p = new Post(username,content,image,"");
+        Post p = new Post(username, content, image, "");
         String createQuery = "INSERT INTO posts (id, creator, caption, url, datecreated, upvotes, downvotes, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DriverManager.getConnection(DB_PATH)) {
             PreparedStatement ps = conn.prepareStatement(createQuery);
@@ -132,8 +130,8 @@ public class PostDBDatabase implements PostDBInterface {
                         coments = new ArrayList<>(Arrays.asList(commentList.split(":::")));
                     }
 
-                    Post p = new Post(result.getString(1),result.getString(2),result.getString(3),result.getString(4),result.getString(5),result.getInt(6),result.getInt(7),coments);
-                    PreparedStatement second  = conn.prepareStatement(deletQuery);
+                    Post p = new Post(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getInt(7), coments);
+                    PreparedStatement second = conn.prepareStatement(deletQuery);
                     second.setString(1, postId);
                     second.executeUpdate();
                     return (p);
@@ -160,19 +158,17 @@ public class PostDBDatabase implements PostDBInterface {
             ResultSet result = pstmt.executeQuery();
             while (result.next()) {
                 if (result.getString(1).equals(postId)) {
-                    Post p  = new Post(result.getString(1),result.getString(2),result.getString(3),result.getString(4),result.getString(5),result.getInt(6),result.getInt(7),Utils.arrayFromString(result.getString(8)));
-                    ArrayList<String> comments =  p.getComments();
+                    Post p = new Post(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getInt(7), Utils.arrayFromString(result.getString(8)));
+                    ArrayList<String> comments = p.getComments();
                     comments.add(username + ": " + comment);
                     p.setComments(comments);
-                    PreparedStatement second  = conn.prepareStatement(updateQuery);
+                    PreparedStatement second = conn.prepareStatement(updateQuery);
                     second.setString(2, p.getId());
                     second.setString(1, Utils.arrListToString(p.getComments()));
                     second.executeUpdate();
                     return true;
                 }
             }
-
-
 
 
         } catch (Exception e) {
@@ -190,19 +186,17 @@ public class PostDBDatabase implements PostDBInterface {
             ResultSet result = pstmt.executeQuery();
             while (result.next()) {
                 if (result.getString(1).equals(postId)) {
-                    Post p  = new Post(result.getString(1),result.getString(2),result.getString(3),result.getString(4),result.getString(5),result.getInt(6),result.getInt(7),Utils.arrayFromString(result.getString(8)));
-                    ArrayList<String> comments =  p.getComments();
+                    Post p = new Post(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getInt(7), Utils.arrayFromString(result.getString(8)));
+                    ArrayList<String> comments = p.getComments();
                     comments.remove(comment);
                     p.setComments(comments);
-                    PreparedStatement second  = conn.prepareStatement(updateQuery);
+                    PreparedStatement second = conn.prepareStatement(updateQuery);
                     second.setString(2, p.getId());
                     second.setString(1, Utils.arrListToString(p.getComments()));
                     second.executeUpdate();
                     return true;
                 }
             }
-
-
 
 
         } catch (Exception e) {
@@ -213,43 +207,40 @@ public class PostDBDatabase implements PostDBInterface {
 
     // Allows user to search through posts by specific username
     public static synchronized ArrayList<Post> getPostsByUsername(String username) {
-        public static synchronized ArrayList<Post> getPostsByUsername(String username) {
-            String selectQuery = "SELECT * FROM posts WHERE username = ? ORDER BY createdAt;";
-            ArrayList<Post> posts = new ArrayList<>();
+        String selectQuery = "SELECT * FROM posts WHERE username = ? ORDER BY createdAt;";
+        ArrayList<Post> posts = new ArrayList<>();
 
-            try (Connection conn = DriverManager.getConnection(DB_PATH);
-                 PreparedStatement pstmt = conn.prepareStatement(selectQuery)) {
+        try (Connection conn = DriverManager.getConnection(DB_PATH);
+             PreparedStatement pstmt = conn.prepareStatement(selectQuery)) {
 
-                // Bind the username parameter to the query
-                pstmt.setString(1, username);
+            // Bind the username parameter to the query
+            pstmt.setString(1, username);
 
-                // Execute the query
-                ResultSet rs = pstmt.executeQuery();
+            // Execute the query
+            ResultSet rs = pstmt.executeQuery();
 
-                // Iterate over the result set and populate the posts list
-                while (rs.next()) {
-                    Post post = new Post(
-                            rs.getString("postId"),
-                            rs.getString("username"),
-                            rs.getString("content"),
-                            rs.getString("image"),
-                            rs.getString("datecreated"),
-                            rs.getInt("upvotes"),
-                            rs.getInt("downvotes"),
-                            Utils.arrayFromString(rs.getString("comments"))
-                    );
-                    posts.add(post);
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+            // Iterate over the result set and populate the posts list
+            while (rs.next()) {
+                Post post = new Post(
+                        rs.getString("postId"),
+                        rs.getString("username"),
+                        rs.getString("content"),
+                        rs.getString("image"),
+                        rs.getString("datecreated"),
+                        rs.getInt("upvotes"),
+                        rs.getInt("downvotes"),
+                        Utils.arrayFromString(rs.getString("comments"))
+                );
+                posts.add(post);
             }
 
-            return posts; // Return the list of posts (empty if no posts were found)
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-
+        return posts; // Return the list of posts (empty if no posts were found)
     }
+
 
     // Allows user to upvote a post
     public static synchronized boolean upvotePost(String postId) {
@@ -261,20 +252,16 @@ public class PostDBDatabase implements PostDBInterface {
             ResultSet result = pstmt.executeQuery();
             while (result.next()) {
                 if (result.getString(1).equals(postId)) {
-                    Post p  = new Post(result.getString(1),result.getString(2),result.getString(3),result.getString(4),result.getString(5),result.getInt(6),result.getInt(7),Utils.arrayFromString(result.getString(8)));
+                    Post p = new Post(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getInt(7), Utils.arrayFromString(result.getString(8)));
                     upvotes = p.getUpVotes();
                     upvotes = upvotes + 1;
-                    PreparedStatement second  = conn.prepareStatement(updateQuery);
+                    PreparedStatement second = conn.prepareStatement(updateQuery);
                     second.setString(2, p.getId());
-                    second.setInt(1, p.getUpVotes());
+                    second.setInt(1, upvotes);
                     second.executeUpdate();
                     return true;
                 }
             }
-
-
-
-
         } catch (Exception e) {
             return false;
         }
@@ -284,6 +271,28 @@ public class PostDBDatabase implements PostDBInterface {
 
     // Allows user to downvote a post
     public static synchronized boolean downvotePost(String postId) {
+        String selectQuery = "SELECT * FROM posts";
+        String updateQuery = "UPDATE posts SET downvotes = ? WHERE id = ?";
+        int downvotes = 0;
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+            ResultSet result = pstmt.executeQuery();
+            while (result.next()) {
+                if (result.getString(1).equals(postId)) {
+                    Post p = new Post(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getInt(7), Utils.arrayFromString(result.getString(8)));
+                    downvotes = p.getDownVotes();
+                    downvotes = downvotes + 1;
+                    PreparedStatement second = conn.prepareStatement(updateQuery);
+                    second.setString(2, p.getId());
+                    second.setInt(1, downvotes);
+                    second.executeUpdate();
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
 
     }
 

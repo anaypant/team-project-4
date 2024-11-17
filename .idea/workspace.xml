@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="utils edit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PostDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
     </list>
     <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
-    <list id="9302ceac-3ba0-4002-a6c4-53fbbef28293" name="Changes by utsie" comment="" />
+    <list id="9302ceac-3ba0-4002-a6c4-53fbbef28293" name="Changes by utsie" comment="">
+      <change beforePath="$PROJECT_DIR$/src/PostDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
+    </list>
     <list id="f21eb0b6-abcb-4943-9fac-651c23a1a073" name="Changes by vishwa" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +40,34 @@
     &quot;accountId&quot;: &quot;f7c10712-aa9e-480c-817a-3322e1681b0f&quot;
   }
 }</component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/PostDBDatabase.java">
+      <ranges>
+        <range start1="19" end1="22" start2="19" end2="20" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="26" end1="27" start2="24" end2="25" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="134" end1="136" start2="132" end2="134" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="162" end1="164" start2="160" end2="162" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="166" end1="167" start2="164" end2="165" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="175" end1="177" start2="173" end2="173" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="192" end1="194" start2="188" end2="190" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="196" end1="197" start2="192" end2="193" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="205" end1="207" start2="201" end2="201" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="215" end1="218" start2="209" end2="211" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="219" end1="221" start2="212" end2="214" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="222" end1="224" start2="215" end2="217" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="225" end1="227" start2="218" end2="220" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="228" end1="242" start2="221" end2="235" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="243" end1="246" start2="236" end2="239" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="247" end1="249" start2="240" end2="242" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="251" end1="253" start2="244" end2="244" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="263" end1="264" start2="254" end2="255" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="266" end1="267" start2="257" end2="258" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="268" end1="269" start2="259" end2="260" changelist="9302ceac-3ba0-4002-a6c4-53fbbef28293" />
+        <range start1="273" end1="277" start2="264" end2="264" changelist="9302ceac-3ba0-4002-a6c4-53fbbef28293" />
+        <range start1="286" end1="286" start2="273" end2="295" changelist="9302ceac-3ba0-4002-a6c4-53fbbef28293" />
+      </ranges>
+    </file>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -64,11 +95,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "SQL-testing",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/utsie/Downloads/sqlite-jdbc-3.47.0.0.jar",
+    "last_opened_file_path": "C:/Users/anayp/Downloads/sqlite-jdbc-3.47.0.0.jar",
     "node.js.selected.package.tslint": "(autodetect)",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
