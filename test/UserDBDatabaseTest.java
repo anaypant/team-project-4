@@ -2,11 +2,14 @@ package test;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.sqlite.core.DB;
 import src.User;
 import src.UserDBDatabase;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import static org.junit.Assert.*;
 
@@ -19,22 +22,32 @@ import static org.junit.Assert.*;
  **/
 
 public class UserDBDatabaseTest {
-    //set up by creating making sure it is writing to a file datbase and is writing to the file
+    private static final String DB_PATH = "jdbc:sqlite:test_user_db.sqlite";
+
     @Before
     public void setUp() {
-        String filename = "test_user_db.txt";
-        try {
-            new FileWriter(filename, false).close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        try (Connection conn = DriverManager.getConnection(DB_PATH);
+             Statement stmt = conn.createStatement()) {
+
+            // Delete all rows from the users table
+            stmt.execute("DELETE FROM users");
+
+            System.out.println("All rows deleted. Database is ready for testing.");
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to reset the database: " + e.getMessage(), e);
         }
-        UserDBDatabase.setFilename(filename);
     }
 
-    //tests that when a User is created and they tryu to login you are able to find them in the databse succefully
+
+
+    @Test
+    public void testCreateUser() {
+        assertTrue("User should be successfully created", UserDBDatabase.createUser("testUser123", "password123"));
+        assertFalse("Duplicate user creation should fail", UserDBDatabase.createUser("testUser123", "password123"));
+    }
+
     @Test
     public void testLoginUserSuccess() {
-        // Create a user and verify login
         UserDBDatabase.createUser("testUser", "password123");
         User user = UserDBDatabase.loginUser("testUser", "password123");
 
@@ -42,65 +55,79 @@ public class UserDBDatabaseTest {
         assertEquals("Username should match after login", "testUser", user.getUsername());
     }
 
-    //makes sure that a User that was never created cannot login to the server as they are nonexistant in the database
     @Test
     public void testLoginUserFailure() {
-        // Attempt login without creating a user first
         User user = UserDBDatabase.loginUser("nonExistentUser", "password123");
         assertNull("Login should fail for non-existent user", user);
 
-        // Create user and try incorrect password
         UserDBDatabase.createUser("testUser", "password123");
-        User userWrongPass = UserDBDatabase.loginUser("testUser", "wrongPassword");
-        assertNull("Login should fail with incorrect password", userWrongPass);
+        User userWrongPassword = UserDBDatabase.loginUser("testUser", "wrongPassword");
+        assertNull("Login should fail with incorrect password", userWrongPassword);
     }
 
-    //makes sure that when we add a freind to a user it is succesfully represented in teh Database
     @Test
     public void testAddFriend() {
-        // Create users and add one as a friend to another
         UserDBDatabase.createUser("testUser", "password123");
         UserDBDatabase.createUser("friendUser", "password123");
 
         assertTrue("Should successfully add friend", UserDBDatabase.addFriend("testUser", "friendUser"));
 
-        // Verify friend addition fails if user doesn’t exist
-        assertFalse("Adding non-existent user as friend should fail", UserDBDatabase.addFriend("testUser", "nonExistentUser"));
+        User user = UserDBDatabase.loginUser("testUser", "password123");
+        assertNotNull("User should exist", user);
+        assertTrue("Friends list should contain the added friend", user.getFriendsList().contains("friendUser"));
     }
 
-    //makes sure that when we add a blocked user to a user it is succesfully represented in teh Database
     @Test
-    public void testBlockUser() {
-        // Create users and block one from another
+    public void testAddBlocked() {
         UserDBDatabase.createUser("testUser", "password123");
         UserDBDatabase.createUser("blockedUser", "password123");
 
         assertTrue("Should successfully block user", UserDBDatabase.addBlocked("testUser", "blockedUser"));
 
-        // Verify block fails if user doesn’t exist
-        assertFalse("Blocking non-existent user should fail", UserDBDatabase.addBlocked("testUser", "nonExistentUser"));
+        User user = UserDBDatabase.loginUser("testUser", "password123");
+        assertNotNull("User should exist", user);
+        assertTrue("Blocked list should contain the blocked user", user.getBlockedList().contains("blockedUser"));
     }
 
-    // makes sure if a duplicate friend tries to get added they won't get added to the database
     @Test
-    public void testDuplicateFriendAddition() {
-        // Create users and add a friend, then attempt duplicate addition
+    public void testRemoveFriend() {
         UserDBDatabase.createUser("testUser", "password123");
         UserDBDatabase.createUser("friendUser", "password123");
 
         UserDBDatabase.addFriend("testUser", "friendUser");
+        assertTrue("Should successfully remove friend", UserDBDatabase.removeFriend("testUser", "friendUser"));
+
+        User user = UserDBDatabase.loginUser("testUser", "password123");
+        assertNotNull("User should exist", user);
+        assertFalse("Friends list should not contain the removed friend", user.getFriendsList().contains("friendUser"));
+    }
+
+    @Test
+    public void testDuplicateFriendAddition() {
+        UserDBDatabase.createUser("testUser", "password123");
+        UserDBDatabase.createUser("friendUser", "password123");
+
+        assertTrue("Should successfully add friend", UserDBDatabase.addFriend("testUser", "friendUser"));
         assertFalse("Adding the same friend again should fail", UserDBDatabase.addFriend("testUser", "friendUser"));
     }
 
-    // makes sure if a duplicate blocked user tries to get added they won't get added to the database
     @Test
     public void testDuplicateBlockUser() {
-        // Create users, block a user, and attempt duplicate block
         UserDBDatabase.createUser("testUser", "password123");
         UserDBDatabase.createUser("blockedUser", "password123");
 
-        UserDBDatabase.addBlocked("testUser", "blockedUser");
+        assertTrue("Should successfully block user", UserDBDatabase.addBlocked("testUser", "blockedUser"));
         assertFalse("Blocking the same user again should fail", UserDBDatabase.addBlocked("testUser", "blockedUser"));
     }
 
+    @Test
+    public void testDeleteUser() {
+        UserDBDatabase.createUser("testUser", "password123");
+
+        User deletedUser = UserDBDatabase.getAndDeleteUser("testUser");
+        assertNotNull("Deleted user should be returned", deletedUser);
+
+        User user = UserDBDatabase.loginUser("testUser", "password123");
+        assertNull("Deleted user should not exist in the database", user);
+    }
 }

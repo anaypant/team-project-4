@@ -1,5 +1,7 @@
 package src;
 
+import org.sqlite.core.DB;
+
 import java.io.*;
 import java.sql.*;
 import java.util.*;
@@ -72,6 +74,19 @@ public class UserDBDatabase implements UserDBInterface {
 
     // Creates a user and writes it to the file
     public static synchronized boolean createUser(String username, String password) {
+        String selectQuery = "SELECT * FROM users";
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            PreparedStatement statement = conn.prepareStatement(selectQuery);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                if (result.getString(2).equals(username)) {
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
         User u = new User(username, password);
         return createUser(u);
 
@@ -91,9 +106,14 @@ public class UserDBDatabase implements UserDBInterface {
             while (result.next()) {
                 if (result.getString(2).equals(loginUsername) && result.getString(3).equals(Loginpassword)) {
                     if (result.getString(4).isEmpty()) {
-                        friends = null;
+                        friends = new ArrayList<>();
                     } else {
                         friends = new ArrayList<>(Arrays.asList(result.getString(4).split(":::")));
+                    }
+                    if (result.getString(5).isEmpty()) {
+                        blocked = new ArrayList<>();
+                    } else {
+                        blocked = new ArrayList<>(Arrays.asList(result.getString(5).split(":::")));
                     }
                     User u = new User(result.getString(2),result.getString(3),result.getString(6),friends,blocked); // need to figure out how the freinds and bliocked will work and turn them into an arrayList
                     return (u);
@@ -129,120 +149,226 @@ public class UserDBDatabase implements UserDBInterface {
 
     // Allows user to search for another account (targetUsername) and add as friend
     public static synchronized boolean addFriend(String username, String targetUsername) {
-        String selectQuery = "SELECT * FROM users";
+        String selectQuery = "SELECT friends FROM users WHERE username = ?";
+        String updateQuery = "UPDATE users SET friends = ? WHERE username = ?";
+
         try (Connection conn = DriverManager.getConnection(DB_PATH)) {
-            String freindList = "";
+            String friendList = "";
+
+            // Step 1: Retrieve the current friends list
             PreparedStatement pstmt = conn.prepareStatement(selectQuery);
-    
+            pstmt.setString(1, username); // Filter by the user's username
             ResultSet result = pstmt.executeQuery();
-            while (result.next()) {
-                if (result.getString(5).contains(targetUsername)) {
-                    return false;
+
+            if (result.next()) { // If the user exists
+                friendList = result.getString("friends");
+
+                // Convert the friends list to an ArrayList for easier manipulation
+                ArrayList<String> friends = friendList != null && !friendList.isEmpty()
+                        ? new ArrayList<>(Arrays.asList(friendList.split(":::")))
+                        : new ArrayList<>();
+
+                // Step 2: Check if the friend is already in the list
+                if (friends.contains(targetUsername)) {
+                    return false; // Friend already exists
                 }
-                freindList = result.getString(4);
-                freindList += ":::" + targetUsername; // tried using the word delimiter didnt work
+
+                // Step 3: Add the new friend to the list
+                friends.add(targetUsername);
+
+                // Step 4: Convert the updated list back to a string
+                friendList = String.join(":::", friends);
+            } else {
+                return false; // User does not exist
             }
-            String addFriend = "INSERT INTO users (username, friends) VALUES (?, ?)";
-            PreparedStatement second = conn.prepareStatement(addFriend);
-            second.setString(1, username);
-            second.setString(2, freindList);
+
+            // Step 5: Update the friends list in the database
+            PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+            updateStmt.setString(1, friendList); // Updated friends list
+            updateStmt.setString(2, username);   // User's username
+            updateStmt.executeUpdate();
+
+            return true; // Friend successfully added
 
         } catch (SQLException e) {
-            return false;
+            e.printStackTrace();
+            return false; // Handle SQL exceptions
         }
-       return true;
     }
 
     // Allows user to search for an account (targetUsername) and remove that user as a friend
     public static synchronized boolean removeFriend(String username, String targetUsername) {
+        String selectQuery = "SELECT friends FROM users WHERE username = ?";
+        String updateQuery = "UPDATE users SET friends = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            String friendsList = "";
+            ArrayList<String> friends = new ArrayList<>();
+
+            // Step 1: Retrieve the current friends list
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+            pstmt.setString(1, username); // Filter by the user's username
+            ResultSet result = pstmt.executeQuery();
+
+            if (result.next()) { // If the user exists
+                friendsList = result.getString("friends");
+
+                if (friendsList != null && !friendsList.isEmpty()) {
+                    // Convert the friends list to an ArrayList
+                    friends = new ArrayList<>(Arrays.asList(friendsList.split(":::")));
+
+                    // Remove the target friend
+                    friends.remove(targetUsername);
+
+                    // Convert the updated list back to a string
+                    friendsList = String.join(":::", friends);
+                } else {
+                    return false; // No friends to remove
+                }
+            } else {
+                return false; // User does not exist
+            }
+
+            // Step 2: Update the friends list in the database
+            PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+            updateStmt.setString(1, friendsList); // Updated friends list
+            updateStmt.setString(2, username);   // User's username
+            updateStmt.executeUpdate();
+
+            return true; // Friend successfully removed
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    // Allows user to search for an account (targetUsername) and block that user
+    public static synchronized boolean addBlocked(String username, String targetUsername) {
+        String selectQuery = "SELECT friends, blocked FROM users WHERE username = ?";
+        String updateQuery = "UPDATE users SET friends = ?, blocked = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            String friendsList = "";
+            String blockedList = "";
+            ArrayList<String> friends = new ArrayList<>();
+            ArrayList<String> blocked = new ArrayList<>();
+
+            // Step 1: Retrieve the current friends and blocked lists
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+            pstmt.setString(1, username);
+            ResultSet result = pstmt.executeQuery();
+
+            if (result.next()) { // User exists
+                friendsList = result.getString("friends");
+                blockedList = result.getString("blocked");
+
+                // Step 2: Convert the friends and blocked lists into ArrayLists
+                if (friendsList != null && !friendsList.isEmpty()) {
+                    friends = new ArrayList<>(Arrays.asList(friendsList.split(":::")));
+                }
+                if (blockedList != null && !blockedList.isEmpty()) {
+                    blocked = new ArrayList<>(Arrays.asList(blockedList.split(":::")));
+                }
+
+                // Step 3: Remove the target user from the friends list
+                friends.remove(targetUsername);
+
+                // Step 4: Add the target user to the blocked list if not already there
+                if (!blocked.contains(targetUsername)) {
+                    blocked.add(targetUsername);
+                } else {
+                    return false; // User is already blocked
+                }
+
+                // Step 5: Convert updated lists back to strings
+                friendsList = String.join(":::", friends);
+                blockedList = String.join(":::", blocked);
+            } else {
+                return false; // User does not exist
+            }
+
+            // Step 6: Update the friends and blocked lists in the database
+            PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+            updateStmt.setString(1, friendsList); // Updated friends list
+            updateStmt.setString(2, blockedList); // Updated blocked list
+            updateStmt.setString(3, username);   // Target username
+            updateStmt.executeUpdate();
+
+            return true; // Successfully updated
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+    }
+
+    // Allows user to delete their own account
+    public static synchronized boolean deleteUser(String username) {
+        // make sure target exists
+        if (!usernameExists(username)) {
+            return false;
+        }
+        return getAndDeleteUser(username) != null;
+    }
+
+    // checks if target username is a friend of the base user
+    public static synchronized boolean isFriend(String base, String target) {
+        User user = getAndDeleteUser(base);
+        if (user == null) {
+            return false;
+        }
+        if (!createUser(user)) {
+            return false;
+        }
+
+        return user.getFriendsList().contains(target);
+    }
+
+    // Allows user to grab username and delete
+    public static synchronized User getAndDeleteUser(String username) {
         String selectQuery = "SELECT * FROM users";
-        String friendsList = "";
+        String deletQuery = "DELETE FROM users WHERE username = ?";
         ArrayList<String> friends = new ArrayList<>();
-        String addFriend = "INSERT INTO users (username, friends) VALUES (?, ?)";
+        ArrayList<String> blocked = new ArrayList<>();
+        String friendsList = "";
+        String blockedList = "";
         try (Connection conn = DriverManager.getConnection(DB_PATH)) {
             PreparedStatement pstmt = conn.prepareStatement(selectQuery);
             ResultSet result = pstmt.executeQuery();
             while (result.next()) {
                 if (result.getString(2).equals(username)) {
                     friendsList = result.getString(4);
-                    if (!(friendsList == null) || !(friendsList.isEmpty())) { // not sure why there is some wierdo error here
+                    if (friendsList == null || friendsList.isEmpty()) {
+                        friends = new ArrayList<>();
+                    } else {
                         friends = new ArrayList<>(Arrays.asList(friendsList.split(":::")));
-                        for (int i = 0; i < friends.size(); i++) {
-                            if (friends.get(i).equals(targetUsername)) {
-                                friends.remove(i);
-                            }
-                        }
-                        for (int i = 0; i < friends.size();i++) {
-                            if (i +1 > friends.size()) {
-                                friendsList = friends.get(i);
-                            }else  {
-                                friendsList += friends.get(i) + ":::";
-                            }
-
-                        }
                     }
-                    PreparedStatement second = conn.prepareStatement(addFriend);
-                    second.setString(1, username);
-                    second.setString(2, friendsList);
-                    return true;
-                }
-            }
-            
-            return false;
-            
-        } catch (SQLException e) {
-            return false;
-        }
-       
-    }
-
-    // Allows user to search for an account (targetUsername) and block that user
-    public static synchronized boolean addBlocked(String username, String targetUsername) {
-        String selectQuery = "SELECT * FROM users";
-        String blockedList = "";
-        ArrayList<String> blocked = new ArrayList<>();
-        String blockFriend = "INSERT INTO users (username, blocked) VALUES (?, ?)";
-        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
-            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
-            ResultSet result = pstmt.executeQuery();
-            while (result.next()) {
-                if (result.getString(2).equals(username)) {
                     blockedList = result.getString(5);
-                    if (!(blockedList == null) || !(blockedList.isEmpty())) {
+                    if (blockedList == null || blockedList.isEmpty()) {
+                        blocked = new ArrayList<>();
+                    } else {
                         blocked = new ArrayList<>(Arrays.asList(blockedList.split(":::")));
-                        for (int i = 0; i < blocked.size(); i++) {
-                            if (blocked.get(i).equals(targetUsername)) {
-                                blocked.remove(i);
-                            }
-                        }
-                        for (int i = 0; i < blocked.size();i++) {
-                            if (i +1 > blocked.size()) {
-                                blockedList = blocked.get(i);
-                            }else  {
-                                blockedList += blocked.get(i) + ":::";
-                            }
-
-                        }
                     }
-                    PreparedStatement second = conn.prepareStatement(blockFriend);
+                    User u = new User (result.getString(2),result.getString(3),result.getString(6),friends,blocked);
+                    PreparedStatement second  = conn.prepareStatement(deletQuery);
                     second.setString(1, username);
-                    second.setString(2, blockedList);
-                    return true;
+                    second.executeUpdate();
+                    return (u);
                 }
             }
-            
-            return false;
-            
+
         } catch (SQLException e) {
-            return false;
+            return null;
         }
-        
+        return null;
     }
 
-    public static void main(String[] args) {
-        User Utsav = new User("Utsav","Password");
-        createUser(Utsav);
-    }
+
+
+
         
     
 }
