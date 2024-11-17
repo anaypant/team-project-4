@@ -1,2 +1,1 @@
-user1:::password1:::null:::[]:::[]
 user2:::password2:::null:::[]:::[]

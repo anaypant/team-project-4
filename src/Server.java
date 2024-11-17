@@ -39,7 +39,8 @@ public class Server implements Runnable {
             "exit",
             "add friend",
             "block",
-            "remove friend"
+            "remove friend",
+            "remove user"
     };
 
 
@@ -147,6 +148,18 @@ public class Server implements Runnable {
                                         msg = "Please enter username of friend to remove: ";
                                     }
                                     break;
+                                case "remove user":
+                                    if (activeUser == null) {
+                                        msg = "Not logged in.";
+                                    } else {
+                                        boolean res = UserDBDatabase.deleteUser(activeUser);
+                                        if (res) {
+                                            msg = "Successfully removed user.";
+                                        } else {
+                                            msg = "Unable to remove user.";
+                                        }
+                                    }
+                                    break;
                                 default:
                                     msg = "Invalid command. Please try again.";
                                     break;
@@ -214,18 +227,23 @@ public class Server implements Runnable {
                             break;
 
                         case SELECT_POST_USERNAME:
-                            // The user inputs the username to view posts from
+                            // The user inputs the username to view posts fro
                             selectedUsername = line;
-                            List<Post> userPosts = PostDBDatabase.getPostsByUsername(selectedUsername);
-                            if (userPosts.isEmpty()) {
-                                msg = "No posts found for user: " + selectedUsername;
+                            if (!UserDBDatabase.isFriend(activeUser, selectedUsername)) {
+                                msg = line + " is not your friend. You can only view posts from friends.";
                                 s = state.IDLE;
                             } else {
-                                msg = "Select a post by entering the number:\n";
-                                for (int i = 0; i < userPosts.size(); i++) {
-                                    msg += (i + 1) + ". " + userPosts.get(i).display();
+                                List<Post> userPosts = PostDBDatabase.getPostsByUsername(selectedUsername);
+                                if (userPosts.isEmpty()) {
+                                    msg = "No posts found for user: " + selectedUsername;
+                                    s = state.IDLE;
+                                } else {
+                                    msg = "Select a post by entering the number:\n";
+                                    for (int i = 0; i < userPosts.size(); i++) {
+                                        msg += (i + 1) + ". " + userPosts.get(i).display();
+                                    }
+                                    s = state.SELECT_POST_CHOICE;
                                 }
-                                s = state.SELECT_POST_CHOICE;
                             }
                             break;
 
