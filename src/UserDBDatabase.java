@@ -1,7 +1,8 @@
 package src;
 
 import java.io.*;
-
+import java.sql.*;
+import java.util.*;
 /**
  * A class that defines how the database deals with User methods.
  * Logging in, adding friends, creating users.
@@ -12,88 +13,61 @@ import java.io.*;
  **/
 
 public class UserDBDatabase implements UserDBInterface {
-    private static PrintWriter out;
-    private static BufferedReader in;
-    private static String filename = Constants.USER_DATABASE_PATH;
+    private static final String DB_PATH = "jdbc:sqlite:C:\\Users\\utsie\\Downloads\\sqlite-dump.db";
 
 
     // Starts up the writer and reader before every process (they are closed at the end).
-    private synchronized static void initialize() {
-        try {
-            out = new PrintWriter(new FileWriter(filename, true));
-            in = new BufferedReader(new FileReader(filename));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
+    
 
     // Allows user to grab username and delete
-    public static synchronized User getAndDeleteUser(String username) {
-        initialize();
-        synchronized (lock) {
-            try {
-                String line = in.readLine();
-                while (line != null) {
-                    if (line.split(Constants.DELIMITER)[0].equals(username)) {
-                        Utils.deleteUser(line.split(Constants.DELIMITER)[0], filename);
-                        close();
-                        return User.parseUser(line);
-                    }
-                    line = in.readLine();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        return null;
-    }
-
-    // Closes the reader and writer -- used after every process
-    private synchronized static void close() {
-        try {
-            if (out != null) {
-                out.close();
-            }
-            if (in != null) {
-                in.close();
-            }
-        } catch (IOException e) {
+    static {
+        try (Connection conn = DriverManager.getConnection(DB_PATH);
+             Statement stmt = conn.createStatement()) {
+            String createTable = "CREATE TABLE IF NOT EXISTS users (" +
+                    "username TEXT PRIMARY KEY, " +
+                    "password TEXT NOT NULL, " +
+                    "friends TEXT, " + // Semi-colon-separated list of friends
+                    "blocked TEXT)";   // Semi-colon-separated list of blocked users
+            stmt.execute(createTable);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+
+    
+    
 
     // Allows user to create a username and account
     public static synchronized boolean createUser(User u) {
-        // Starts up printer and writer
-        initialize();
-
-        // Checks if username already exists
-        synchronized (lock) { // I think we need to synchronize this stuff to be thread safe
-            try {
-                String line = in.readLine();
-                while (line != null) { // Parse the line and check if the first string (username) is the target username
-                    if (line.split(Constants.DELIMITER)[0].equals(u.getUsername())) {
-                        return false; // username already exists
-                    }
-                    line = in.readLine();
+        String username = u.getUsername();
+        String password = u.getPassword();
+        try (Connection connection = DriverManager.getConnection(DB_PATH)) {
+            String queryStatement = "SELECT * FROM users";
+            PreparedStatement statement = connection.prepareStatement(queryStatement);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                if (result.getString(2).equals(username)) {
+                    return false;
                 }
-                // if we didn't find it, we can add a username and password
-//                User u = new User(username, password);
-                System.out.println(u);
-                out.println(u);
-                out.flush(); // flush to ensure the file is written
-                close();
-
-            } catch (IOException e) {
-                return false;
             }
-
-
-            return true;
+        } catch (SQLException e) {
+            return false;
         }
+        String createQuery = "INSERT INTO users (username, password, friends, blocked) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(DB_PATH);
+             PreparedStatement pstmt = conn.prepareStatement(createQuery)) {
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            pstmt.setString(3, ""); // Empty friends list
+            pstmt.setString(4, ""); // Empty blocked list
+            pstmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+       return true;
+        
     }
 
     // Creates a user and writes it to the file
@@ -101,104 +75,162 @@ public class UserDBDatabase implements UserDBInterface {
         User u = new User(username, password);
         return createUser(u);
 
+
     }
 
 
     // check the file to see if the username and password match with something
     // doesn't have to be locked right?
-    public static synchronized User loginUser(String loginUsername, String password) {
-        try {
-            initialize();
-            String line = in.readLine();
-            System.out.println("line:");
-            System.out.println(line);
-            while (line != null) {
-                String[] parsed = line.split(Constants.DELIMITER);
-                if (parsed[0].equals(loginUsername) && parsed[1].equals(password)) {
-                    close();
-                    return User.parseUser(line);
-                }
-                line = in.readLine();
+    public static synchronized User loginUser(String loginUsername, String Loginpassword) {
+        String selectQuery = "SELECT * FROM users";
+        try (Connection connection = DriverManager.getConnection(DB_PATH)) {
+            PreparedStatement pstmt = connection.prepareStatement(selectQuery);
+            ResultSet result = pstmt.executeQuery();
+            while (result.next()) {
+                if (result.getString(2).equals(loginUsername) && result.getString(3).equals(Loginpassword)) {
+                    User u = new User(result.getString(2),result.getString(3),result.getString(6),result.getString(4),result.getString(5)); // need to figure out how the freinds and bliocked will work and turn them into an arrayList
+                    return (u);
+                }   
             }
-            close();
-            return null;
-        } catch (IOException e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
+      
     }
 
     // If username already exists
     private static synchronized boolean usernameExists(String username) {
-        initialize();
-        try {
-            String line = in.readLine();
-            while (line != null) {
-                String[] parsed = line.split(Constants.DELIMITER);
-                if (parsed[0].equals(username)) {
-                    close();
+        String selectQuery = "SELECT * FROM users";
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+            ResultSet result = pstmt.executeQuery();
+            while (result.next()) {
+                if (result.getString(2).equals(username)) {
                     return true;
                 }
-                line = in.readLine();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
         return false;
+      
     }
 
     // Allows user to search for another account (targetUsername) and add as friend
     public static synchronized boolean addFriend(String username, String targetUsername) {
-        // make sure target exists
-        if (!usernameExists(targetUsername)) {
+        String selectQuery = "SELECT * FROM users";
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            String freindList = "";
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+    
+            ResultSet result = pstmt.executeQuery();
+            while (result.next()) {
+                if (result.getString(5).contains(targetUsername)) {
+                    return false;
+                }
+                freindList = result.getString(4);
+                freindList += ":::" + targetUsername; // tried using the word delimiter didnt work
+            }
+            String addFriend = "INSERT INTO users (username, friends) VALUES (?, ?)";
+            PreparedStatement second = conn.prepareStatement(addFriend);
+            second.setString(1, username);
+            second.setString(2, freindList);
+
+        } catch (SQLException e) {
             return false;
         }
-        User u = getAndDeleteUser(username);
-        if (u == null) {
-            return false;
-        }
-        if (!u.addFriend(targetUsername)) {
-            createUser(u);
-            return false;
-        }
-        return createUser(u);
+       return true;
     }
 
     // Allows user to search for an account (targetUsername) and remove that user as a friend
     public static synchronized boolean removeFriend(String username, String targetUsername) {
-        // make sure target exists
-        if (!usernameExists(targetUsername)) {
+        String selectQuery = "SELECT * FROM users";
+        String friendsList = "";
+        ArrayList<String> friends = new ArrayList<>();
+        String addFriend = "INSERT INTO users (username, friends) VALUES (?, ?)";
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+            ResultSet result = pstmt.executeQuery();
+            while (result.next()) {
+                if (result.getString(2).equals(username)) {
+                    friendsList = result.getString(4);
+                    if (!(friendsList == null) || !(friendsList.isEmpty())) { // not sure why there is some wierdo error here
+                        friends = new ArrayList<>(Arrays.asList(friendsList.split(":::")));
+                        for (int i = 0; i < friends.size(); i++) {
+                            if (friends.get(i).equals(targetUsername)) {
+                                friends.remove(i);
+                            }
+                        }
+                        for (int i = 0; i < friends.size();i++) {
+                            if (i +1 > friends.size()) {
+                                friendsList = friends.get(i);
+                            }else  {
+                                friendsList += friends.get(i) + ":::";
+                            }
+
+                        }
+                    }
+                    PreparedStatement second = conn.prepareStatement(addFriend);
+                    second.setString(1, username);
+                    second.setString(2, friendsList);
+                    return true;
+                }
+            }
+            
+            return false;
+            
+        } catch (SQLException e) {
             return false;
         }
-        User u = getAndDeleteUser(username);
-        if (u == null) {
-            return false;
-        }
-        if (!u.removeFriend(targetUsername)) {
-            createUser(u);
-            return false;
-        }
-        return createUser(u);
+       
     }
 
     // Allows user to search for an account (targetUsername) and block that user
     public static synchronized boolean addBlocked(String username, String targetUsername) {
-        // make sure target exists
-        if (!usernameExists(targetUsername)) {
+        String selectQuery = "SELECT * FROM users";
+        String blockedList = "";
+        ArrayList<String> blocked = new ArrayList<>();
+        String blockFriend = "INSERT INTO users (username, blocked) VALUES (?, ?)";
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+            ResultSet result = pstmt.executeQuery();
+            while (result.next()) {
+                if (result.getString(2).equals(username)) {
+                    blockedList = result.getString(5);
+                    if (!(blockedList == null) || !(blockedList.isEmpty())) {
+                        blocked = new ArrayList<>(Arrays.asList(blockedList.split(":::")));
+                        for (int i = 0; i < blocked.size(); i++) {
+                            if (blocked.get(i).equals(targetUsername)) {
+                                blocked.remove(i);
+                            }
+                        }
+                        for (int i = 0; i < blocked.size();i++) {
+                            if (i +1 > blocked.size()) {
+                                blockedList = blocked.get(i);
+                            }else  {
+                                blockedList += blocked.get(i) + ":::";
+                            }
+
+                        }
+                    }
+                    PreparedStatement second = conn.prepareStatement(blockFriend);
+                    second.setString(1, username);
+                    second.setString(2, blockedList);
+                    return true;
+                }
+            }
+            
+            return false;
+            
+        } catch (SQLException e) {
             return false;
         }
-        User u = getAndDeleteUser(username);
-        if (u == null) {
-            return false;
-        }
-        if (!u.blockUser(targetUsername)) {
-            createUser(u);
-            return false;
-        }
-        return createUser(u);
+        
     }
 
     public static void setFilename(String fn) {
-        filename = fn;
+        
     }
 }
