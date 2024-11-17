@@ -198,6 +198,28 @@ public class UserDBDatabase implements UserDBInterface {
         return createUser(u);
     }
 
+    // Allows user to delete their own account
+    public static synchronized boolean deleteUser(String username) {
+        // make sure target exists
+        if (!usernameExists(username)) {
+            return false;
+        }
+        return getAndDeleteUser(username) != null;
+    }
+
+    // checks if target username is a friend of the base user
+    public static synchronized boolean isFriend(String base, String target) {
+        User user = getAndDeleteUser(base);
+        if (user == null) {
+            return false;
+        }
+        if (!createUser(user)) {
+            return false;
+        }
+        
+        return user.getFriendsList().contains(target);
+    }
+
     public static void setFilename(String fn) {
         filename = fn;
     }
