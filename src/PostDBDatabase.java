@@ -255,16 +255,18 @@ public class PostDBDatabase implements PostDBInterface {
     public static synchronized boolean upvotePost(String postId) {
         String selectQuery = "SELECT * FROM posts";
         String updateQuery = "UPDATE posts SET upvotes = ? WHERE id = ?";
+        int upvotes = 0;
         try (Connection conn = DriverManager.getConnection(DB_PATH)) {
             PreparedStatement pstmt = conn.prepareStatement(selectQuery);
             ResultSet result = pstmt.executeQuery();
             while (result.next()) {
                 if (result.getString(1).equals(postId)) {
                     Post p  = new Post(result.getString(1),result.getString(2),result.getString(3),result.getString(4),result.getString(5),result.getInt(6),result.getInt(7),Utils.arrayFromString(result.getString(8)));
-
+                    upvotes = p.getUpVotes();
+                    upvotes = upvotes + 1;
                     PreparedStatement second  = conn.prepareStatement(updateQuery);
                     second.setString(2, p.getId());
-                    second.setString(1, Utils.arrListToString(p.getComments()));
+                    second.setInt(1, p.getUpVotes());
                     second.executeUpdate();
                     return true;
                 }
