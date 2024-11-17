@@ -83,19 +83,28 @@ public class UserDBDatabase implements UserDBInterface {
     // doesn't have to be locked right?
     public static synchronized User loginUser(String loginUsername, String Loginpassword) {
         String selectQuery = "SELECT * FROM users";
+        ArrayList<String> friends = new ArrayList<>();
+        ArrayList<String> blocked = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(DB_PATH)) {
             PreparedStatement pstmt = connection.prepareStatement(selectQuery);
             ResultSet result = pstmt.executeQuery();
             while (result.next()) {
                 if (result.getString(2).equals(loginUsername) && result.getString(3).equals(Loginpassword)) {
-                    User u = new User(result.getString(2),result.getString(3),result.getString(6),result.getString(4),result.getString(5)); // need to figure out how the freinds and bliocked will work and turn them into an arrayList
+                    if (result.getString(4).isEmpty()) {
+                        friends = null;
+                    } else {
+                        friends = new ArrayList<>(Arrays.asList(result.getString(4).split(":::")));
+                    }
+                    User u = new User(result.getString(2),result.getString(3),result.getString(6),friends,blocked); // need to figure out how the freinds and bliocked will work and turn them into an arrayList
                     return (u);
                 }   
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
+        return null;
       
     }
 
@@ -230,7 +239,10 @@ public class UserDBDatabase implements UserDBInterface {
         
     }
 
-    public static void setFilename(String fn) {
-        
+    public static void main(String[] args) {
+        User Utsav = new User("Utsav","Password");
+        createUser(Utsav);
     }
+        
+    
 }
