@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
  **/
 
 public class UserDBDatabaseTest {
-    private static final String DB_PATH = "jdbc:sqlite:test_user_db.sqlite";
+    private static final String DB_PATH = "jdbc:sqlite:users.sqlite";
 
     @Before
     public void setUp() {

@@ -13,12 +13,12 @@
 3. Class descriptions
    1. Constants is a class that contains constant variables used to manipulate the database. These include file path names, including user.txt and post.txt. Additionally, there is a delimiter included that is used to parse the files for the Users and Posts.
    2. Post is a class that defines a social media post object. Parses a string to get the creator, caption, and url. Also defines functions to display the post with a nice format, set upvotes and downvotes, as well as getters and setters for all the class variables.
-   3. PostDBDatabase is a class that defines the behavior of methods related to the Post class and the database. Defines how to parse strings and call specific Post methods to create, delete, add comments, upvote, and downvote.
+   3. PostDBDatabase is a class that defines the behavior of methods related to the Post class and the database. Uses SQL queries to update and make changes to the database. Calls specific Post methods to create, delete, add comments, upvote, and downvote.
    4. PostInterface is an interface that outlines the methods of the Post class.
    5. PostDBInterface is an interface that outlines the methods of PostDBDatabase.
    6. Server establishes a network connection. Defines fail and success states for each command (creating posts, creating users, deleting posts, etc.) and returns messages based on if the command went through or not. It also handles any thread-based errors.
    7. User defines a social media user and any methods that go along with it. This includes blocking users and adding friends, as well as getters and setters for changing passwords, usernames, imagePath, etcetera. Parses strings for class variables including username, password, imagePath, friends (list of friends of the account), and blocked (list of accounts the user has blocked).
-   8. UserDBDatabase is a class that defines the behavior of methods related to the User class and the database. Defines how to parse strings and call specific User methods to create, delete, add friends and block users.
+   8. UserDBDatabase is a class that defines the behavior of methods related to the User class and the database. Uses SQL queries to update and make changes to the database. Calls specific User methods to create, delete, add friends and block users.
    9. UserInterface is an interface that outlines the methods defined by the User class.
    10. UserDBInterface is an interface that outlines the methods defined by UserDBDatabase.
    11. Utils contains helper methods that are used throughout the program by various classes. These include arrListToString() which converts an ArrayList to a String as well as deletePost() and deleteUser().

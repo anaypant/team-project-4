@@ -17,6 +17,11 @@ public class Utils {
     //taking a string and converting the elements inside into an arrayList which it returns that we can use later to go
     //through things like number list for posts and such.
     public static ArrayList<String> arrayFromString(String s) {
+
+        if (s.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         ArrayList<String> result = new ArrayList<>();
         String st = s.substring(1, s.length() - 1);
 

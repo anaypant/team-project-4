@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A class that establishes a network connection.
@@ -15,7 +16,7 @@ import java.util.List;
  * @version November 3rd, 2024
  **/
 
-public class Server implements Runnable {
+public class Server implements Runnable, ServerInterface {
 
     private final Socket socket;
 
@@ -25,29 +26,6 @@ public class Server implements Runnable {
     private String activeUser = null;
     private String selectedUsername = null; // Username for viewing posts
     private String createPostDesc = null;
-
-    // Accepted User Commands
-    public static final String[] commands = {
-            "help",
-            "Create user",
-            "Login user",
-            "Create post",
-            "Select post",
-            "Upvote",
-            "Downvote",
-            "Comment",
-            "exit",
-            "add friend",
-            "block",
-            "remove friend",
-            "remove user"
-    };
-
-
-    // All possible different states that can be achieved
-    private enum state {
-        IDLE, CREATE_USER, LOGIN_USER, CREATE_POST, CREATE_POST_IMG, SELECT_POST, SELECT_POST_USERNAME, SELECT_POST_CHOICE, LOGIN_USER_PASSWORD, ADD_COMMENT, ADD_FRIEND, BLOCK, REMOVE_FRIEND
-    }
 
     // Creates a new server that connects to a client
     public Server(Socket socket) throws IOException {
@@ -103,8 +81,10 @@ public class Server implements Runnable {
                                     msg = "Please enter the username to view posts from: ";
                                     break;
                                 case "upvote":
+                                    System.out.println(selectedPost);
                                     if (selectedPost != null && PostDBDatabase.upvotePost(selectedPost.getId())) {
                                         msg = "Post upvoted!";
+                                        selectedPost = null;
                                     } else {
                                         msg = "No post selected to upvote.";
                                     }
@@ -227,9 +207,9 @@ public class Server implements Runnable {
                             break;
 
                         case SELECT_POST_USERNAME:
-                            // The user inputs the username to view posts fro
+                            // The user inputs the username to view posts from
                             selectedUsername = line;
-                            if (!UserDBDatabase.isFriend(activeUser, selectedUsername)) {
+                            if (!UserDBDatabase.isFriend(activeUser, selectedUsername) && !Objects.equals(activeUser, selectedUsername)) {
                                 msg = line + " is not your friend. You can only view posts from friends.";
                                 s = state.IDLE;
                             } else {
@@ -250,6 +230,10 @@ public class Server implements Runnable {
                         case SELECT_POST_CHOICE: // asking for which post they want to select
                             try {
                                 int choice = Integer.parseInt(line) - 1;
+                                if (choice == -1) {
+                                    msg = "Invalid input. Please enter a valid number.";
+                                    break;
+                                }
                                 selectedPost = PostDBDatabase.selectPost(selectedUsername, choice);
                                 if (selectedPost != null) {
                                     msg = "Post selected. You can now like, dislike, or comment.";
