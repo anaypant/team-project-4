@@ -1,7 +1,10 @@
 package src;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A class containing helper methods used in various classes.
@@ -130,5 +133,26 @@ public class Utils {
 
         result += "]";
         return result;
+    }
+
+    // Takes the collection of posts in arraylist and sorts them by year ascending using the provided collection formatting
+    public static ArrayList<Post> sortPostsByDateDesc(ArrayList<Post> posts) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        posts.sort((post1, post2) -> {
+            try {
+                // Parse the date strings into Date objects
+                Date date1 = dateFormat.parse(post1.getDateCreated());
+                Date date2 = dateFormat.parse(post2.getDateCreated());
+
+                // Compare the dates in descending order
+                return date2.compareTo(date1);
+            } catch (ParseException e) {
+                // If parsing fails, consider the posts equal (fallback)
+                return 0;
+            }
+        });
+
+        return posts;
     }
 }

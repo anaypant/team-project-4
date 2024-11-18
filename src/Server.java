@@ -3,6 +3,7 @@ package src;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -177,6 +178,27 @@ public class Server implements Runnable, ServerInterface {
                                 if (u != null) {
                                     this.activeUser = u.getUsername();
                                     msg = "Login successful.";
+
+
+                                    // If login is successful, show feed of all friends
+                                    // Get all Friends and get posts by friends
+                                    ArrayList<Post> feed = new ArrayList<>();
+                                    for (String friend : u.getFriendsList()) {
+                                        ArrayList<Post> posts = PostDBDatabase.getPostsByUsername(friend);
+                                        feed.addAll(posts);
+                                    }
+                                    feed = Utils.sortPostsByDateDesc(feed);
+
+                                    if (feed.size() == 0) {
+                                        msg += "\n No posts to show on feed.";
+                                    } else {
+                                        msg += "\n Feed: ";
+                                        for (int i = 0; i < feed.size(); i++) {
+                                            msg += feed.get(i).display();
+                                        }
+                                    }
+
+
                                 } else {
                                     msg = "Login failed.";
                                 }

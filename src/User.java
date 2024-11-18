@@ -1,4 +1,5 @@
 package src;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -108,10 +109,7 @@ public class User implements UserInterface {
     @Override
     public String toString() {
 
-        return this.username + Constants.DELIMITER + this.password +
-                Constants.DELIMITER + this.imagePath + Constants.DELIMITER +
-                Utils.arrListToString(this.friends) + Constants.DELIMITER +
-                Utils.arrListToString(this.blocked);
+        return this.username + Constants.DELIMITER + this.password + Constants.DELIMITER + this.imagePath + Constants.DELIMITER + Utils.arrListToString(this.friends) + Constants.DELIMITER + Utils.arrListToString(this.blocked);
     }
 
     // Setter for password
@@ -128,4 +126,6 @@ public class User implements UserInterface {
         ArrayList<String> blocked = Utils.arrayFromString(parsed[4]);
         return new User(parsed[0], parsed[1], parsed[2], friends, blocked);
     }
+
+
 }

@@ -1,5 +1,16 @@
 package src;
 
+/**
+ * An Interface that describes field functionality for the Server class
+ * Commands: Creating posts, deleting posts,
+ * commenting on posts, deleting comments on posts,
+ * upvoting, downvoting.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ *
+ * @version November 3rd, 2024
+ **/
+
 public interface ServerInterface {
     // All possible different states that can be achieved
     enum state {

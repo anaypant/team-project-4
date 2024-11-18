@@ -25,6 +25,9 @@ public class PostDBDatabaseTest {
     private static final String DB_PATH = "jdbc:sqlite:posts.sqlite";
 
     @Before
+    // create table of posts and users
+    // if they already exist, deletes them and recreates
+    // creates two users, user1 and user2
     public void setUp() {
         try (Connection conn = DriverManager.getConnection(DB_PATH);
              Statement stmt = conn.createStatement()) {
@@ -59,6 +62,7 @@ public class PostDBDatabaseTest {
     }
 
     @Test
+    // tests the creation of a post with a file path
     public void testCreatePost() {
         assertTrue("Post should be created successfully",
                 PostDBDatabase.createPost("user1", "This is a test post", "image.jpg"));
@@ -69,6 +73,8 @@ public class PostDBDatabaseTest {
     }
 
     @Test
+    // creates one post each for user1 and user2
+    // checks if the indexing for posts work (ex: index 5 should not work for a user who only has one post)
     public void testSelectPost() {
         PostDBDatabase.createPost("user1", "First post", "image1.jpg");
         PostDBDatabase.createPost("user1", "Second post", "image2.jpg");
@@ -82,6 +88,8 @@ public class PostDBDatabaseTest {
     }
 
     @Test
+    // tests deletion of posts
+    // checks that the postId is attributed to the appropriate post and that the post is actually deleted
     public void testDeletePost() {
         PostDBDatabase.createPost("user1", "This post will be deleted", "image.jpg");
 
@@ -96,6 +104,9 @@ public class PostDBDatabaseTest {
     }
 
     @Test
+    // creates post from user1
+    // comments on post from user2
+    // checks that the comment is actually posted and that the content of the comment is intact
     public void testAddComment() {
         PostDBDatabase.createPost("user1", "Post with comments", "image.jpg");
 
@@ -111,6 +122,10 @@ public class PostDBDatabaseTest {
     }
 
     @Test
+    // creates a post by user1
+    // adds a comment
+    // deletes the comment by calling the appropriate database method
+    // checks that no comments are under the post
     public void testDeleteComment() {
         PostDBDatabase.createPost("user1", "Post to delete comment", "image.jpg");
 
@@ -127,6 +142,9 @@ public class PostDBDatabaseTest {
     }
 
     @Test
+    // creates post from user1
+    // checks postId and calls appropriate database methods to upvote the post
+    // checks that the upvote count actually changed
     public void testUpvotePost() {
         PostDBDatabase.createPost("user1", "Post to be upvoted", "image.jpg");
 
@@ -141,6 +159,9 @@ public class PostDBDatabaseTest {
     }
 
     @Test
+    // creates post from user1
+    // checks postId and calls appropriate database methods to downvote the post
+    // checks that the downvote count actually changed
     public void testDownvotePost() {
         PostDBDatabase.createPost("user1", "Post to be downvoted", "image.jpg");
 
@@ -155,6 +176,9 @@ public class PostDBDatabaseTest {
     }
 
     @Test
+    // creates two posts from user1 and one from user2
+    // creates two ArrayLists, one for user1's posts and one for user2's
+    // checks that the ArrayLists are the appropriate size, that being the number of posts for each respective user
     public void testGetPostsByUsername() {
         PostDBDatabase.createPost("user1", "User1's first post", "image1.jpg");
         PostDBDatabase.createPost("user1", "User1's second post", "image2.jpg");

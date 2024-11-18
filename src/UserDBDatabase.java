@@ -108,16 +108,8 @@ public class UserDBDatabase implements UserDBInterface {
             ResultSet result = pstmt.executeQuery();
             while (result.next()) {
                 if (result.getString(2).equals(loginUsername) && result.getString(3).equals(Loginpassword)) {
-                    if (result.getString(4).isEmpty()) {
-                        friends = new ArrayList<>();
-                    } else {
-                        friends = new ArrayList<>(Arrays.asList(result.getString(4).split(":::")));
-                    }
-                    if (result.getString(5).isEmpty()) {
-                        blocked = new ArrayList<>();
-                    } else {
-                        blocked = new ArrayList<>(Arrays.asList(result.getString(5).split(":::")));
-                    }
+                    friends = Utils.arrayFromString(result.getString(4));
+                    blocked = Utils.arrayFromString(result.getString(5));
                     User u = new User(result.getString(2), result.getString(3), result.getString(6), friends, blocked); // need to figure out how the freinds and bliocked will work and turn them into an arrayList
                     return (u);
                 }
@@ -223,19 +215,9 @@ public class UserDBDatabase implements UserDBInterface {
 
             if (result.next()) { // If the user exists
                 friendsList = result.getString("friends");
-
-                if (friendsList != null && !friendsList.isEmpty()) {
-                    // Convert the friends list to an ArrayList
-                    friends = new ArrayList<>(Arrays.asList(friendsList.split(":::")));
-
-                    // Remove the target friend
-                    friends.remove(targetUsername);
-
-                    // Convert the updated list back to a string
-                    friendsList = String.join(":::", friends);
-                } else {
-                    return false; // No friends to remove
-                }
+                friends = Utils.arrayFromString(friendsList);
+                friends.remove(targetUsername);
+                friendsList = Utils.arrListToString(friends);
             } else {
                 return false; // User does not exist
             }
@@ -282,17 +264,11 @@ public class UserDBDatabase implements UserDBInterface {
                 friendsList = result.getString("friends");
                 blockedList = result.getString("blocked");
 
-                // Step 2: Convert the friends and blocked lists into ArrayLists
-                if (friendsList != null && !friendsList.isEmpty()) {
-                    friends = new ArrayList<>(Arrays.asList(friendsList.split(":::")));
-                }
-                if (blockedList != null && !blockedList.isEmpty()) {
-                    blocked = new ArrayList<>(Arrays.asList(blockedList.split(":::")));
-                }
+                friends = Utils.arrayFromString(friendsList);
+                blocked = Utils.arrayFromString(blockedList);
 
                 // Step 3: Remove the target user from the friends list
                 friends.remove(targetUsername);
-
                 // Step 4: Add the target user to the blocked list if not already there
                 if (!blocked.contains(targetUsername)) {
                     blocked.add(targetUsername);
@@ -301,8 +277,8 @@ public class UserDBDatabase implements UserDBInterface {
                 }
 
                 // Step 5: Convert updated lists back to strings
-                friendsList = String.join(":::", friends);
-                blockedList = String.join(":::", blocked);
+                friendsList = Utils.arrListToString(friends);
+                blockedList = Utils.arrListToString(blocked);
             } else {
                 return false; // User does not exist
             }
@@ -328,6 +304,10 @@ public class UserDBDatabase implements UserDBInterface {
     public static synchronized boolean deleteUser(String username) {
         // make sure target exists
         if (!usernameExists(username)) {
+            return false;
+        }
+        // delete all their posts
+        if (!PostDBDatabase.deletePostsByUsername(username)) {
             return false;
         }
         return getAndDeleteUser(username) != null;

@@ -4,25 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="some changes before intellij ultimate">
+    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="sql and network io done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/post.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialMedia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/posts.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/posts.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PostDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ServerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UserDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/PostDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/PostDBDatabaseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_post_db.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_user_db.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user.txt" beforeDir="false" />
     </list>
     <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
+    <list id="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" name="Changes by utsie" comment="">
+      <change beforePath="$PROJECT_DIR$/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialMedia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" afterDir="false" />
+    </list>
     <list id="f21eb0b6-abcb-4943-9fac-651c23a1a073" name="Changes by vishwa" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/PostDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/PostDBDatabaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +35,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -53,77 +56,29 @@
   }
 }]]></component>
   <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/UserDBDatabase.java">
+    <file path="$PROJECT_DIR$/test/UserDBDatabaseTest.java">
       <ranges>
-        <range start1="7" end1="7" start2="7" end2="8" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="17" end1="18" start2="18" end2="19" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="21" end1="22" start2="22" end2="23" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="24" end1="24" start2="25" end2="27" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="25" end1="31" start2="28" end2="30" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="38" end1="40" start2="37" end2="37" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="42" end1="42" start2="39" end2="42" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="58" end1="60" start2="58" end2="59" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="62" end1="64" start2="61" end2="63" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="65" end1="66" start2="64" end2="65" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="70" end1="72" start2="69" end2="71" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="75" end1="75" start2="74" end2="76" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="98" end1="98" start2="99" end2="101" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="117" end1="118" start2="120" end2="121" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="119" end1="120" start2="122" end2="123" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="127" end1="128" start2="130" end2="131" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="130" end1="131" start2="133" end2="136" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="146" end1="147" start2="151" end2="152" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="150" end1="150" start2="155" end2="157" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="151" end1="151" start2="158" end2="162" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="155" end1="156" start2="166" end2="167" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="157" end1="161" start2="168" end2="172" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="162" end1="164" start2="173" end2="175" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="165" end1="169" start2="176" end2="178" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="170" end1="171" start2="179" end2="180" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="175" end1="176" start2="184" end2="185" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="177" end1="177" start2="186" end2="187" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="178" end1="183" start2="188" end2="188" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="184" end1="190" start2="189" end2="195" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="197" end1="197" start2="202" end2="203" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="199" end1="199" start2="205" end2="207" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="200" end1="200" start2="208" end2="211" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="247" end1="247" start2="258" end2="261" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="248" end1="248" start2="262" end2="266" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="308" end1="308" start2="326" end2="327" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="317" end1="317" start2="336" end2="337" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="322" end1="323" start2="342" end2="343" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="330" end1="330" start2="350" end2="352" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="343" end1="348" start2="365" end2="367" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="349" end1="356" start2="368" end2="372" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="369" end1="373" start2="385" end2="385" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="27" end1="27" start2="27" end2="28" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
+        <range start1="34" end1="35" start2="35" end2="36" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
+        <range start1="41" end1="42" start2="42" end2="42" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="43" end1="43" start2="43" end2="44" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
+        <range start1="49" end1="49" start2="50" end2="52" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
+        <range start1="57" end1="57" start2="60" end2="63" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="67" end1="67" start2="73" end2="76" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="79" end1="79" start2="88" end2="90" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
+        <range start1="91" end1="91" start2="102" end2="104" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="104" end1="104" start2="117" end2="120" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="113" end1="113" start2="129" end2="131" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
+        <range start1="122" end1="122" start2="140" end2="141" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
+        <range start1="123" end1="123" start2="142" end2="145" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
       </ranges>
     </file>
-    <file path="$PROJECT_DIR$/src/PostDBDatabase.java">
+    <file path="$PROJECT_DIR$/SocialMedia.java">
       <ranges>
-        <range start1="19" end1="20" start2="19" end2="20" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="23" end1="23" start2="23" end2="26" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="25" end1="25" start2="28" end2="31" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="44" end1="44" start2="50" end2="53" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="73" end1="74" start2="82" end2="84" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="79" end1="79" start2="89" end2="91" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="80" end1="81" start2="92" end2="93" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="96" end1="99" start2="108" end2="111" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="113" end1="113" start2="125" end2="126" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="115" end1="120" start2="128" end2="130" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="124" end1="124" start2="134" end2="137" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="125" end1="133" start2="138" end2="140" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="147" end1="147" start2="154" end2="155" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="152" end1="152" start2="160" end2="161" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="180" end1="180" start2="189" end2="191" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="208" end1="208" start2="219" end2="221" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="209" end1="210" start2="222" end2="223" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="224" end1="228" start2="237" end2="241" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="245" end1="245" start2="258" end2="261" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="246" end1="265" start2="262" end2="265" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="267" end1="268" start2="267" end2="270" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="272" end1="272" start2="274" end2="277" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="273" end1="292" start2="278" end2="280" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="294" end1="296" start2="282" end2="284" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="19" end1="20" start2="19" end2="19" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="21" end1="22" start2="20" end2="20" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
+        <range start1="24" end1="25" start2="22" end2="23" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
+        <range start1="28" end1="30" start2="26" end2="27" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
       </ranges>
     </file>
   </component>
@@ -144,9 +99,14 @@
     "Application.Server.executor": "Run",
     "Application.SocialMedia.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.PostDBDatabaseTest and 4 more.executor": "Run",
+    "JUnit.PostDBDatabaseTest and 5 more.executor": "Run",
     "JUnit.PostDBDatabaseTest.executor": "Run",
     "JUnit.PostTest.executor": "Run",
+    "JUnit.ServerTest.executor": "Run",
+    "JUnit.SocialMediaTest.executor": "Run",
     "JUnit.UserDBDatabaseTest.executor": "Run",
+    "JUnit.UserDBDatabaseTest.testAddBlocked.executor": "Run",
     "JUnit.UserTest.executor": "Run",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
@@ -162,7 +122,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "fileTemplates",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -197,6 +157,35 @@
       <toRun name="SocialMedia" type="Application" />
       <method v="2" />
     </configuration>
+    <configuration name="PostDBDatabaseTest and 4 more" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="team-project-4" />
+      <option name="TEST_OBJECT" value="pattern" />
+      <patterns>
+        <pattern testClass="test.PostDBDatabaseTest" />
+        <pattern testClass="test.PostTest" />
+        <pattern testClass="test.ServerTest" />
+        <pattern testClass="test.UserDBDatabaseTest" />
+        <pattern testClass="test.UserTest" />
+      </patterns>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PostDBDatabaseTest and 5 more" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="team-project-4" />
+      <option name="TEST_OBJECT" value="pattern" />
+      <patterns>
+        <pattern testClass="test.PostDBDatabaseTest" />
+        <pattern testClass="test.PostTest" />
+        <pattern testClass="test.ServerTest" />
+        <pattern testClass="test.SocialMediaTest" />
+        <pattern testClass="test.UserDBDatabaseTest" />
+        <pattern testClass="test.UserTest" />
+      </patterns>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PostDBDatabaseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="team-project-4" />
       <extension name="coverage">
@@ -212,7 +201,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PostTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SocialMediaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="team-project-4" />
       <extension name="coverage">
         <pattern>
@@ -221,7 +210,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.PostTest" />
+      <option name="MAIN_CLASS_NAME" value="test.SocialMediaTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -242,36 +231,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="team-project-4" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.UserTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.Server" />
       <item itemvalue="Application.SocialMedia" />
       <item itemvalue="Compound.application" />
+      <item itemvalue="JUnit.PostDBDatabaseTest and 4 more" />
+      <item itemvalue="JUnit.PostDBDatabaseTest and 5 more" />
+      <item itemvalue="JUnit.SocialMediaTest" />
       <item itemvalue="JUnit.PostDBDatabaseTest" />
-      <item itemvalue="JUnit.PostTest" />
       <item itemvalue="JUnit.UserDBDatabaseTest" />
-      <item itemvalue="JUnit.UserTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PostDBDatabaseTest and 5 more" />
+        <item itemvalue="JUnit.SocialMediaTest" />
+        <item itemvalue="JUnit.PostDBDatabaseTest and 4 more" />
         <item itemvalue="JUnit.PostDBDatabaseTest" />
         <item itemvalue="JUnit.UserDBDatabaseTest" />
-        <item itemvalue="JUnit.UserTest" />
-        <item itemvalue="JUnit.PostTest" />
       </list>
     </recent_temporary>
   </component>
@@ -291,7 +267,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1730677784295</updated>
-      <workItem from="1731883600041" duration="6204000" />
+      <workItem from="1731883600041" duration="9732000" />
     </task>
     <task id="LOCAL-00001" summary="final phase 1">
       <option name="closed" value="true" />
@@ -325,7 +301,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731883549111</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="sql and network io done">
+      <option name="closed" value="true" />
+      <created>1731890141369</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731890141369</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -336,6 +320,7 @@
     <MESSAGE value="user edit" />
     <MESSAGE value="utils edit" />
     <MESSAGE value="some changes before intellij ultimate" />
-    <option name="LAST_COMMIT_MESSAGE" value="some changes before intellij ultimate" />
+    <MESSAGE value="sql and network io done" />
+    <option name="LAST_COMMIT_MESSAGE" value="sql and network io done" />
   </component>
 </project>

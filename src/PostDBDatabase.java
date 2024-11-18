@@ -216,6 +216,26 @@ public class PostDBDatabase implements PostDBInterface {
         return false;
     }
 
+    public static synchronized boolean deletePostsByUsername(String username) {
+        String delQuery = "DELETE FROM posts WHERE creator = ?;";
+
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+
+
+            PreparedStatement second = conn.prepareStatement(delQuery);
+            second.setString(1, username);
+            second.executeUpdate();
+
+            return true;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false; // Return the list of posts (empty if no posts were found)
+    }
+
     // Allows user to search through posts by specific username
     // for each post in the database from a specific user, the post is added to an ArrayList of Post objects
     // returns the list of Post objects

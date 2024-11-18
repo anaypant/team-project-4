@@ -17,17 +17,14 @@ import java.util.Scanner;
  *
  * <p>Purdue University -- CS18000 -- Fall 2024</p>
  *
- *
  * @version November 3rd, 2024
- *
  **/
 
-public class SocialMedia {
+public class SocialMedia implements SocialMediaInterface {
     public static void main(String[] args) {
         try {
             // Specify the server's hostname and port number
-            String serverHostname = Constants.SERVER_HOST_NAME;
-            int portNumber = Constants.PORT_NUMBER;
+
 
             // Create a socket to connect to the server
             Socket socket = new Socket(serverHostname, portNumber);
