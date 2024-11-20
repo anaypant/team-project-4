@@ -14,6 +14,6 @@ public interface SocialMediaInterface {
     }
 
     // Some static fields used by the
-    String serverHostname = Constants.SERVER_HOST_NAME;
-    int portNumber = Constants.PORT_NUMBER;
+    String SERVER_HOST_NAME = Constants.SERVER_HOST_NAME;
+    int PORT_NUMBER = Constants.PORT_NUMBER;
 }

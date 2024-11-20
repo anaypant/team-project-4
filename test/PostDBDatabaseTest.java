@@ -2,6 +2,7 @@ package test;
 
 import org.junit.Before;
 import org.junit.Test;
+import src.Constants;
 import src.Post;
 import src.PostDBDatabase;
 import src.UserDBDatabase;
@@ -22,7 +23,7 @@ import static org.junit.Assert.*;
  */
 
 public class PostDBDatabaseTest {
-    private static final String DB_PATH = "jdbc:sqlite:posts.sqlite";
+    private static final String DB_PATH = Constants.POST_DB;
 
     @Before
     // create table of posts and users

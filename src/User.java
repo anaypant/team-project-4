@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * A class that represents each social media user.
  * Each user has a username, password, and profile picture path.
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ * @author Purdue University -- CS18000 -- Fall 2024</p>
  *
  * @version November 3rd, 2024
  **/
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class User implements UserInterface {
     private String username;
     private String imagePath;
-    private ArrayList<String> friends;
-    private ArrayList<String> blocked;
+    private final ArrayList<String> friends;
+    private final ArrayList<String> blocked;
     private String password;
 
     // constructer intilalzes all fields the User given an input of a username and password
@@ -28,7 +28,9 @@ public class User implements UserInterface {
     }
 
     // constructor with all the fields, mainly used for parsing from a string to a user
-    public User(String username, String password, String imagePath, ArrayList<String> friends, ArrayList<String> blocked) {
+    public User(String username, String password,
+                String imagePath, ArrayList<String> friends,
+                ArrayList<String> blocked) {
         this.username = username;
         this.imagePath = imagePath;
         this.friends = friends;
@@ -56,12 +58,14 @@ public class User implements UserInterface {
         return this.blocked;
     }
 
-    //takes the input of a username in the form of a String and sets the username to the given one and returns nothing.
+    //takes the input of a username in the form of a String and sets the username
+    // to the given one and returns nothing.
     public void setUsername(String username) {
         this.username = username;
     }
 
-    //takes the input of an image path in the form of a String and sets the image path to the given one and returns nothing.
+    //takes the input of an image path in the form of a String and sets the image
+    // path to the given one and returns nothing.
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
@@ -71,8 +75,10 @@ public class User implements UserInterface {
         return this.password;
     }
 
-    //method to add a friend that takes the input of a friend in the form of a string. It then makes sure the friend
-    // is not blocked and if they aren't it will add the friend to the ArrayList of friends and doesnt return anything.
+    //method to add a friend that takes the input of a friend in the form of a string.
+    // It then makes sure the friend
+    // is not blocked and if they aren't it will add the friend to the ArrayList
+    // of friends and doesnt return anything.
     public boolean addFriend(String friend) {
         if (this.friends.contains(friend)) {
             return false;
@@ -92,7 +98,8 @@ public class User implements UserInterface {
         return true;
     }
 
-    // the blockUser method will take an input of a string and add this user to the blocked ArrayList as well as
+    // the blockUser method will take an input of a string and add this user
+    // to the blocked ArrayList as well as
     //remove them from the friends list and returns nothing.
     public boolean blockUser(String user) {
         if (this.blocked.contains(user)) {
@@ -103,13 +110,18 @@ public class User implements UserInterface {
         return true;
     }
 
-    //overriding the toString() method so that it returns a users username then our delimiter which is ":::" then
-    //password then deloimiter then image path then delimiter than freinds list then delimiter then blockedd list
+    //overriding the toString() method so that it returns a users username
+    // then our delimiter which is ":::" then
+    //password then deloimiter then image path then delimiter than freinds
+    // list then delimiter then blockedd list
     //then delimiter then posts lists which is an integer list.
     @Override
     public String toString() {
 
-        return this.username + Constants.DELIMITER + this.password + Constants.DELIMITER + this.imagePath + Constants.DELIMITER + Utils.arrListToString(this.friends) + Constants.DELIMITER + Utils.arrListToString(this.blocked);
+        return this.username + Constants.DELIMITER + this.password +
+                Constants.DELIMITER + this.imagePath + Constants.DELIMITER +
+                Utils.arrListToString(this.friends) + Constants.DELIMITER +
+                Utils.arrListToString(this.blocked);
     }
 
     // Setter for password

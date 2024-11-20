@@ -9,9 +9,10 @@ import java.util.Date;
 
 /**
  * A class that defines how the database deals with Post methods
- * Creating posts, deleting posts, commenting on posts, deleting comments on posts, upvoting, downvoting.
+ * Creating posts, deleting posts, commenting on posts,
+ * deleting comments on posts, upvoting, downvoting.
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ * @author Purdue University -- CS18000 -- Fall 2024</p>
  *
  * @version November 3rd, 2024
  **/
@@ -22,21 +23,25 @@ public class PostDBDatabase implements PostDBInterface {
 
     // Gathers user's username, post content and image to create post
     // uses the create method from CRUD, in this case INSERT, to create a post in the database
-    // uses query and gets all the properties of the post before executing the query to update the database
+    // uses query and gets all the properties of the post
+    // before executing the query to update the database
     // returns true if successful, false otherwise
     public static synchronized boolean createPost(String username, String content, String image) {
         Post p = new Post(username, content, image, "");
-        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date()); // Adds date to post
+        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        // Adds date to post
         p.setDateCreated(date);
 
-        String createQuery = "INSERT INTO posts (id, creator, caption, url, datecreated, upvotes, downvotes, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String createQuery = "INSERT INTO posts (id, creator, " +
+                "caption, url, datecreated, upvotes, downvotes, " +
+                "comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DriverManager.getConnection(DB_PATH)) {
             PreparedStatement ps = conn.prepareStatement(createQuery);
             ps.setString(1, p.getId());
             ps.setString(2, username);
             ps.setString(3, content);
             ps.setString(4, image);
-            ps.setString(5, p.getDateCreated().toString());
+            ps.setString(5, p.getDateCreated());
             ps.setInt(6, 0);
             ps.setInt(7, 0);
             ps.setString(8, "");
@@ -49,10 +54,12 @@ public class PostDBDatabase implements PostDBInterface {
     }
 
     // method creates a post using a preexisting Post object
-    // in this case, uses getters for the Post object that was passed in to write the query that is then called to update the database
+    // in this case, uses getters for the Post object that was passed
+    // in to write the query that is then called to update the database
     // returns true if successful, false otherwise
     public static synchronized boolean createPost(Post p) {
-        String createQuery = "INSERT INTO posts (id, creator, caption, url, datecreated,upvotes, downvotes, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String createQuery = "INSERT INTO posts (id, creator, caption, url, " +
+                "datecreated,upvotes, downvotes, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         String username = p.getCreator();
         String content = p.getCaption();
         String image = p.getUrl();
@@ -90,7 +97,8 @@ public class PostDBDatabase implements PostDBInterface {
     // Creates query to obtain a post given a username and integer index
     // obtains most recent post
     public static synchronized Post selectPost(String username, int index) {
-        String selectQuery = "SELECT * FROM posts WHERE creator = ? ORDER BY datecreated DESC LIMIT 1 OFFSET ?";
+        String selectQuery = "SELECT * FROM posts WHERE creator = ? " +
+                "ORDER BY datecreated DESC LIMIT 1 OFFSET ?";
 
         try (Connection conn = DriverManager.getConnection(DB_PATH);
              PreparedStatement ps = conn.prepareStatement(selectQuery)) {
@@ -123,7 +131,8 @@ public class PostDBDatabase implements PostDBInterface {
     }
 
     // Allows user to choose a post to delete
-    // uses a select and delete query to first get the posts and then delete the specific post by id where id = postId
+    // uses a select and delete query to first get the posts and then
+    // delete the specific post by id where id = postId
     private static synchronized Post getAndDeletePost(String postId) {
         String selectQuery = "SELECT * FROM posts";
         String deletQuery = "DELETE FROM posts WHERE id = ?";
@@ -137,7 +146,10 @@ public class PostDBDatabase implements PostDBInterface {
                 System.out.println(postId);
                 if (result.getString(1).equals(postId)) {
                     comments = Utils.arrayFromString(result.getString(8));
-                    Post p = new Post(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getInt(7), comments);
+                    Post p = new Post(result.getString(1),
+                            result.getString(2), result.getString(3),
+                            result.getString(4), result.getString(5),
+                            result.getInt(6), result.getInt(7), comments);
                     PreparedStatement second = conn.prepareStatement(deletQuery);
                     second.setString(1, postId);
                     second.executeUpdate();
@@ -158,7 +170,8 @@ public class PostDBDatabase implements PostDBInterface {
     }
 
     // Allows user to add a comment to a post, displays postId, username, and comments
-    // uses select and update queries to search for a specific post of postId and then post a comment from a given username
+    // uses select and update queries to search for a specific post of
+    // postId and then post a comment from a given username
     public static synchronized boolean addComment(String postId, String username, String comment) {
         String selectQuery = "SELECT * FROM posts";
         String updateQuery = "UPDATE posts SET comments = ? WHERE id = ?";
@@ -167,7 +180,11 @@ public class PostDBDatabase implements PostDBInterface {
             ResultSet result = pstmt.executeQuery();
             while (result.next()) {
                 if (result.getString(1).equals(postId)) {
-                    Post p = new Post(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getInt(7), Utils.arrayFromString(result.getString(8)));
+                    Post p = new Post(result.getString(1),
+                            result.getString(2), result.getString(3),
+                            result.getString(4), result.getString(5),
+                            result.getInt(6), result.getInt(7),
+                            Utils.arrayFromString(result.getString(8)));
                     ArrayList<String> comments = p.getComments();
                     comments.add(username + ": " + comment);
                     p.setComments(comments);
@@ -197,7 +214,11 @@ public class PostDBDatabase implements PostDBInterface {
             ResultSet result = pstmt.executeQuery();
             while (result.next()) {
                 if (result.getString(1).equals(postId)) {
-                    Post p = new Post(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getInt(7), Utils.arrayFromString(result.getString(8)));
+                    Post p = new Post(result.getString(1),
+                            result.getString(2), result.getString(3),
+                            result.getString(4), result.getString(5),
+                            result.getInt(6), result.getInt(7),
+                            Utils.arrayFromString(result.getString(8)));
                     ArrayList<String> comments = p.getComments();
                     comments.remove(comment);
                     p.setComments(comments);
@@ -237,7 +258,8 @@ public class PostDBDatabase implements PostDBInterface {
     }
 
     // Allows user to search through posts by specific username
-    // for each post in the database from a specific user, the post is added to an ArrayList of Post objects
+    // for each post in the database from a specific user,
+    // the post is added to an ArrayList of Post objects
     // returns the list of Post objects
     public static synchronized ArrayList<Post> getPostsByUsername(String username) {
         String selectQuery = "SELECT * FROM posts WHERE creator = ? ORDER BY datecreated;";

@@ -1,6 +1,3 @@
-import src.Constants;
-
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,9 +24,9 @@ public class SocialMedia implements SocialMediaInterface {
 
 
             // Create a socket to connect to the server
-            Socket socket = new Socket(serverHostname, portNumber);
+            Socket socket = new Socket(SERVER_HOST_NAME, PORT_NUMBER);
             //JOptionPane.showMessageDialog(null, "Connected to server on port" + portNumber);
-            System.out.println("Connected to server on port " + portNumber);
+            System.out.println("Connected to server on port " + PORT_NUMBER);
 
             // Set up input and output streams
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -43,7 +40,6 @@ public class SocialMedia implements SocialMediaInterface {
             while (true) {
                 System.out.print("You: ");
                 String msg = scanner.nextLine();
-                //String msg = JOptionPane.showInputDialog(null, "Welcome to the social media app. Please enter a command:");
                 System.out.println();
 
                 // Exit condition
@@ -56,15 +52,12 @@ public class SocialMedia implements SocialMediaInterface {
 
                 // Read the entire response from server
                 StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = in.readLine()) != null && !line.equals("EOM")) {
+                String line = in.readLine();
+                while (line != null && !line.equals("EOM")) {
                     response.append(line).append("\n");
+                    line = in.readLine();
                 }
 
-                // Print the full response
-
-                //msg = JOptionPane.showInputDialog(null, response.toString());
-                //out.println(msg);
                 System.out.print(response + "\n");
             }
 

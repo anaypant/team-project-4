@@ -4,7 +4,7 @@ package src;
  * Interface containing constant variables used for the database
  * including paths, the server host name, and the main menu.
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ * @author Purdue University -- CS18000 -- Fall 2024</p>
  *
  * @version November 3rd, 2024
  **/

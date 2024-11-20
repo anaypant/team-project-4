@@ -12,7 +12,7 @@ import java.util.Objects;
  * Creates the interface for the user to call commands.
  * Creates a Thread for each active user
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ * @author Purdue University -- CS18000 -- Fall 2024</p>
  *
  * @version November 3rd, 2024
  **/
@@ -23,7 +23,7 @@ public class Server implements Runnable, ServerInterface {
 
     // Individual Client parameters
     private Post selectedPost;
-    private state s;
+    private State s;
     private String activeUser = null;
     private String selectedUsername = null; // Username for viewing posts
     private String createPostDesc = null;
@@ -32,7 +32,7 @@ public class Server implements Runnable, ServerInterface {
     public Server(Socket socket) throws IOException {
         this.socket = socket;
         this.selectedPost = null;
-        this.s = state.IDLE;
+        this.s = State.IDLE;
     }
 
     // Run method, run in each serve
@@ -52,12 +52,13 @@ public class Server implements Runnable, ServerInterface {
                 String msg = ""; // output message
 
                 // if the user wants help
-                if (line.equals("help") && s == state.IDLE) {
+                if (line.equals("help") && s == State.IDLE) {
                     msg = "Commands: ";
                     for (String item : commands) {
                         msg += item + ", ";
                     }
-                    msg = msg.substring(0, msg.length() - 2); // return the list of commands, with the last comma removed
+                    msg = msg.substring(0, msg.length() - 2); // return the list of commands,
+                    // with the last comma removed
                 } else {
                     switch (s) {
 
@@ -66,24 +67,25 @@ public class Server implements Runnable, ServerInterface {
                             // based on the command, check to see what command they want
                             switch (line.toLowerCase()) {
                                 case "create user":
-                                    s = state.CREATE_USER;
+                                    s = State.CREATE_USER;
                                     msg = "Please enter a username: ";
                                     break;
                                 case "login user":
-                                    s = state.LOGIN_USER;
+                                    s = State.LOGIN_USER;
                                     msg = "Please enter your username: ";
                                     break;
                                 case "create post":
-                                    s = state.CREATE_POST_IMG;
+                                    s = State.CREATE_POST_IMG;
                                     msg = "Please enter post content: ";
                                     break;
                                 case "select post":
-                                    s = state.SELECT_POST_USERNAME;
+                                    s = State.SELECT_POST_USERNAME;
                                     msg = "Please enter the username to view posts from: ";
                                     break;
                                 case "upvote":
                                     System.out.println(selectedPost);
-                                    if (selectedPost != null && PostDBDatabase.upvotePost(selectedPost.getId())) {
+                                    if (selectedPost != null &&
+                                            PostDBDatabase.upvotePost(selectedPost.getId())) {
                                         msg = "Post upvoted!";
                                         selectedPost = null;
                                     } else {
@@ -91,7 +93,8 @@ public class Server implements Runnable, ServerInterface {
                                     }
                                     break;
                                 case "downvote":
-                                    if (selectedPost != null && PostDBDatabase.downvotePost(selectedPost.getId())) {
+                                    if (selectedPost != null &&
+                                            PostDBDatabase.downvotePost(selectedPost.getId())) {
                                         msg = "Post downvoted!";
                                     } else {
                                         msg = "No post selected to downvote.";
@@ -99,7 +102,7 @@ public class Server implements Runnable, ServerInterface {
                                     break;
                                 case "comment":
                                     if (selectedPost != null) {
-                                        s = state.ADD_COMMENT;
+                                        s = State.ADD_COMMENT;
                                         msg = "Enter your comment: ";
                                     } else {
                                         msg = "No post selected to comment on.";
@@ -109,7 +112,7 @@ public class Server implements Runnable, ServerInterface {
                                     if (activeUser == null) {
                                         msg = "Not logged in.";
                                     } else {
-                                        s = state.ADD_FRIEND;
+                                        s = State.ADD_FRIEND;
                                         msg = "Please enter username of friend to add: ";
                                     }
                                     break;
@@ -117,7 +120,7 @@ public class Server implements Runnable, ServerInterface {
                                     if (activeUser == null) {
                                         msg = "Not logged in.";
                                     } else {
-                                        s = state.BLOCK;
+                                        s = State.BLOCK;
                                         msg = "Please enter username of user to block: ";
                                     }
                                     break;
@@ -125,7 +128,7 @@ public class Server implements Runnable, ServerInterface {
                                     if (activeUser == null) {
                                         msg = "Not logged in.";
                                     } else {
-                                        s = state.REMOVE_FRIEND;
+                                        s = State.REMOVE_FRIEND;
                                         msg = "Please enter username of friend to remove: ";
                                     }
                                     break;
@@ -161,14 +164,14 @@ public class Server implements Runnable, ServerInterface {
                                     msg = "User creation failed.";
                                 }
                                 tempUsername = null; // Reset for next user creation
-                                s = state.IDLE;
+                                s = State.IDLE;
                             }
                             break;
 
                         case LOGIN_USER: // logging in a user, asking for password
                             loginUsername = line;
                             msg = "Please enter your password: ";
-                            s = state.LOGIN_USER_PASSWORD; // Move to a new sub-state
+                            s = State.LOGIN_USER_PASSWORD; // Move to a new sub-state
                             break;
 
                         case LOGIN_USER_PASSWORD: // logging in with username and password
@@ -184,7 +187,8 @@ public class Server implements Runnable, ServerInterface {
                                     // Get all Friends and get posts by friends
                                     ArrayList<Post> feed = new ArrayList<>();
                                     for (String friend : u.getFriendsList()) {
-                                        ArrayList<Post> posts = PostDBDatabase.getPostsByUsername(friend);
+                                        ArrayList<Post> posts =
+                                                PostDBDatabase.getPostsByUsername(friend);
                                         feed.addAll(posts);
                                     }
                                     feed = Utils.sortPostsByDateDesc(feed);
@@ -202,17 +206,17 @@ public class Server implements Runnable, ServerInterface {
                                 } else {
                                     msg = "Login failed.";
                                 }
-                                s = state.IDLE;
+                                s = State.IDLE;
                             } else {
                                 msg = "Fatal: loginUsername is null (LOGIN_USER_PASSWORD)";
-                                s = state.IDLE;
+                                s = State.IDLE;
                             }
                             break;
 
                         case CREATE_POST_IMG: // asking for image url
                             createPostDesc = line;
                             msg = "Please enter valid URL (empty for no URL)";
-                            s = state.CREATE_POST;
+                            s = State.CREATE_POST;
                             break;
 
                         case CREATE_POST: // creating a new post, asking for content
@@ -225,26 +229,30 @@ public class Server implements Runnable, ServerInterface {
                             } else {
                                 msg = "Please log in to create a post.";
                             }
-                            s = state.IDLE;
+                            s = State.IDLE;
                             break;
 
                         case SELECT_POST_USERNAME:
                             // The user inputs the username to view posts from
                             selectedUsername = line;
-                            if (!UserDBDatabase.isFriend(activeUser, selectedUsername) && !Objects.equals(activeUser, selectedUsername)) {
+                            if (!UserDBDatabase.isFriend(activeUser, selectedUsername) &&
+                                    !Objects.equals(activeUser, selectedUsername)) {
                                 msg = line + " is not your friend. You can only view posts from friends.";
-                                s = state.IDLE;
+                                s = State.IDLE;
                             } else {
                                 List<Post> userPosts = PostDBDatabase.getPostsByUsername(selectedUsername);
                                 if (userPosts.isEmpty()) {
                                     msg = "No posts found for user: " + selectedUsername;
-                                    s = state.IDLE;
+                                    s = State.IDLE;
                                 } else {
                                     msg = "Select a post by entering the number:\n";
                                     for (int i = 0; i < userPosts.size(); i++) {
-                                        msg += (i + 1) + ". " + userPosts.get(i).display();
+                                        msg += "----  OPTION " + (i + 1) + ". ----\n" +
+                                                userPosts.get(i).display() + "\n";
                                     }
-                                    s = state.SELECT_POST_CHOICE;
+                                    msg += "\nPlease select the desired post by " +
+                                            "typing in the respective option number.\n";
+                                    s = State.SELECT_POST_CHOICE;
                                 }
                             }
                             break;
@@ -265,7 +273,7 @@ public class Server implements Runnable, ServerInterface {
                             } catch (NumberFormatException e) {
                                 msg = "Invalid input. Please enter a number.";
                             }
-                            s = state.IDLE;
+                            s = State.IDLE;
                             break;
 
                         case ADD_COMMENT: // adding comment to selected post
@@ -275,7 +283,7 @@ public class Server implements Runnable, ServerInterface {
                             } else {
                                 msg = "Failed to add comment. No post selected.";
                             }
-                            s = state.IDLE;
+                            s = State.IDLE;
                             break;
 
                         case ADD_FRIEND: // adding a friend based on target post
@@ -285,7 +293,7 @@ public class Server implements Runnable, ServerInterface {
                             } else {
                                 msg = "Could not add friend " + line;
                             }
-                            s = state.IDLE;
+                            s = State.IDLE;
                             break;
 
                         case BLOCK: // Blocked friend
@@ -295,7 +303,7 @@ public class Server implements Runnable, ServerInterface {
                             } else {
                                 msg = "Could not block " + line;
                             }
-                            s = state.IDLE;
+                            s = State.IDLE;
                             break;
                         case REMOVE_FRIEND: // removed friend
                             boolean res3 = UserDBDatabase.removeFriend(activeUser, line);
@@ -304,21 +312,22 @@ public class Server implements Runnable, ServerInterface {
                             } else {
                                 msg = "Could not remove friend " + line;
                             }
-                            s = state.IDLE;
+                            s = State.IDLE;
                             break;
 
 
                         default:
                             msg = "Unrecognized state.";
-                            s = state.IDLE;
+                            s = State.IDLE;
                             break;
                     }
                 }
-                if (s.equals(state.IDLE)) { // print out main menu message if idle
+                if (s.equals(State.IDLE)) { // print out main menu message if idle
                     msg += "\n" + Constants.MAIN_MENU_MSG;
                 }
                 out.println(msg); // Send response to client
-                out.println("EOM"); // Send an "END OF MESSAGE" indicator to indicate end of response
+                out.println("EOM"); // Send an "END OF MESSAGE" indicator to
+                // indicate end of response
                 out.flush();
             }
         } catch (IOException e) {

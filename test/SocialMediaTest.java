@@ -35,10 +35,14 @@ public class SocialMediaTest {
                 public void run() {
                     try {
                         clientSocket = serverSocket.accept();
-                        serverWriter = new PrintWriter(clientSocket.getOutputStream(), true);
-                        serverReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                        serverWriter = new PrintWriter(clientSocket.getOutputStream(),
+                                true);
+                        serverReader = new BufferedReader(new InputStreamReader(
+                                clientSocket.getInputStream()));
                     } catch (Exception e) {
-                        throw new RuntimeException("Failed to set up server-client communication: " + e.getMessage(), e);
+                        throw new RuntimeException(
+                                "Failed to set up server-client communication: " +
+                                        e.getMessage(), e);
                     }
                 }
             });
@@ -74,14 +78,17 @@ public class SocialMediaTest {
         try {
             Socket client = new Socket("localhost", Constants.PORT_NUMBER + 1);
             PrintWriter clientWriter = new PrintWriter(client.getOutputStream(), true);
-            BufferedReader clientReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            BufferedReader clientReader = new BufferedReader(
+                    new InputStreamReader(client.getInputStream()));
 
             Thread serverResponseThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         String receivedMessage = serverReader.readLine();
-                        assertEquals("Server should receive the correct message", "test message", receivedMessage);
+                        assertEquals(
+                                "Server should receive the correct message",
+                                "test message", receivedMessage);
 
                         serverWriter.println("Server response");
                         serverWriter.println("EOM"); // End of message marker
@@ -95,12 +102,14 @@ public class SocialMediaTest {
             clientWriter.println("test message");
 
             StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = clientReader.readLine()) != null && !line.equals("EOM")) {
+            String line = clientReader.readLine();
+            while (line != null && !line.equals("EOM")) {
                 response.append(line).append("\n");
+                line = clientReader.readLine();
             }
 
-            assertEquals("Client should receive the correct response", "Server response\n", response.toString());
+            assertEquals("Client should receive the correct response",
+                    "Server response\n", response.toString());
 
             client.close();
         } catch (Exception e) {

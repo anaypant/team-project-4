@@ -10,7 +10,7 @@ import java.util.Date;
  * A class containing helper methods used in various classes.
  * arrListToString(), replaceLineInFile()
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ * @author Purdue University -- CS18000 -- Fall 2024</p>
  *
  * @version November 3rd, 2024
  **/

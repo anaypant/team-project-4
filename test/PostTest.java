@@ -35,7 +35,8 @@ public class PostTest {
     @Test
     public void testConstructorWithId() {
         setUp();
-        Post postWithId = new Post("doesn't matter", "user2", "caption2", "null", "11-03-2024", 1, 1, comments);
+        Post postWithId = new Post("doesn't matter", "user2", "caption2",
+                "null", "11-03-2024", 1, 1, comments);
         assertEquals("user2", postWithId.getCreator());
         assertEquals("caption2", postWithId.getCaption());
         assertEquals("null", postWithId.getUrl());
@@ -59,7 +60,8 @@ public class PostTest {
         assertEquals(comments, post.getComments());
     }
 
-    // Setters and Getters for post contents, grabs username, caption, content, date posted, and upvotes/downvotes
+    // Setters and Getters for post contents, grabs username, caption, content,
+    // date posted, and upvotes/downvotes
     @Test
     public void testSettersAndGetters() {
         setUp();
@@ -82,15 +84,18 @@ public class PostTest {
     @Test
     public void testEquals() {
         setUp();
-        Post anotherPost = new Post(post.getId(), "user", "caption", "null", "11-03-2024", 1, 1, comments);
-        assertTrue(post.equals(anotherPost));
+        Post anotherPost = new Post(post.getId(), "user", "caption",
+                "null", "11-03-2024", 1, 1, comments);
+        assertEquals(post, anotherPost);
     }
 
     // Tests that postId is matched
     @Test
     public void testToString() {
         setUp();
-        String expected = post.getId() + ":::user:::caption:::null:::11-03-2024:::1:::1:::[\"user: comment\",\"user2: comment2\"]";
+        String expected = post.getId() +
+                ":::user:::caption:::null:::11-03-2024:::1:::1:::" +
+                "[\"user: comment\",\"user2: comment2\"]";
         assertEquals(expected, post.toString());
     }
 
@@ -115,7 +120,8 @@ public class PostTest {
     @Test
     public void testParseString() {
         setUp();
-        String postString = post.getId() + ":::user:::caption:::null:::11-03-2024:::1:::1:::[\"user: comment\",\"user2: comment2\"]";
+        String postString = post.getId() + ":::user:::caption:::null:::" +
+                "11-03-2024:::1:::1:::[\"user: comment\",\"user2: comment2\"]";
         Post parsedPost = Post.parseString(postString);
 
         assertEquals(post.getId(), parsedPost.getId());

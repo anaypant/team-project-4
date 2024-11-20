@@ -4,29 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="sql and network io done">
+    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="phase 2 final">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f097e6ca-0f1c-481d-98ee-be8107efa10f.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f097e6ca-0f1c-481d-98ee-be8107efa10f/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialMedia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialMediaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialMediaInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/posts.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/posts.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Post.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PostDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PostDBInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PostInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ServerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UserDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UserDBInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" afterDir="false" />
-    </list>
-    <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
-    <list id="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" name="Changes by utsie" comment="">
-      <change beforePath="$PROJECT_DIR$/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialMedia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" afterDir="false" />
-    </list>
-    <list id="f21eb0b6-abcb-4943-9fac-651c23a1a073" name="Changes by vishwa" comment="">
       <change beforePath="$PROJECT_DIR$/test/PostDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/PostDBDatabaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/PostTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/PostTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/ServerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/SocialMediaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/SocialMediaTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite" afterDir="false" />
     </list>
+    <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
+    <list id="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" name="Changes by utsie" comment="" />
+    <list id="f21eb0b6-abcb-4943-9fac-651c23a1a073" name="Changes by vishwa" comment="Changes by vishwa" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,39 +55,12 @@
     &quot;assignee&quot;: &quot;anaypant&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/anaypant/team-project-4.git",
-    "accountId": "a7a9c81b-9be2-4a5d-8443-b7b4dd0e1e7c"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/anaypant/team-project-4.git&quot;,
+    &quot;accountId&quot;: &quot;a7a9c81b-9be2-4a5d-8443-b7b4dd0e1e7c&quot;
   }
-}]]></component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/test/UserDBDatabaseTest.java">
-      <ranges>
-        <range start1="27" end1="27" start2="27" end2="28" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="34" end1="35" start2="35" end2="36" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
-        <range start1="41" end1="42" start2="42" end2="42" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="43" end1="43" start2="43" end2="44" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="49" end1="49" start2="50" end2="52" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-        <range start1="57" end1="57" start2="60" end2="63" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="67" end1="67" start2="73" end2="76" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="79" end1="79" start2="88" end2="90" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
-        <range start1="91" end1="91" start2="102" end2="104" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="104" end1="104" start2="117" end2="120" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="113" end1="113" start2="129" end2="131" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
-        <range start1="122" end1="122" start2="140" end2="141" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
-        <range start1="123" end1="123" start2="142" end2="145" changelist="f21eb0b6-abcb-4943-9fac-651c23a1a073" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/SocialMedia.java">
-      <ranges>
-        <range start1="19" end1="20" start2="19" end2="19" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="21" end1="22" start2="20" end2="20" changelist="4ddabe72-0e67-462a-a82f-e0f8d7fede35" />
-        <range start1="24" end1="25" start2="22" end2="23" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
-        <range start1="28" end1="30" start2="26" end2="27" changelist="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" />
-      </ranges>
-    </file>
-  </component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -94,44 +73,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Server.executor": "Run",
-    "Application.SocialMedia.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.PostDBDatabaseTest and 4 more.executor": "Run",
-    "JUnit.PostDBDatabaseTest and 5 more.executor": "Run",
-    "JUnit.PostDBDatabaseTest.executor": "Run",
-    "JUnit.PostTest.executor": "Run",
-    "JUnit.ServerTest.executor": "Run",
-    "JUnit.SocialMediaTest.executor": "Run",
-    "JUnit.UserDBDatabaseTest.executor": "Run",
-    "JUnit.UserDBDatabaseTest.testAddBlocked.executor": "Run",
-    "JUnit.UserTest.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "SQL-testing",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/anayp/IdeaProjects/team-project-4",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "fileTemplates",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SocialMedia.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.PostDBDatabaseTest and 4 more.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest and 5 more.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ServerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SocialMediaTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserDBDatabaseTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserDBDatabaseTest.testAddBlocked.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserTest.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;SQL-testing&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/anayp/IdeaProjects/team-project-4&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;fileTemplates&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
-  <component name="RunManager" selected="Compound.application">
+}</component>
+  <component name="RunManager" selected="JUnit.ServerTest">
     <configuration name="Server" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="src.Server" />
       <module name="team-project-4" />
@@ -157,36 +136,7 @@
       <toRun name="SocialMedia" type="Application" />
       <method v="2" />
     </configuration>
-    <configuration name="PostDBDatabaseTest and 4 more" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="team-project-4" />
-      <option name="TEST_OBJECT" value="pattern" />
-      <patterns>
-        <pattern testClass="test.PostDBDatabaseTest" />
-        <pattern testClass="test.PostTest" />
-        <pattern testClass="test.ServerTest" />
-        <pattern testClass="test.UserDBDatabaseTest" />
-        <pattern testClass="test.UserTest" />
-      </patterns>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PostDBDatabaseTest and 5 more" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="team-project-4" />
-      <option name="TEST_OBJECT" value="pattern" />
-      <patterns>
-        <pattern testClass="test.PostDBDatabaseTest" />
-        <pattern testClass="test.PostTest" />
-        <pattern testClass="test.ServerTest" />
-        <pattern testClass="test.SocialMediaTest" />
-        <pattern testClass="test.UserDBDatabaseTest" />
-        <pattern testClass="test.UserTest" />
-      </patterns>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PostDBDatabaseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PostTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="team-project-4" />
       <extension name="coverage">
         <pattern>
@@ -195,7 +145,22 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.PostDBDatabaseTest" />
+      <option name="MAIN_CLASS_NAME" value="test.PostTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="team-project-4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.ServerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -231,23 +196,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="team-project-4" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.UserTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Server" />
       <item itemvalue="Application.SocialMedia" />
       <item itemvalue="Compound.application" />
-      <item itemvalue="JUnit.PostDBDatabaseTest and 4 more" />
-      <item itemvalue="JUnit.PostDBDatabaseTest and 5 more" />
+      <item itemvalue="JUnit.PostTest" />
+      <item itemvalue="JUnit.ServerTest" />
+      <item itemvalue="JUnit.UserTest" />
       <item itemvalue="JUnit.SocialMediaTest" />
-      <item itemvalue="JUnit.PostDBDatabaseTest" />
       <item itemvalue="JUnit.UserDBDatabaseTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.PostDBDatabaseTest and 5 more" />
-        <item itemvalue="JUnit.SocialMediaTest" />
-        <item itemvalue="JUnit.PostDBDatabaseTest and 4 more" />
-        <item itemvalue="JUnit.PostDBDatabaseTest" />
+        <item itemvalue="JUnit.ServerTest" />
+        <item itemvalue="JUnit.UserTest" />
         <item itemvalue="JUnit.UserDBDatabaseTest" />
+        <item itemvalue="JUnit.SocialMediaTest" />
+        <item itemvalue="JUnit.PostTest" />
       </list>
     </recent_temporary>
   </component>
@@ -267,7 +247,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1730677784295</updated>
-      <workItem from="1731883600041" duration="9732000" />
+      <workItem from="1731883600041" duration="10366000" />
+      <workItem from="1731961142201" duration="993000" />
+      <workItem from="1732076732059" duration="3511000" />
     </task>
     <task id="LOCAL-00001" summary="final phase 1">
       <option name="closed" value="true" />
@@ -309,7 +291,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731890141369</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="phase 2 final">
+      <option name="closed" value="true" />
+      <created>1731895176901</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1731895176902</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,6 +311,8 @@
     <MESSAGE value="utils edit" />
     <MESSAGE value="some changes before intellij ultimate" />
     <MESSAGE value="sql and network io done" />
-    <option name="LAST_COMMIT_MESSAGE" value="sql and network io done" />
+    <MESSAGE value="Changes by vishwa" />
+    <MESSAGE value="phase 2 final" />
+    <option name="LAST_COMMIT_MESSAGE" value="phase 2 final" />
   </component>
 </project>

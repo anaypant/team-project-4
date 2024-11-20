@@ -1,5 +1,6 @@
 package test;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import src.Constants;
@@ -7,6 +8,7 @@ import src.Server;
 import src.PostDBDatabase;
 import src.UserDBDatabase;
 
+import java.io.IOException;
 import java.lang.constant.Constable;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -24,10 +26,11 @@ import static org.junit.Assert.*;
  * @version November 17th, 2024
  **/
 public class ServerTest {
-    private static final String USER_DB_PATH = "jdbc:sqlite:users.sqlite";
-    private static final String POST_DB_PATH = "jdbc:sqlite:posts.sqlite";
+    private static final String USER_DB_PATH = Constants.USER_DB;
+    private static final String POST_DB_PATH = Constants.POST_DB;
     private Server server;
     private ServerSocket serverSocket;
+
 
     @Before
     public void setUp() {
@@ -44,12 +47,27 @@ public class ServerTest {
             postStmt.execute("DELETE FROM posts");
             System.out.println("All rows deleted from posts table.");
 
-            serverSocket = new ServerSocket(Constants.PORT_NUMBER); // Use a random available port
-            Socket socket = new Socket("localhost", Constants.PORT_NUMBER);
+            serverSocket = new ServerSocket(Constants.PORT_NUMBER + 1); // Use a random
+            // available port
+            Socket socket = new Socket("localhost", Constants.PORT_NUMBER + 1);
             server = new Server(socket);
+
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    // Closes the server after each run
+    @After
+    public void cleanUp() {
+        // check if server is running and close it
+        if (serverSocket != null) {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -63,7 +81,7 @@ public class ServerTest {
     public void testBasicCommandProcessing() {
         // Simulate basic server commands via database interactions
         UserDBDatabase.createUser("testUser", "password123");
-        assertTrue("User creation should succeed", UserDBDatabase.loginUser("testUser", "password123") != null);
+        assertNotNull("User creation should succeed", UserDBDatabase.loginUser("testUser", "password123"));
 
         PostDBDatabase.createPost("testUser", "Test Caption", "http://test.url");
         assertFalse("Post list should not be empty", PostDBDatabase.getPostsByUsername("testUser").isEmpty());

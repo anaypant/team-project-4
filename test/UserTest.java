@@ -6,6 +6,7 @@ import src.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -29,7 +30,7 @@ public class UserTest {
     @Before
     public void setUp() {
         friends = new ArrayList<>(Arrays.asList("friend1", "friend2"));
-        blocked = new ArrayList<>(Arrays.asList("blockedUser1"));
+        blocked = new ArrayList<>(List.of("blockedUser1"));
         user = new User("username", "password", "profile.jpg", friends, blocked);
     }
 
@@ -112,7 +113,7 @@ public class UserTest {
         assertEquals("password", parsedUser.getPassword());
         assertEquals("profile.jpg", parsedUser.getImagePath());
         assertEquals(Arrays.asList("friend1", "friend2"), parsedUser.getFriendsList());
-        assertEquals(Arrays.asList("blockedUser1"), parsedUser.getBlockedList());
+        assertEquals(List.of("blockedUser1"), parsedUser.getBlockedList());
     }
 
     //Checks that a blokcked freinnd cannot be affedded to the friends lusist.

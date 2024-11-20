@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * An interface that defines what the User class will look like.
  *
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ * @author Purdue University -- CS18000 -- Fall 2024</p>
  *
  *
  * @version November 3rd, 2024
@@ -27,11 +27,11 @@ public interface UserInterface {
     // gets password
     String getPassword();
     // sets profile pic path
-    public void setImagePath(String imagePath);
+    void setImagePath(String imagePath);
     // adds friend
-    public boolean addFriend(String friend);
+    boolean addFriend(String friend);
     // removes friend
-    public boolean removeFriend(String friend);
+    boolean removeFriend(String friend);
     // blocks user
-    public boolean blockUser(String user);
+    boolean blockUser(String user);
 }

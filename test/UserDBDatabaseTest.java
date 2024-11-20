@@ -3,6 +3,7 @@ package test;
 import org.junit.Before;
 import org.junit.Test;
 import org.sqlite.core.DB;
+import src.Constants;
 import src.User;
 import src.UserDBDatabase;
 
@@ -22,7 +23,7 @@ import static org.junit.Assert.*;
  **/
 
 public class UserDBDatabaseTest {
-    private static final String DB_PATH = "jdbc:sqlite:users.sqlite";
+    private static final String DB_PATH = Constants.USER_DB;
 
     @Before
     // sets up the test by removing all rows from the users table and connecting to the database at the database path

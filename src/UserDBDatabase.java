@@ -10,7 +10,7 @@ import java.util.*;
  * A class that defines how the database deals with User methods.
  * Logging in, adding friends, creating users.
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ * @author Purdue University -- CS18000 -- Fall 2024</p>
  *
  * @version November 3rd, 2024
  **/
@@ -26,8 +26,11 @@ public class UserDBDatabase implements UserDBInterface {
     // Initializes table if it doesn't already exist
     // Checks that the schema is appropriate and handles SQL exceptions
     static {
-        try (Connection conn = DriverManager.getConnection(DB_PATH); Statement stmt = conn.createStatement()) {
-            String createTable = "CREATE TABLE IF NOT EXISTS users (" + "username TEXT PRIMARY KEY, " + "password TEXT NOT NULL, " + "friends TEXT, " + // Semi-colon-separated list of friends
+        try (Connection conn = DriverManager.getConnection(DB_PATH); Statement stmt
+                = conn.createStatement()) {
+            String createTable = "CREATE TABLE IF NOT EXISTS users (" +
+                    "username TEXT PRIMARY KEY," +
+                    " " + "password TEXT NOT NULL, " + "friends TEXT, " + // Semi-colon-separated list of friends
                     "blocked TEXT)";   // Semi-colon-separated list of blocked users
             stmt.execute(createTable);
         } catch (SQLException e) {
@@ -55,12 +58,16 @@ public class UserDBDatabase implements UserDBInterface {
         } catch (SQLException e) {
             return false;
         }
-        String createQuery = "INSERT INTO users (username, password, friends, blocked) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DriverManager.getConnection(DB_PATH); PreparedStatement pstmt = conn.prepareStatement(createQuery)) {
+        String createQuery = "INSERT INTO users (username, password, friends, blocked)" +
+                " VALUES (?, ?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(DB_PATH);
+             PreparedStatement pstmt = conn.prepareStatement(createQuery)) {
             pstmt.setString(1, username);
             pstmt.setString(2, password);
-            pstmt.setString(3, Utils.arrListToString(u.getFriendsList())); // Empty friends list
-            pstmt.setString(4, Utils.arrListToString(u.getBlockedList())); // Empty blocked list
+            pstmt.setString(3, Utils.arrListToString(u.getFriendsList()));
+            // Empty friends list
+            pstmt.setString(4, Utils.arrListToString(u.getBlockedList()));
+            // Empty blocked list
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -99,7 +106,7 @@ public class UserDBDatabase implements UserDBInterface {
     // doesn't have to be locked right?
     // verifies username and password
     // returns User object on successful login
-    public static synchronized User loginUser(String loginUsername, String Loginpassword) {
+    public static synchronized User loginUser(String loginUsername, String loginPassword) {
         String selectQuery = "SELECT * FROM users";
         ArrayList<String> friends = new ArrayList<>();
         ArrayList<String> blocked = new ArrayList<>();
@@ -107,10 +114,15 @@ public class UserDBDatabase implements UserDBInterface {
             PreparedStatement pstmt = connection.prepareStatement(selectQuery);
             ResultSet result = pstmt.executeQuery();
             while (result.next()) {
-                if (result.getString(2).equals(loginUsername) && result.getString(3).equals(Loginpassword)) {
+                if (result.getString(2).equals(loginUsername) &&
+                        result.getString(3).equals(loginPassword)) {
                     friends = Utils.arrayFromString(result.getString(4));
                     blocked = Utils.arrayFromString(result.getString(5));
-                    User u = new User(result.getString(2), result.getString(3), result.getString(6), friends, blocked); // need to figure out how the freinds and bliocked will work and turn them into an arrayList
+                    User u = new User(result.getString(2),
+                            result.getString(3), result.getString(6),
+                            friends, blocked);
+                    // need to figure out how the freinds and bliocked
+                    // will work and turn them into an arrayList
                     return (u);
                 }
             }
@@ -320,7 +332,8 @@ public class UserDBDatabase implements UserDBInterface {
         if (user == null) {
             return false;
         }
-        if (!createUser(user)) { // attempts to recreate the user after deleting them, returns false if unsuccessful
+        if (!createUser(user)) { // attempts to recreate the user after deleting them,
+            // returns false if unsuccessful
             return false;
         }
 
@@ -348,7 +361,9 @@ public class UserDBDatabase implements UserDBInterface {
                     blockedList = result.getString(5);
                     blocked = Utils.arrayFromString(blockedList);
 
-                    User u = new User(result.getString(2), result.getString(3), result.getString(6), friends, blocked);
+                    User u = new User(result.getString(2),
+                            result.getString(3), result.getString(6),
+                            friends, blocked);
                     PreparedStatement second = conn.prepareStatement(deletQuery);
                     second.setString(1, username);
                     second.executeUpdate();
