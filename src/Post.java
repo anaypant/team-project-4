@@ -22,7 +22,7 @@ public class Post implements Serializable, PostInterface {
     private int upVotes; // Number of up votes
     private int downVotes; // Number of down votes
     private ArrayList<String> comments; // An Array List of Comments on the POst
-
+    private boolean canComment;
 
     //Constructor for post that takes an id, creator, caption,
     // url (for image), date created all in forms of Strings

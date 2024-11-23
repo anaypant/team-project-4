@@ -5,29 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="phase 2 final">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f097e6ca-0f1c-481d-98ee-be8107efa10f.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f097e6ca-0f1c-481d-98ee-be8107efa10f/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialMedia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialMediaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialMediaInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/posts.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/posts.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostDBInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ServerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserDBInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/PostDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/PostDBDatabaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/PostTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/PostTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/ServerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/SocialMediaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/SocialMediaTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite" afterDir="false" />
     </list>
     <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
@@ -110,7 +91,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="JUnit.ServerTest">
+  <component name="RunManager" selected="Compound.application">
     <configuration name="Server" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="src.Server" />
       <module name="team-project-4" />
