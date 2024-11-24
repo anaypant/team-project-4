@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 /**
  * Unit tests for server-client interactions in the SocialMedia application.
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ * @author CS180 L2 Team 5
  *
  * @version November 17th, 2024
  **/

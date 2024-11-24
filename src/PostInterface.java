@@ -6,9 +6,9 @@ import java.util.ArrayList;
  * An interface that defines what the Post class will look like.
  *
  *
- * @author Purdue University -- CS18000 -- Fall 2024</p>
+ * @author CS180 L2 Team 5
  *
- * @version November 3rd, 2024
+ * @version 2.0
  **/
 
 public interface PostInterface {

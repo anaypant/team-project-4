@@ -12,9 +12,9 @@ import java.util.Objects;
  * Creates the interface for the user to call commands.
  * Creates a Thread for each active user
  *
- * @author Purdue University -- CS18000 -- Fall 2024</p>
+ * @author CS180 L2 Team 5
  *
- * @version November 3rd, 2024
+ * @version 2.0
  **/
 
 public class Server implements Runnable, ServerInterface {
@@ -54,7 +54,7 @@ public class Server implements Runnable, ServerInterface {
                 // if the user wants help
                 if (line.equals("help") && s == State.IDLE) {
                     msg = "Commands: ";
-                    for (String item : commands) {
+                    for (String item : COMMANDS) {
                         msg += item + ", ";
                     }
                     msg = msg.substring(0, msg.length() - 2); // return the list of commands,

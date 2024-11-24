@@ -21,8 +21,7 @@ import static org.junit.Assert.*;
 /**
  * Test file for Server class setup and basic functionality.
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
- *
+ * @author CS180 L2 Team 5
  * @version November 17th, 2024
  **/
 public class ServerTest {

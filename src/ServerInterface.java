@@ -4,12 +4,11 @@ package src;
  * An Interface that describes field functionality for the Server class
  * Commands: Creating posts, deleting posts,
  * commenting on posts, deleting comments on posts,
- * upvoting, downvoting.
+ * upvoting, downvoting. *
  *
- * @author Purdue University -- CS18000 -- Fall 2024</p>
- * @version November 3rd, 2024
+ * @author CS180 L2 Team 5
+ * @version 2.0
  **/
-
 public interface ServerInterface {
     // All possible different states that can be achieved
     enum State {
@@ -19,7 +18,7 @@ public interface ServerInterface {
     }
 
     // Accepted User Commands
-    String[] commands = {
+    String[] COMMANDS = {
         "help",
         "Create user",
         "Login user",

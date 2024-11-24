@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="phase 2 final">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f097e6ca-0f1c-481d-98ee-be8107efa10f.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f097e6ca-0f1c-481d-98ee-be8107efa10f/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="vocareum check">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialMedia.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialMediaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialMediaInterface.java" afterDir="false" />
@@ -28,6 +29,7 @@
       <change beforePath="$PROJECT_DIR$/test/ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/ServerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/SocialMediaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/SocialMediaTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite" afterDir="false" />
     </list>
     <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
@@ -55,12 +57,12 @@
     &quot;assignee&quot;: &quot;anaypant&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/anaypant/team-project-4.git&quot;,
-    &quot;accountId&quot;: &quot;a7a9c81b-9be2-4a5d-8443-b7b4dd0e1e7c&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/anaypant/team-project-4.git",
+    "accountId": "f7c10712-aa9e-480c-817a-3322e1681b0f"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -101,6 +103,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;fileTemplates&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -231,14 +234,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -249,7 +244,7 @@
       <updated>1730677784295</updated>
       <workItem from="1731883600041" duration="10366000" />
       <workItem from="1731961142201" duration="993000" />
-      <workItem from="1732076732059" duration="3511000" />
+      <workItem from="1732076732059" duration="5474000" />
     </task>
     <task id="LOCAL-00001" summary="final phase 1">
       <option name="closed" value="true" />
@@ -299,7 +294,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731895176902</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="vocareum check">
+      <option name="closed" value="true" />
+      <created>1732127072849</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1732127072849</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,6 +316,7 @@
     <MESSAGE value="sql and network io done" />
     <MESSAGE value="Changes by vishwa" />
     <MESSAGE value="phase 2 final" />
-    <option name="LAST_COMMIT_MESSAGE" value="phase 2 final" />
+    <MESSAGE value="vocareum check" />
+    <option name="LAST_COMMIT_MESSAGE" value="vocareum check" />
   </component>
 </project>

@@ -10,9 +10,9 @@ import java.util.*;
  * A class that defines how the database deals with User methods.
  * Logging in, adding friends, creating users.
  *
- * @author Purdue University -- CS18000 -- Fall 2024</p>
+ * @author CS180 L2 Team 5
  *
- * @version November 3rd, 2024
+ * @version 2.0
  **/
 
 public class UserDBDatabase implements UserDBInterface {

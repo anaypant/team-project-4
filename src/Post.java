@@ -8,9 +8,9 @@ import java.util.UUID;
  * A class that represents each social media post, either an image or text post.
  * Each post has a creator, id, caption, and url
  *
- * @author Purdue University -- CS18000 -- Fall 2024</p>
+ * @author CS180 L2 Team 5
  *
- * @version November 3rd, 2024
+ * @version Phase 2.0
  **/
 
 public class Post implements Serializable, PostInterface {

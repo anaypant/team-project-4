@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * A class that represents each social media user.
  * Each user has a username, password, and profile picture path.
  *
- * @author Purdue University -- CS18000 -- Fall 2024</p>
+ * @author CS180 L2 Team 5
  *
- * @version November 3rd, 2024
+ * @version 2.0
  **/
 
 public class User implements UserInterface {

@@ -17,9 +17,8 @@ import static org.junit.Assert.*;
 /**
  * Test file for PostDBDatabase
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
- *
- * @version November 3rd, 2024
+ * @author CS180 L2 Team 5
+ * @version 2.0
  */
 
 public class PostDBDatabaseTest {

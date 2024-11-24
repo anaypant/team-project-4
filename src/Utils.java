@@ -10,14 +10,15 @@ import java.util.Date;
  * A class containing helper methods used in various classes.
  * arrListToString(), replaceLineInFile()
  *
- * @author Purdue University -- CS18000 -- Fall 2024</p>
+ * @author CS180 L2 Team 5
  *
- * @version November 3rd, 2024
+ * @version 2.0
  **/
 
 public class Utils {
 
-    //taking a string and converting the elements inside into an arrayList which it returns that we can use later to go
+    //taking a string and converting the elements inside into an
+    // arrayList which it returns that we can use later to go
     //through things like number list for posts and such.
     public static ArrayList<String> arrayFromString(String s) {
 
@@ -51,8 +52,10 @@ public class Utils {
     }
 
     //takes in a file and id then
-    // reads the post file and as long as each post doesn't have the specified id it will add it to an arrayList
-    // then once its added all but the specified one it will rewrite the arrayList out essentialy deleting
+    // reads the post file and as long as each post doesn't
+    // have the specified id it will add it to an arrayList
+    // then once its added all but the specified one it will
+    // rewrite the arrayList out essentialy deleting
     //a specified Post and returns nothing
     public static void deletePost(String postId, String fileName) {
         ArrayList<String> lines = new ArrayList<>();
@@ -84,9 +87,11 @@ public class Utils {
     }
 
     //takes in a file and username then
-    // reads the user file and as long as each user doesn't have the specified username it will add it to
+    // reads the user file and as long as each user
+    // doesn't have the specified username it will add it to
     // an arrayList
-    // then once its added all but the specified one it will rewrite the arrayList out essentialy deleting
+    // then once its added all but the specified one
+    // it will rewrite the arrayList out essentialy deleting
     //a specified User and returns nothing
     public static void deleteUser(String username, String fileName) {
         ArrayList<String> lines = new ArrayList<>();
@@ -117,7 +122,8 @@ public class Utils {
         }
     }
 
-    //takes an arrayList and goes through each element and writes it to a string so that we can convert an ArrayList
+    //takes an arrayList and goes through each element and
+    // writes it to a string so that we can convert an ArrayList
     //to a string and pit it into a file later.
     public static String arrListToString(ArrayList<String> arr) {
         String result = "[";
@@ -135,7 +141,8 @@ public class Utils {
         return result;
     }
 
-    // Takes the collection of posts in arraylist and sorts them by year ascending using the provided collection formatting
+    // Takes the collection of posts in arraylist and sorts them by
+    // year ascending using the provided collection formatting
     public static ArrayList<Post> sortPostsByDateDesc(ArrayList<Post> posts) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 

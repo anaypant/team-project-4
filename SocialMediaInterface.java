@@ -4,9 +4,9 @@ import src.Constants;
  * An interface that defines what the Client will look like.
  *
  *
- * <p>Purdue University -- CS18000 -- Fall 2024</p>
+ * @author CS180 L2 Team 5
  *
- * @version November 3rd, 2024
+ * @version 2.0
  **/
 public interface SocialMediaInterface {
     // Static main method that is inherited by the social media
