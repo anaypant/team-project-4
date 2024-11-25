@@ -21,8 +21,8 @@ public class Post implements Serializable, PostInterface {
     private String dateCreated; // Date the post was created
     private int upVotes; // Number of up votes
     private int downVotes; // Number of down votes
-    private ArrayList<String> comments; // An Array List of Comments on the POst
-    private boolean canComment;
+    private ArrayList<Comment> comments; // An Array List of Comments on the POst
+    private boolean hidden;
 
     //Constructor for post that takes an id, creator, caption,
     // url (for image), date created all in forms of Strings
@@ -31,7 +31,7 @@ public class Post implements Serializable, PostInterface {
     //use this version when we parse
     public Post(String id, String creator, String caption, String url,
                 String dateCreated, int upVotes, int downVotes,
-                ArrayList<String> comments) {
+                ArrayList<Comment> comments) {
         this.id = id;
         this.creator = creator;
         this.caption = caption;
@@ -135,15 +135,64 @@ public class Post implements Serializable, PostInterface {
     }
 
     //
-    public ArrayList<String> getComments() {
+    public ArrayList<Comment> getComments() {
         return comments;
     }
 
     //takes an input of a comment in the form of an ArrayList
     // of Strings and sets the comments to the given
     //comments specified and returns nothing.
-    public void setComments(ArrayList<String> comments) {
+    public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
+    }
+
+    public void addComment(String creator, String text) {
+        comments.add(new Comment(creator, text));
+    }
+
+    public void deleteComment(String commentId) {
+        for (Comment comment : comments) {
+            if (comment.getId().equals(commentId)) {
+                comments.remove(comment);
+                break; // Exit the loop once the comment is found and deleted
+            }
+        }    }
+
+    public void upvoteComment(String commentId) {
+        for (Comment comment : comments) {
+            if (comment.getId().equals(commentId)) {
+                comment.upvote();
+                break;
+            }
+        }
+    }
+
+    public void downvoteComment(String commentId) {
+        for (Comment comment : comments) {
+            if (comment.getId().equals(commentId)) {
+                comment.downvote();
+                break;
+            }
+        }
+    }
+
+    public void hide(String user) {
+        if (user.equals(creator)) {
+            hidden = true;
+        } else {
+            throw new IllegalArgumentException("Only the post owner can hide this post.");
+        }
+    }
+
+    public void unhide(String user) {
+        if (user.equals(creator)) {
+            hidden = false;
+        } else {
+            throw new IllegalArgumentException("Only the post owner can unhide this post.");
+        }
+    }
+    public boolean isHidden() {
+        return hidden;
     }
 
     //overriding the equals() method and checking if the ids opf
@@ -157,18 +206,7 @@ public class Post implements Serializable, PostInterface {
         return false;
     }
 
-    //overriding the toString() method to make it our own using
-    // our own delimter of ":::" so that we can parse
-    //through it later and returns the String in the form of id ,
-    // creator, dateCreated,upvotes,downVotes,comments
-    @Override
-    public String toString() {
-        return this.id + Constants.DELIMITER + this.creator + Constants.DELIMITER +
-                this.caption + Constants.DELIMITER + this.url + Constants.DELIMITER +
-                this.dateCreated + Constants.DELIMITER + this.upVotes +
-                Constants.DELIMITER + this.downVotes + Constants.DELIMITER +
-                Utils.arrListToString(this.comments);
-    }
+
 
     //just another toString() but in our own format and returns our speicial format
     public String display() {
@@ -180,7 +218,7 @@ public class Post implements Serializable, PostInterface {
         msg += "Number of Up Votes: " + this.upVotes + "\n";
         msg += "Number of Down Votes: " + this.downVotes + "\n";
         msg += "Comments: \n";
-        for (String comment : this.comments) {
+        for (Comment comment : this.comments) {
             msg += comment + "\n";
         }
         msg += "----------";
@@ -188,20 +226,5 @@ public class Post implements Serializable, PostInterface {
 
     }
 
-    //parses the post in the given format of the toString() and sets
-    // each variable to its respective parts and
-    // and returns the Post based off the variables
-    public static Post parseString(String s) {
-        String[] parsed = s.split(Constants.DELIMITER);
-        String uid = parsed[0];
-        String creator = parsed[1];
-        String caption = parsed[2];
-        String url = parsed[3];
-        String date = parsed[4];
-        int uv = Integer.parseInt(parsed[5]);
-        int dv = Integer.parseInt(parsed[6]);
-        ArrayList<String> c = Utils.arrayFromString(parsed[7]);
-        return new Post(uid, creator, caption, url, date, uv, dv, c);
-    }
 
 }

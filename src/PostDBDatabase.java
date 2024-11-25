@@ -66,7 +66,7 @@ public class PostDBDatabase implements PostDBInterface {
         int upvotes = p.getUpVotes();
         int downvotes = p.getDownVotes();
         String datecreated = p.getDateCreated();
-        ArrayList<String> comments = p.getComments();
+        ArrayList<Comment> comments = p.getComments();
         String commentList = comments.toString();
         commentList = commentList.substring(1, commentList.length() - 1);
         commentList = commentList.replace(", ", ":::");
@@ -121,7 +121,7 @@ public class PostDBDatabase implements PostDBInterface {
                         rs.getString("datecreated"),
                         rs.getInt("upvotes"),
                         rs.getInt("downvotes"),
-                        Utils.arrayFromString(rs.getString("comments"))
+                        Utils.ComarrayFromString(rs.getString("comments"))
                 );
             }
         } catch (Exception e) {
@@ -136,7 +136,7 @@ public class PostDBDatabase implements PostDBInterface {
     private static synchronized Post getAndDeletePost(String postId) {
         String selectQuery = "SELECT * FROM posts";
         String deletQuery = "DELETE FROM posts WHERE id = ?";
-        ArrayList<String> comments;
+        ArrayList<Comment> comments;
         try (Connection conn = DriverManager.getConnection(DB_PATH)) {
             PreparedStatement pstmt = conn.prepareStatement(selectQuery);
             ResultSet result = pstmt.executeQuery();
@@ -145,7 +145,7 @@ public class PostDBDatabase implements PostDBInterface {
                 System.out.println(result.getString(1));
                 System.out.println(postId);
                 if (result.getString(1).equals(postId)) {
-                    comments = Utils.arrayFromString(result.getString(8));
+                    comments = Utils.ComarrayFromString(result.getString(8));
                     Post p = new Post(result.getString(1),
                             result.getString(2), result.getString(3),
                             result.getString(4), result.getString(5),
@@ -184,13 +184,13 @@ public class PostDBDatabase implements PostDBInterface {
                             result.getString(2), result.getString(3),
                             result.getString(4), result.getString(5),
                             result.getInt(6), result.getInt(7),
-                            Utils.arrayFromString(result.getString(8)));
-                    ArrayList<String> comments = p.getComments();
-                    comments.add(username + ": " + comment);
+                            Utils.ComarrayFromString(result.getString(8)));
+                    ArrayList<Comment> comments = p.getComments();
+                    comments.add(new Comment(username, comment));
                     p.setComments(comments);
                     PreparedStatement second = conn.prepareStatement(updateQuery);
                     second.setString(2, p.getId());
-                    second.setString(1, Utils.arrListToString(p.getComments()));
+                    second.setString(1, Utils.ComarrListToString(p.getComments()));
                     second.executeUpdate();
                     return true;
                 }
@@ -218,13 +218,13 @@ public class PostDBDatabase implements PostDBInterface {
                             result.getString(2), result.getString(3),
                             result.getString(4), result.getString(5),
                             result.getInt(6), result.getInt(7),
-                            Utils.arrayFromString(result.getString(8)));
-                    ArrayList<String> comments = p.getComments();
+                            Utils.ComarrayFromString(result.getString(8)));
+                    ArrayList<Comment> comments = p.getComments();
                     comments.remove(comment);
                     p.setComments(comments);
                     PreparedStatement second = conn.prepareStatement(updateQuery);
                     second.setString(2, p.getId());
-                    second.setString(1, Utils.arrListToString(p.getComments()));
+                    second.setString(1, Utils.ComarrListToString(p.getComments()));
                     second.executeUpdate();
                     return true;
                 }
@@ -284,7 +284,7 @@ public class PostDBDatabase implements PostDBInterface {
                         rs.getString("datecreated"),
                         rs.getInt("upvotes"),
                         rs.getInt("downvotes"),
-                        Utils.arrayFromString(rs.getString("comments"))
+                        Utils.ComarrayFromString(rs.getString("comments"))
                 );
                 posts.add(post);
             }
@@ -325,6 +325,150 @@ public class PostDBDatabase implements PostDBInterface {
         p.setDownVotes(p.getDownVotes() + 1);
         return createPost(p);
     }
+
+
+    public static boolean hidePost(String postId, String user) {
+        Post post = getAndDeletePost(postId); // Retrieve the post
+        if (post == null) {
+            return false;
+        }
+
+        try {
+            post.hide(user);
+            String updateQuery = "UPDATE posts SET hidden = true WHERE id = ?";
+            try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+                PreparedStatement ps = conn.prepareStatement(updateQuery);
+                ps.setString(1, postId);
+                ps.executeUpdate();
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Upvote a comment
+    public static boolean upvoteComment(String postId, String commentId) {
+        Post post = getAndDeletePost(postId); // Retrieve and delete the post from the database
+        if (post == null) {
+            return false;
+        }
+
+        try {
+            // Find and upvote the comment
+            post.upvoteComment(commentId);
+
+            // Save the updated post back to the database
+            saveUpdatedPost(post);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static synchronized boolean downvoteComment(String postId, String commentId) {
+        String selectQuery = "SELECT comments FROM posts WHERE id = ?";
+        String updateQuery = "UPDATE posts SET comments = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            // Step 1: Retrieve the comments for the post
+            PreparedStatement selectStmt = conn.prepareStatement(selectQuery);
+            selectStmt.setString(1, postId);
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                // Deserialize comments into a list of Comment objects
+                String commentsJson = rs.getString("comments");
+                ArrayList<Comment> comments = Utils.commentsFromJson(commentsJson);
+
+                // Step 2: Find the comment and update its downvotes
+                boolean commentFound = false;
+                for (Comment comment : comments) {
+                    if (comment.getId().equals(commentId)) {
+                        comment.downvote();
+                        commentFound = true;
+                        break;
+                    }
+                }
+
+                if (!commentFound) {
+                    return false; // Comment not found
+                }
+
+                // Step 3: Serialize the updated comments back to JSON
+                String updatedCommentsJson = Utils.commentsToJson(comments);
+
+                // Step 4: Update the database with the new comments
+                PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+                updateStmt.setString(1, updatedCommentsJson);
+                updateStmt.setString(2, postId);
+                updateStmt.executeUpdate();
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false; // Failed to update comment
+    }
+
+    private static boolean saveUpdatedPost(Post post) {
+        String updateQuery = "UPDATE posts SET caption = ?, url = ?, datecreated = ?, upvotes = ?, downvotes = ?, comments = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            PreparedStatement ps = conn.prepareStatement(updateQuery);
+
+            // Prepare the updated post data
+            ps.setString(1, post.getCaption());
+            ps.setString(2, post.getUrl());
+            ps.setString(3, post.getDateCreated());
+            ps.setInt(4, post.getUpVotes());
+            ps.setInt(5, post.getDownVotes());
+            ps.setString(6, Utils.commentsToJson(post.getComments())); // Convert comments to JSON
+            ps.setString(7, post.getId());
+
+            // Execute the update query
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean unhidePost(String postId, String user) {
+        String selectQuery = "SELECT * FROM posts WHERE id = ?";
+        String updateQuery = "UPDATE posts SET hidden = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            // Step 1: Retrieve the post
+            PreparedStatement selectStmt = conn.prepareStatement(selectQuery);
+            selectStmt.setString(1, postId);
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                // Step 2: Check if the user is the owner
+                String creator = rs.getString("creator");
+                if (!creator.equals(user)) {
+                    return false; // Only the owner can unhide the post
+                }
+
+                // Step 3: Update the post's hidden status
+                PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+                updateStmt.setBoolean(1, false); // Set hidden = false
+                updateStmt.setString(2, postId);
+                updateStmt.executeUpdate();
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false; // Return false if the operation fails
+    }
+
 
 
 }

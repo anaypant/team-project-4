@@ -1,53 +1,89 @@
 package src;
 
-public class Comment implements  CommentInterface{
-    private String comment;
-    private int upvotes;
-    private int downvotes;
-    private boolean isVisible;
-    private User postOwner;
-    private User commentOwner;
+import java.io.Serializable;
 
-    public Comment(String comment, int upvotes, int downvotes, boolean isVisible, User postOwner, User commentOwner) {
-        this.comment = comment;
-        this.upvotes = upvotes;
-        this.downvotes = downvotes;
-        this.isVisible = isVisible;
-        this.postOwner = postOwner;
-        this.commentOwner = commentOwner;
+public class Comment implements Serializable {
+    private String id;          // Unique ID for the comment
+    private String text;        // Content of the comment
+    private String creator;     // Creator of the comment
+    private int upvotes;        // Number of upvotes
+    private int downvotes;      // Number of downvotes
+    private boolean hidden;     // Flag for whether the comment is hidden
+
+    // Constructor
+    public Comment(String creator, String text) {
+        this.id = java.util.UUID.randomUUID().toString();
+        this.text = text;
+        this.creator = creator;
+        this.upvotes = 0;
+        this.downvotes = 0;
+        this.hidden = false;
     }
 
-    public String getComment() {
-        return comment;
+    // Getters and setters
+    public String getId() {
+        return id;
     }
-    public void setComment(String comment) {
-        this.comment = comment;
+
+    public String getText() {
+        if (hidden) {
+            return "[Hidden]";
+        } else {
+            return text;
+        }
     }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
     public int getUpvotes() {
         return upvotes;
     }
-    public void setUpvotes(int upvotes) {
-        this.upvotes = upvotes;
-    }
+
     public int getDownvotes() {
         return downvotes;
     }
-    public void setDownvotes(int downvotes) {
-        this.downvotes = downvotes;
+
+    public boolean isHidden() {
+        return hidden;
     }
-    public boolean isVisible() {
-        return isVisible;
+
+    // Functional methods
+    public void upvote() {
+        upvotes++;
     }
-    public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
+
+    public void downvote() {
+        downvotes++;
     }
-    public User getPostOwner() {
-        return postOwner;
+
+    public void hide(String user) {
+        if (user.equals(creator)) {
+            hidden = true;
+        } else {
+            throw new IllegalArgumentException("Only the comment owner can hide this comment.");
+        }
     }
-    public void setPostOwner(User postOwner) {
-        this.postOwner = postOwner;
+
+    public void unhide(String user) {
+        if (user.equals(creator)) {
+            hidden = false;
+        } else {
+            throw new IllegalArgumentException("Only the comment owner can unhide this comment.");
+        }
     }
-    public User getCommentOwner() {
-        return commentOwner;
-    }
+
+
+    @Override
+    public String toString() {
+        if (hidden) {
+            return "[Hidden]";
+        } else {
+            return text + " (Upvotes: " + upvotes + ", Downvotes: " + downvotes + ")";
+        }    }
 }

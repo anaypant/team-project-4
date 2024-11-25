@@ -144,6 +144,9 @@ public class Server implements Runnable, ServerInterface {
                                         }
                                     }
                                     break;
+
+
+
                                 default:
                                     msg = "Invalid command. Please try again.";
                                     break;
@@ -314,6 +317,7 @@ public class Server implements Runnable, ServerInterface {
                             }
                             s = State.IDLE;
                             break;
+
 
 
                         default:

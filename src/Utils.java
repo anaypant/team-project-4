@@ -3,8 +3,11 @@ package src;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * A class containing helper methods used in various classes.
@@ -48,6 +51,21 @@ public class Utils {
         }
 
         return result;
+    }
+    public static ArrayList<Comment> ComarrayFromString(String s) {
+        if (s == null || s.isEmpty()) {
+            return new ArrayList<>(); // Return an empty list if the input is null or empty
+        }
+
+        try {
+            // Use Gson to parse the JSON string into an ArrayList<Comment>
+            Gson gson = new Gson();
+            Type listType = new TypeToken<ArrayList<Comment>>() {}.getType();
+            return gson.fromJson(s, listType);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); // Return an empty list on error
+        }
     }
 
     //takes in a file and id then
@@ -135,6 +153,22 @@ public class Utils {
         return result;
     }
 
+    public static String ComarrListToString(ArrayList<Comment> arr) {
+        String result = "[";
+
+        for (int i = 0; i < arr.size(); i++) {
+            result += "\"" + arr.get(i) + "\"";
+
+            // Add a comma and space if it's not the last element
+            if (i < arr.size() - 1) {
+                result += ",";
+            }
+        }
+
+        result += "]";
+        return result;
+    }
+
     // Takes the collection of posts in arraylist and sorts them by year ascending using the provided collection formatting
     public static ArrayList<Post> sortPostsByDateDesc(ArrayList<Post> posts) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -155,4 +189,16 @@ public class Utils {
 
         return posts;
     }
+
+    public static String commentsToJson(ArrayList<Comment> comments) {
+        Gson gson = new Gson();
+        return gson.toJson(comments);
+    }
+
+    public static ArrayList<Comment> commentsFromJson(String json) {
+        Gson gson = new Gson();
+        Type listType = new TypeToken<ArrayList<Comment>>() {}.getType();
+        return gson.fromJson(json, listType);
+    }
+
 }
