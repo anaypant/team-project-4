@@ -1,6 +1,7 @@
 package test;
 
 import org.junit.Test;
+import src.Comment;
 import src.Post;
 
 import java.util.ArrayList;
@@ -20,11 +21,11 @@ import static org.junit.Assert.assertTrue;
 
 public class PostTest {
     private Post post;
-    private ArrayList<String> comments;
+    private ArrayList<Comment> comments;
 
     // Formats post with username, caption, content, date, and comments with usernames
     public void setUp() {
-        comments = new ArrayList<>(Arrays.asList("user: comment", "user2: comment2"));
+        comments = new ArrayList<>();
         post = new Post("user", "caption", "null", "11-03-2024");
         post.setUpVotes(1);
         post.setDownVotes(1);
@@ -132,14 +133,5 @@ public class PostTest {
         assertEquals(post.getUpVotes(), parsedPost.getUpVotes());
         assertEquals(post.getDownVotes(), parsedPost.getDownVotes());
         assertEquals(post.getComments(), parsedPost.getComments());
-    }
-
-    // Formats comments on test post
-    @Test
-    public void testCommentsFormat() {
-        setUp();
-        post.getComments().add("user3: New comment!");
-        String lastComment = post.getComments().get(post.getComments().size() - 1);
-        assertEquals("user3: New comment!", lastComment);
     }
 }

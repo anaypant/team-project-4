@@ -19,19 +19,22 @@ public interface ServerInterface {
 
     // Accepted User Commands
     String[] COMMANDS = {
-        "help",
-        "Create user",
-        "Login user",
-        "Create post",
-        "Select post",
-        "Upvote",
-        "Downvote",
-        "Comment",
-        "exit",
-        "add friend",
-        "block",
-        "remove friend",
-        "remove user"
+            "help",
+            "Create user",
+            "Login user",
+            "Create post",
+            "Select post",
+            "Upvote",
+            "Downvote",
+            "Comment",
+            "Upvote comment",
+            "Downvote comment",
+            "exit",
+            "add friend",
+            "block",
+            "remove friend",
+            "remove user"
+
     };
 
 }

@@ -52,9 +52,9 @@ public interface PostInterface {
     void setDownVotes(int downVotes);
 
     // gets list of comments
-    ArrayList<String> getComments();
+    ArrayList<Comment> getComments();
 
     // sets list of comments
-    void setComments(ArrayList<String> comments);
+    void setComments(ArrayList<Comment> comments);
 
 }

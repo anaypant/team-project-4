@@ -13,7 +13,6 @@ import java.util.Objects;
  * Creates a Thread for each active user
  *
  * @author CS180 L2 Team 5
- *
  * @version 2.0
  **/
 
@@ -108,6 +107,13 @@ public class Server implements Runnable, ServerInterface {
                                         msg = "No post selected to comment on.";
                                     }
                                     break;
+                                case "upvote comment":
+                                    if (selectedPost != null) {
+                                        s = State.ADD_COMMENT;
+                                        msg = "Enter your comment: ";
+                                    } else {
+                                        msg = "No post selected to comment on.";
+                                    }
                                 case "add friend":
                                     if (activeUser == null) {
                                         msg = "Not logged in.";
@@ -287,11 +293,15 @@ public class Server implements Runnable, ServerInterface {
                             break;
 
                         case ADD_FRIEND: // adding a friend based on target post
-                            boolean res = UserDBDatabase.addFriend(activeUser, line);
-                            if (res) {
-                                msg = "Successfully added friend " + line;
-                            } else {
+                            if (line.equals(activeUser)) {
                                 msg = "Could not add friend " + line;
+                            } else {
+                                boolean res = UserDBDatabase.addFriend(activeUser, line);
+                                if (res) {
+                                    msg = "Successfully added friend " + line;
+                                } else {
+                                    msg = "Could not add friend " + line;
+                                }
                             }
                             s = State.IDLE;
                             break;
