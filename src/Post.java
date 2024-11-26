@@ -21,7 +21,7 @@ public class Post implements Serializable, PostInterface {
     private String dateCreated; // Date the post was created
     private int upVotes; // Number of up votes
     private int downVotes; // Number of down votes
-    private ArrayList<String> comments; // An Array List of Comments on the POst
+    private ArrayList<Comment> comments; // An Array List of Comments on the POst
     private boolean canComment;
 
     //Constructor for post that takes an id, creator, caption,
@@ -31,7 +31,7 @@ public class Post implements Serializable, PostInterface {
     //use this version when we parse
     public Post(String id, String creator, String caption, String url,
                 String dateCreated, int upVotes, int downVotes,
-                ArrayList<String> comments) {
+                ArrayList<Comment> comments) {
         this.id = id;
         this.creator = creator;
         this.caption = caption;
@@ -135,14 +135,14 @@ public class Post implements Serializable, PostInterface {
     }
 
     //
-    public ArrayList<String> getComments() {
+    public ArrayList<Comment> getComments() {
         return comments;
     }
 
     //takes an input of a comment in the form of an ArrayList
     // of Strings and sets the comments to the given
     //comments specified and returns nothing.
-    public void setComments(ArrayList<String> comments) {
+    public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
     }
 
@@ -167,7 +167,7 @@ public class Post implements Serializable, PostInterface {
                 this.caption + Constants.DELIMITER + this.url + Constants.DELIMITER +
                 this.dateCreated + Constants.DELIMITER + this.upVotes +
                 Constants.DELIMITER + this.downVotes + Constants.DELIMITER +
-                Utils.arrListToString(this.comments);
+                Utils.ComarrListToString(this.comments);
     }
 
     //just another toString() but in our own format and returns our speicial format
@@ -180,8 +180,8 @@ public class Post implements Serializable, PostInterface {
         msg += "Number of Up Votes: " + this.upVotes + "\n";
         msg += "Number of Down Votes: " + this.downVotes + "\n";
         msg += "Comments: \n";
-        for (String comment : this.comments) {
-            msg += comment + "\n";
+        for (Comment comment : this.comments) {
+            msg += comment.getCommentText() + String.valueOf(comment.getUpvotes()) + String.valueOf(comment.getDownvotes()) + "\n";
         }
         msg += "----------";
         return msg;
@@ -191,7 +191,7 @@ public class Post implements Serializable, PostInterface {
     //parses the post in the given format of the toString() and sets
     // each variable to its respective parts and
     // and returns the Post based off the variables
-    public static Post parseString(String s) {
+    /*public static Post parseString(String s) {
         String[] parsed = s.split(Constants.DELIMITER);
         String uid = parsed[0];
         String creator = parsed[1];
@@ -202,6 +202,6 @@ public class Post implements Serializable, PostInterface {
         int dv = Integer.parseInt(parsed[6]);
         ArrayList<String> c = Utils.arrayFromString(parsed[7]);
         return new Post(uid, creator, caption, url, date, uv, dv, c);
-    }
+    }*/
 
 }
