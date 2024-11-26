@@ -68,10 +68,14 @@ public class Comment {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Comment) {
-            Comment c = (Comment) obj;
+        if (obj instanceof Comment c) {
             return c.comment.equals(this.comment) && c.upvotes == this.upvotes && c.downvotes == this.downvotes;
         }
         return false;
+    }
+
+    public String display() {
+        return this.creator + ": " + this.comment + " --- Upvotes: " +
+                this.upvotes + " --- Downvotes: " + this.downvotes;
     }
 }

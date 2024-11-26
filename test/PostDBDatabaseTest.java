@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import src.Constants;
 import src.Post;
+import src.Comment;
 import src.PostDBDatabase;
-import src.UserDBDatabase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,177 +17,158 @@ import static org.junit.Assert.*;
 /**
  * Test file for PostDBDatabase
  *
- * @author CS180 L2 Team 5
  * @version 2.0
  */
-
 public class PostDBDatabaseTest {
     private static final String DB_PATH = Constants.POST_DB;
 
     @Before
-    // create table of posts and users
-    // if they already exist, deletes them and recreates
-    // creates two users, user1 and user2
     public void setUp() {
         try (Connection conn = DriverManager.getConnection(DB_PATH);
              Statement stmt = conn.createStatement()) {
 
-            // Drop and recreate the posts table
-            stmt.execute("DROP TABLE IF EXISTS posts");
-            stmt.execute("CREATE TABLE posts (" +
-                    "id TEXT PRIMARY KEY, " +
-                    "creator TEXT NOT NULL, " +
-                    "caption TEXT, " +
-                    "url TEXT, " +
-                    "datecreated TEXT, " +
-                    "upvotes INTEGER DEFAULT 0, " +
-                    "downvotes INTEGER DEFAULT 0, " +
-                    "comments TEXT)");
+            // Delete all rows from the posts table
+            stmt.execute("DELETE FROM posts");
 
-            // Drop and recreate the users table
-            stmt.execute("DROP TABLE IF EXISTS users");
-            stmt.execute("CREATE TABLE users (" +
-                    "username TEXT PRIMARY KEY, " +
-                    "password TEXT NOT NULL, " +
-                    "friends TEXT, " +
-                    "blocked TEXT)");
+            // Ensure the table schema exists
+            String createTableQuery = """
+                CREATE TABLE IF NOT EXISTS posts (
+                    id TEXT PRIMARY KEY,
+                    creator TEXT NOT NULL,
+                    caption TEXT,
+                    url TEXT,
+                    datecreated TEXT,
+                    upvotes INTEGER,
+                    downvotes INTEGER,
+                    comments TEXT,
+                    commentsEnabled TEXT
+                );
+            """;
+            stmt.execute(createTableQuery);
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to reset the database: " + e.getMessage(), e);
         }
-
-        // Create test users
-        UserDBDatabase.createUser("user1", "password1");
-        UserDBDatabase.createUser("user2", "password2");
     }
 
     @Test
-    // tests the creation of a post with a file path
-    public void testCreatePost() {
+    public void testCreatePostWithFields() {
         assertTrue("Post should be created successfully",
-                PostDBDatabase.createPost("user1", "This is a test post", "image.jpg"));
+                PostDBDatabase.createPost("TestUser", "Test Caption", "test.jpg"));
 
-        ArrayList<Post> posts = PostDBDatabase.getPostsByUsername("user1");
-        assertEquals("There should be one post for user1", 1, posts.size());
-        assertEquals("This is a test post", posts.get(0).getCaption());
+        Post retrievedPost = PostDBDatabase.selectPost("TestUser", 0, "TestUser");
+        assertNotNull("Post should be retrievable from the database", retrievedPost);
+        assertEquals("TestUser", retrievedPost.getCreator());
+        assertEquals("Test Caption", retrievedPost.getCaption());
+        assertEquals("test.jpg", retrievedPost.getUrl());
     }
 
     @Test
-    // creates one post each for user1 and user2
-    // checks if the indexing for posts work (ex: index 5 should not work for a user who only has one post)
-    public void testSelectPost() {
-        PostDBDatabase.createPost("user1", "First post", "image1.jpg");
-        PostDBDatabase.createPost("user1", "Second post", "image2.jpg");
+    public void testCreatePostWithoutImage() {
+        assertTrue("Post without an image should be created successfully",
+                PostDBDatabase.createPost("TestUser", "Test Caption"));
 
-        Post selectedPost = PostDBDatabase.selectPost("user1", 1);
-        assertNotNull("Post should be selected successfully", selectedPost);
-        assertEquals("Second post", selectedPost.getCaption());
-
-        Post invalidSelection = PostDBDatabase.selectPost("user1", 5);
-        assertNull("Invalid index selection should return null", invalidSelection);
+        Post retrievedPost = PostDBDatabase.selectPost("TestUser", 0, "TestUser");
+        assertNotNull("Post should be retrievable from the database", retrievedPost);
+        assertEquals("TestUser", retrievedPost.getCreator());
+        assertEquals("Test Caption", retrievedPost.getCaption());
+        assertNull("Post URL should be null", retrievedPost.getUrl());
     }
 
     @Test
-    // tests deletion of posts
-    // checks that the postId is attributed to the appropriate post and that the post is actually deleted
     public void testDeletePost() {
-        PostDBDatabase.createPost("user1", "This post will be deleted", "image.jpg");
+        Post post = new Post("TestUser", "Post to Delete", null, "11-25-2024");
+        PostDBDatabase.createPost(post);
 
-        ArrayList<Post> posts = PostDBDatabase.getPostsByUsername("user1");
-        String postId = posts.get(0).getId();
-        boolean deleted = PostDBDatabase.deletePost(postId);
+        assertTrue("Post should be deleted successfully", PostDBDatabase.deletePost(post.getId()));
 
-        assertTrue("Post should be deleted successfully", deleted);
-
-        posts = PostDBDatabase.getPostsByUsername("user1");
-        assertTrue("No posts should remain after deletion", posts.isEmpty());
+        Post retrievedPost = PostDBDatabase.selectPost("TestUser", 0, "TestUser");
+        assertNull("Deleted post should not exist in the database", retrievedPost);
     }
 
     @Test
-    // creates post from user1
-    // comments on post from user2
-    // checks that the comment is actually posted and that the content of the comment is intact
     public void testAddComment() {
-        PostDBDatabase.createPost("user1", "Post with comments", "image.jpg");
+        Post post = new Post("TestUser", "Post with Comments", null, "11-25-2024");
+        PostDBDatabase.createPost(post);
 
-        ArrayList<Post> posts = PostDBDatabase.getPostsByUsername("user1");
-        String postId = posts.get(0).getId();
+        assertTrue("Comment should be added successfully",
+                PostDBDatabase.addComment(post.getId(), "Commenter", "This is a comment"));
 
-        boolean commentAdded = PostDBDatabase.addComment(postId, "user2", "Nice post!");
-        assertTrue("Comment should be added successfully", commentAdded);
-
-        posts = PostDBDatabase.getPostsByUsername("user1");
-        assertEquals("There should be one comment on the post", 1, posts.get(0).getComments().size());
-        assertEquals("user2: Nice post!", posts.get(0).getComments().get(0));
+        ArrayList<Comment> comments = PostDBDatabase.getCommentsFromPost(post.getId());
+        assertNotNull("Comments should be retrievable", comments);
+        assertEquals(1, comments.size());
+        assertEquals("This is a comment", comments.get(0).getComment());
+        assertEquals("Commenter", comments.get(0).getCreator());
     }
 
     @Test
-    // creates a post by user1
-    // adds a comment
-    // deletes the comment by calling the appropriate database method
-    // checks that no comments are under the post
     public void testDeleteComment() {
-        PostDBDatabase.createPost("user1", "Post to delete comment", "image.jpg");
+        Post post = new Post("TestUser", "Post with Comments", null, "11-25-2024");
+        PostDBDatabase.createPost(post);
 
-        ArrayList<Post> posts = PostDBDatabase.getPostsByUsername("user1");
-        String postId = posts.get(0).getId();
+        PostDBDatabase.addComment(post.getId(), "Commenter", "This is a comment");
 
-        PostDBDatabase.addComment(postId, "user2", "Comment to delete");
-        boolean commentDeleted = PostDBDatabase.deleteComment(postId, "user2: Comment to delete");
+        assertTrue("Comment should be deleted successfully",
+                PostDBDatabase.deleteComment(post.getId(), "Commenter", "This is a comment"));
 
-        assertTrue("Comment should be deleted successfully", commentDeleted);
-
-        posts = PostDBDatabase.getPostsByUsername("user1");
-        assertTrue("No comments should remain after deletion", posts.get(0).getComments().isEmpty());
+        ArrayList<Comment> comments = PostDBDatabase.getCommentsFromPost(post.getId());
+        assertNotNull("Comments should be retrievable", comments);
+        assertEquals(0, comments.size());
     }
 
     @Test
-    // creates post from user1
-    // checks postId and calls appropriate database methods to upvote the post
-    // checks that the upvote count actually changed
     public void testUpvotePost() {
-        PostDBDatabase.createPost("user1", "Post to be upvoted", "image.jpg");
+        Post post = new Post("TestUser", "Upvote Test", null, "11-25-2024");
+        PostDBDatabase.createPost(post);
 
-        ArrayList<Post> posts = PostDBDatabase.getPostsByUsername("user1");
-        String postId = posts.get(0).getId();
+        assertTrue("Post should be upvoted successfully", PostDBDatabase.upvotePost(post.getId()));
 
-        boolean upvoted = PostDBDatabase.upvotePost(postId);
-        assertTrue("Post should be upvoted successfully", upvoted);
-
-        posts = PostDBDatabase.getPostsByUsername("user1");
-        assertEquals("Upvote count should be 1", 1, posts.get(0).getUpVotes());
+        Post retrievedPost = PostDBDatabase.selectPost("TestUser", 0, "TestUser");
+        assertEquals(1, retrievedPost.getUpVotes());
     }
 
     @Test
-    // creates post from user1
-    // checks postId and calls appropriate database methods to downvote the post
-    // checks that the downvote count actually changed
     public void testDownvotePost() {
-        PostDBDatabase.createPost("user1", "Post to be downvoted", "image.jpg");
+        Post post = new Post("TestUser", "Downvote Test", null, "11-25-2024");
+        PostDBDatabase.createPost(post);
 
-        ArrayList<Post> posts = PostDBDatabase.getPostsByUsername("user1");
-        String postId = posts.get(0).getId();
+        assertTrue("Post should be downvoted successfully", PostDBDatabase.downvotePost(post.getId()));
 
-        boolean downvoted = PostDBDatabase.downvotePost(postId);
-        assertTrue("Post should be downvoted successfully", downvoted);
-
-        posts = PostDBDatabase.getPostsByUsername("user1");
-        assertEquals("Downvote count should be 1", 1, posts.get(0).getDownVotes());
+        Post retrievedPost = PostDBDatabase.selectPost("TestUser", 0, "TestUser");
+        assertEquals(1, retrievedPost.getDownVotes());
     }
 
     @Test
-    // creates two posts from user1 and one from user2
-    // creates two ArrayLists, one for user1's posts and one for user2's
-    // checks that the ArrayLists are the appropriate size, that being the number of posts for each respective user
+    public void testEnableAndDisableComments() {
+        Post post = new Post("TestUser", "Toggle Comments", null, "11-25-2024");
+        PostDBDatabase.createPost(post);
+
+        assertTrue("Comments should be disabled successfully", PostDBDatabase.disableComments(post.getId()));
+        assertFalse("Comments should be disabled", PostDBDatabase.getCommentsEnabled(post.getId()));
+
+        assertTrue("Comments should be enabled successfully", PostDBDatabase.enableComments(post.getId()));
+        assertTrue("Comments should be enabled", PostDBDatabase.getCommentsEnabled(post.getId()));
+    }
+
+    @Test
     public void testGetPostsByUsername() {
-        PostDBDatabase.createPost("user1", "User1's first post", "image1.jpg");
-        PostDBDatabase.createPost("user1", "User1's second post", "image2.jpg");
-        PostDBDatabase.createPost("user2", "User2's post", "image3.jpg");
+        PostDBDatabase.createPost("TestUser", "First Post", null);
+        PostDBDatabase.createPost("TestUser", "Second Post", null);
 
-        ArrayList<Post> user1Posts = PostDBDatabase.getPostsByUsername("user1");
-        assertEquals("There should be two posts for user1", 2, user1Posts.size());
+        ArrayList<Post> posts = PostDBDatabase.getPostsByUsername("TestUser", "TestUer1");
+        assertNotNull("Posts should be retrievable", posts);
+        assertEquals(2, posts.size());
+    }
 
-        ArrayList<Post> user2Posts = PostDBDatabase.getPostsByUsername("user2");
-        assertEquals("There should be one post for user2", 1, user2Posts.size());
+    @Test
+    public void testDeletePostsByUsername() {
+        PostDBDatabase.createPost("TestUser", "First Post", null);
+        PostDBDatabase.createPost("TestUser", "Second Post", null);
+
+        assertTrue("Posts should be deleted successfully by username",
+                PostDBDatabase.deletePostsByUsername("TestUser"));
+
+        ArrayList<Post> posts = PostDBDatabase.getPostsByUsername("TestUser", "Test");
+        assertEquals("No posts should remain for the user", 0, posts.size());
     }
 }

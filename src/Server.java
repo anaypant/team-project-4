@@ -26,12 +26,22 @@ public class Server implements Runnable, ServerInterface {
     private String activeUser = null;
     private String selectedUsername = null; // Username for viewing posts
     private String createPostDesc = null;
+    private ArrayList<Comment> comments = null; // Stores the comments for upvoting, downvoting, etc.
+    private Comment selectedComment = null;
 
     // Creates a new server that connects to a client
     public Server(Socket socket) throws IOException {
         this.socket = socket;
         this.selectedPost = null;
         this.s = State.IDLE;
+    }
+
+    private void reset() {
+        this.selectedPost = null;
+        this.s = State.IDLE;
+        this.comments = null;
+        this.createPostDesc = null;
+        this.selectedComment = null;
     }
 
     // Run method, run in each serve
@@ -48,6 +58,7 @@ public class Server implements Runnable, ServerInterface {
             String loginUsername = null; // tracks the username after the password is entered
 
             while ((line = in.readLine()) != null) {
+                line = line.trim();
                 String msg = ""; // output message
 
                 // if the user wants help
@@ -91,6 +102,22 @@ public class Server implements Runnable, ServerInterface {
                                         msg = "No post selected to upvote.";
                                     }
                                     break;
+                                case "delete post":
+                                    if (selectedPost != null) {
+                                        if (selectedPost.getCreator().equals(activeUser)) {
+                                            boolean res = PostDBDatabase.deletePost(selectedPost.getId());
+                                            if (res) {
+                                                msg = "Successfully deleted post.";
+                                            } else {
+                                                msg = "Failed to delete post.";
+                                            }
+                                        } else {
+                                            msg = "Only the creator of the post can delete a post.";
+                                        }
+                                    } else {
+                                        msg = "No post selected to delete.";
+                                    }
+                                    break;
                                 case "downvote":
                                     if (selectedPost != null &&
                                             PostDBDatabase.downvotePost(selectedPost.getId())) {
@@ -101,19 +128,38 @@ public class Server implements Runnable, ServerInterface {
                                     break;
                                 case "comment":
                                     if (selectedPost != null) {
+                                        if (!selectedPost.isCommentsEnabled()) {
+                                            msg = "Selected post owner has disabled comments";
+                                            break;
+                                        }
                                         s = State.ADD_COMMENT;
                                         msg = "Enter your comment: ";
                                     } else {
                                         msg = "No post selected to comment on.";
                                     }
                                     break;
-                                case "upvote comment":
+                                case "select comment":
                                     if (selectedPost != null) {
-                                        s = State.ADD_COMMENT;
-                                        msg = "Enter your comment: ";
+                                        // display all comments from selected post
+                                        comments = PostDBDatabase.getCommentsFromPost(selectedPost.getId());
+                                        if (comments == null || comments.isEmpty()) {
+                                            msg = "No comments on this post";
+                                        } else {
+                                            s = State.SELECT_COMMENT;
+                                            int counter = 0;
+                                            for (Comment comment : comments) {
+                                                msg += counter + " ---> " + comment + "\n";
+                                                msg += "Upvotes: " + comment.getUpvotes() + "   Downvotes: " +
+                                                        comment.getDownvotes() + "\n";
+                                                counter++;
+                                            }
+                                            msg += "Enter the index of the selected comment: ";
+
+                                        }
                                     } else {
                                         msg = "No post selected to comment on.";
                                     }
+                                    break;
                                 case "add friend":
                                     if (activeUser == null) {
                                         msg = "Not logged in.";
@@ -150,6 +196,116 @@ public class Server implements Runnable, ServerInterface {
                                         }
                                     }
                                     break;
+                                case "enable comments":
+                                    if (selectedPost != null) {
+                                        String creator = PostDBDatabase.getCreatorOfPost(selectedPost.getId());
+                                        if (creator == null || !creator.equals(activeUser)) {
+                                            msg = "You are not authorized to enable comments on this post.";
+                                        } else {
+                                            boolean result = PostDBDatabase.enableComments(selectedPost.getId());
+                                            msg = (result) ? "Comments enabled for this post." : "Failed to enable` comments.";
+                                        }
+                                    } else {
+                                        msg = "No post selected.";
+                                    }
+                                    break;
+                                case "disable comments":
+                                    if (selectedPost != null) {
+                                        String creator = PostDBDatabase.getCreatorOfPost(selectedPost.getId());
+                                        if (creator == null || !creator.equals(activeUser)) {
+                                            msg = "You are not authorized to disable comments on this post.";
+                                        } else {
+                                            boolean result = PostDBDatabase.disableComments(selectedPost.getId());
+                                            msg = (result) ? "Comments disabled for this post." : "Failed to disable comments.";
+                                        }
+                                    } else {
+                                        msg = "No post selected.";
+                                    }
+                                    s = State.IDLE;
+                                    break;
+                                case "downvote comment":
+                                    if (selectedPost != null && comments != null) {
+                                        try {
+                                            Comment targetComment = comments.get(Integer.parseInt(line) - 1);
+                                            boolean result = PostDBDatabase.downvoteComment(selectedPost.getId(), targetComment);
+                                            msg = result ? "Comment downvoted successfully." : "Failed to downvote comment.";
+                                        } catch (Exception e) {
+                                            msg = "Error downvoting comment: " + e.getMessage();
+                                        }
+                                    } else {
+                                        msg = "No comment or post selected.";
+                                    }
+                                    s = State.IDLE;
+                                    break;
+                                case "upvote comment":
+                                    if (selectedPost != null && comments != null) {
+                                        try {
+                                            boolean result = PostDBDatabase.upvoteComment(selectedPost.getId(), selectedComment);
+                                            msg = result ? "Comment upvoted successfully." : "Failed to upvote comment.";
+                                        } catch (Exception e) {
+                                            msg = "Error upvoting comment: " + e.getMessage();
+                                        }
+                                    } else {
+                                        msg = "No comment or post selected.";
+                                    }
+                                    s = State.IDLE;
+                                    break;
+                                case "delete comment":
+                                    if (selectedPost != null && comments != null) {
+                                        try {
+                                            if (selectedComment.getCreator().equals(activeUser) || selectedPost.getCreator().equals(activeUser)) {
+                                                boolean result = PostDBDatabase.deleteComment(selectedPost.getId(),
+                                                        selectedComment.getCreator(), selectedComment.getComment());
+                                                if (result) {
+                                                    msg = "Comment deleted successfully.";
+                                                } else {
+                                                    msg = "Failed to delete comment.";
+                                                }
+                                            } else {
+                                                msg = "You are not authorized to delete comments on this post.";
+                                            }
+
+                                        } catch (Exception e) {
+                                            msg = "Error deleting comment: " + e.getMessage();
+                                        }
+                                    } else {
+                                        msg = "No comment or post selected.";
+                                    }
+                                    break;
+                                case "hide post":
+                                    if (selectedPost != null) {
+                                        if (selectedPost.getCreator().equals(activeUser)) {
+                                            boolean result = PostDBDatabase.hidePost(selectedPost.getId());
+                                            if (result) {
+                                                msg = "Successfully hid post";
+                                            } else {
+                                                msg = "Failed to hide post.";
+                                            }
+                                        } else {
+                                            msg = "You can only hide posts you created.";
+                                        }
+                                    } else {
+                                        msg = "No post selected.";
+                                    }
+                                    break;
+
+                                case "unhide post":
+                                    if (selectedPost != null) {
+                                        if (selectedPost.getCreator().equals(activeUser)) {
+                                            boolean result = PostDBDatabase.unhidePost(selectedPost.getId());
+                                            if (result) {
+                                                msg = "Successfully unhid post";
+                                            } else {
+                                                msg = "Failed to unhide post.";
+                                            }
+                                        } else {
+                                            msg = "You can only unhide posts you created.";
+                                        }
+                                    } else {
+                                        msg = "No post selected.";
+                                    }
+                                    break;
+
                                 default:
                                     msg = "Invalid command. Please try again.";
                                     break;
@@ -164,6 +320,12 @@ public class Server implements Runnable, ServerInterface {
                             } else {
                                 // Expecting password
                                 String password = line;
+                                if (password.isEmpty() || password.length() < 5) {
+                                    msg = "Password is too short.";
+                                    tempUsername = null;
+                                    s = State.IDLE;
+                                    break;
+                                }
                                 if (UserDBDatabase.createUser(tempUsername, password)) {
                                     msg = "User created successfully.";
                                 } else {
@@ -188,13 +350,14 @@ public class Server implements Runnable, ServerInterface {
                                     this.activeUser = u.getUsername();
                                     msg = "Login successful.";
 
+                                    reset();
 
                                     // If login is successful, show feed of all friends
                                     // Get all Friends and get posts by friends
                                     ArrayList<Post> feed = new ArrayList<>();
                                     for (String friend : u.getFriendsList()) {
                                         ArrayList<Post> posts =
-                                                PostDBDatabase.getPostsByUsername(friend);
+                                                PostDBDatabase.getPostsByUsername(friend, activeUser);
                                         feed.addAll(posts);
                                     }
                                     feed = Utils.sortPostsByDateDesc(feed);
@@ -246,13 +409,14 @@ public class Server implements Runnable, ServerInterface {
                                 msg = line + " is not your friend. You can only view posts from friends.";
                                 s = State.IDLE;
                             } else {
-                                List<Post> userPosts = PostDBDatabase.getPostsByUsername(selectedUsername);
+                                List<Post> userPosts = PostDBDatabase.getPostsByUsername(selectedUsername, activeUser);
                                 if (userPosts.isEmpty()) {
                                     msg = "No posts found for user: " + selectedUsername;
                                     s = State.IDLE;
                                 } else {
                                     msg = "Select a post by entering the number:\n";
                                     for (int i = 0; i < userPosts.size(); i++) {
+
                                         msg += "----  OPTION " + (i + 1) + ". ----\n" +
                                                 userPosts.get(i).display() + "\n";
                                     }
@@ -270,7 +434,7 @@ public class Server implements Runnable, ServerInterface {
                                     msg = "Invalid input. Please enter a valid number.";
                                     break;
                                 }
-                                selectedPost = PostDBDatabase.selectPost(selectedUsername, choice);
+                                selectedPost = PostDBDatabase.selectPost(selectedUsername, choice, activeUser);
                                 if (selectedPost != null) {
                                     msg = "Post selected. You can now like, dislike, or comment.";
                                 } else {
@@ -325,6 +489,26 @@ public class Server implements Runnable, ServerInterface {
                             s = State.IDLE;
                             break;
 
+                        case SELECT_COMMENT:
+                            if (comments != null && !comments.isEmpty()) {
+                                try {
+                                    int commentIndex = Integer.parseInt(line); // Select the comment
+                                    if (commentIndex >= 0 && commentIndex < comments.size()) {
+                                        selectedComment = comments.get(commentIndex);
+                                        msg = "Selected comment: " + selectedComment +
+                                                "\nCommands: upvote comment, downvote comment.";
+                                        s = State.IDLE; // Transition to comment interaction state
+                                    } else {
+                                        msg = "Invalid comment index. Please try again.";
+                                    }
+                                } catch (NumberFormatException e) {
+                                    msg = "Invalid input. Please enter a number.";
+                                }
+                            } else {
+                                msg = "No comments available for selection.";
+                                s = State.IDLE;
+                            }
+                            break;
 
                         default:
                             msg = "Unrecognized state.";
