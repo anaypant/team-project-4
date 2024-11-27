@@ -299,7 +299,7 @@ public class PostDBDatabase implements PostDBInterface {
     // recreates Post that was deleted
     public static synchronized boolean upvotePost(String postId) {
         Post p = getAndDeletePost(postId);
-        System.out.println(p);
+        System.out.println(p.getComments());
         if (p == null) {
             return false;
         }
