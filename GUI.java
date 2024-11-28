@@ -5,11 +5,11 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * A GUI client for the social media application without using additional threads.
- * Allows users to interact with the server using a graphical interface.
+ * A GUI client for the social media application with a login screen.
+ * Displays only server messages to the user without adding any hardcoded messages.
+ * After successful login, it shows the main application with additional commands and the feed.
  *
- * @author
- * @version 1.0
+ * @version 1.4
  */
 public class GUI extends JFrame {
     private static final String SERVER_HOST_NAME = "localhost";
@@ -19,13 +19,23 @@ public class GUI extends JFrame {
     private BufferedReader in;
     private PrintWriter out;
 
+    // Main panels
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
+
+    // Login panel components
+    private JPanel loginPanel;
+    private JButton createUserButton;
+    private JButton loginUserButton;
+    private JTextArea loginDisplayArea; // Display server messages on login screen
+
+    // Main application panel components
+    private JPanel appPanel;
     private JTextArea displayArea;
     private JTextField inputField;
     private JButton sendButton;
 
     // Command buttons
-    private JButton createUserButton;
-    private JButton loginUserButton;
     private JButton createPostButton;
     private JButton selectPostButton;
     private JButton upvoteButton;
@@ -42,6 +52,9 @@ public class GUI extends JFrame {
     // Timer for polling server responses
     private Timer responseTimer;
 
+    private String activeUser; // To keep track of the logged-in user
+    private String currentCard = "Login"; // Track the currently displayed card
+
     public GUI() {
         // Initialize the GUI components
         setTitle("Social Media App");
@@ -52,14 +65,72 @@ public class GUI extends JFrame {
     }
 
     private void initComponents() {
-        // Set up the main layout
-        setLayout(new BorderLayout());
+        // Use CardLayout to switch between login screen and main application
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        // Initialize login panel
+        initLoginPanel();
+
+        // Initialize main application panel
+        initAppPanel();
+
+        // Add panels to main panel
+        mainPanel.add(loginPanel, "Login");
+        mainPanel.add(appPanel, "App");
+
+        // Show login panel initially
+        cardLayout.show(mainPanel, "Login");
+        currentCard = "Login"; // Set the current card
+
+        // Add main panel to frame
+        add(mainPanel);
+    }
+
+    private void initLoginPanel() {
+        loginPanel = new JPanel(new BorderLayout());
+
+        // Panel for buttons
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        // Create User button
+        createUserButton = new JButton("Create User");
+        createUserButton.setPreferredSize(new Dimension(150, 30));
+        createUserButton.addActionListener(e -> createUser());
+
+        // Login User button
+        loginUserButton = new JButton("Login User");
+        loginUserButton.setPreferredSize(new Dimension(150, 30));
+        loginUserButton.addActionListener(e -> loginUser());
+
+        // Add buttons to the button panel
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        buttonPanel.add(createUserButton, gbc);
+
+        gbc.gridy = 1;
+        buttonPanel.add(loginUserButton, gbc);
+
+        // Add button panel to the top of login panel
+        loginPanel.add(buttonPanel, BorderLayout.NORTH);
+
+        // Login display area to show server messages
+        loginDisplayArea = new JTextArea();
+        loginDisplayArea.setEditable(false);
+        JScrollPane loginScrollPane = new JScrollPane(loginDisplayArea);
+        loginPanel.add(loginScrollPane, BorderLayout.CENTER);
+    }
+
+    private void initAppPanel() {
+        appPanel = new JPanel(new BorderLayout());
 
         // Display area for server responses
         displayArea = new JTextArea();
         displayArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(displayArea);
-        add(scrollPane, BorderLayout.CENTER);
+        appPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Panel for input field and send button
         JPanel inputPanel = new JPanel(new BorderLayout());
@@ -71,14 +142,12 @@ public class GUI extends JFrame {
         // Add action listener for the send button
         sendButton.addActionListener(e -> sendMessage());
 
-        // Add input panel to the frame
-        add(inputPanel, BorderLayout.SOUTH);
+        // Add input panel to the app panel
+        appPanel.add(inputPanel, BorderLayout.SOUTH);
 
         // Panel for command buttons
-        JPanel buttonPanel = new JPanel(new GridLayout(2, 4, 5, 5));
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 3, 5, 5));
 
-        createUserButton = new JButton("Create User");
-        loginUserButton = new JButton("Login User");
         createPostButton = new JButton("Create Post");
         selectPostButton = new JButton("Select Post");
         upvoteButton = new JButton("Upvote");
@@ -87,8 +156,6 @@ public class GUI extends JFrame {
         logoutButton = new JButton("Logout");
 
         // Add action listeners for command buttons
-        createUserButton.addActionListener(e -> createUser());
-        loginUserButton.addActionListener(e -> loginUser());
         createPostButton.addActionListener(e -> createPost());
         selectPostButton.addActionListener(e -> selectPost());
         upvoteButton.addActionListener(e -> sendCommand("upvote"));
@@ -97,8 +164,6 @@ public class GUI extends JFrame {
         logoutButton.addActionListener(e -> logout());
 
         // Add buttons to the panel
-        buttonPanel.add(createUserButton);
-        buttonPanel.add(loginUserButton);
         buttonPanel.add(createPostButton);
         buttonPanel.add(selectPostButton);
         buttonPanel.add(upvoteButton);
@@ -106,8 +171,8 @@ public class GUI extends JFrame {
         buttonPanel.add(commentButton);
         buttonPanel.add(logoutButton);
 
-        // Add button panel to the frame
-        add(buttonPanel, BorderLayout.NORTH);
+        // Add button panel to the app panel
+        appPanel.add(buttonPanel, BorderLayout.NORTH);
     }
 
     private void connectToServer() {
@@ -121,10 +186,12 @@ public class GUI extends JFrame {
             responseTimer = new Timer(100, e -> pollServer());
             responseTimer.start();
 
-            displayArea.append("Connected to server on port " + PORT_NUMBER + "\n");
+            // Since we're in the login screen, append message to loginDisplayArea
+            // Remove hardcoded message, rely on server to send any messages if needed
         } catch (IOException e) {
             e.printStackTrace();
-            displayArea.append("Failed to connect to server.\n");
+            JOptionPane.showMessageDialog(this, "Failed to connect to server.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -137,14 +204,38 @@ public class GUI extends JFrame {
                 while ((line = in.readLine()) != null && !line.equals("EOM")) {
                     response.append(line).append("\n");
                 }
-                displayArea.append(response.toString());
-                // Auto-scroll to the bottom
-                displayArea.setCaretPosition(displayArea.getDocument().getLength());
+                processServerResponse(response.toString());
             }
         } catch (IOException e) {
             e.printStackTrace();
-            displayArea.append("Connection to server lost.\n");
+            JOptionPane.showMessageDialog(this, "Connection to server lost.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
             responseTimer.stop();
+        }
+    }
+
+    private void processServerResponse(String response) {
+        // Check if we're on the login screen or the app screen
+        if (currentCard.equals("Login")) {
+            // We're on the login screen
+            if (response.contains("Login successful.")) {
+                // Show the app panel
+                cardLayout.show(mainPanel, "App");
+                currentCard = "App"; // Update current card
+
+                // Display the server's response in the main display area
+                displayArea.append(response);
+                displayArea.setCaretPosition(displayArea.getDocument().getLength());
+            } else {
+                // Display server messages on the login screen
+                loginDisplayArea.append(response);
+                loginDisplayArea.setCaretPosition(loginDisplayArea.getDocument().getLength());
+            }
+        } else {
+            // We're on the app screen
+            // Append server responses to the display area
+            displayArea.append(response);
+            displayArea.setCaretPosition(displayArea.getDocument().getLength());
         }
     }
 
@@ -164,8 +255,15 @@ public class GUI extends JFrame {
         sendCommand("exit");
         try {
             socket.close();
-            displayArea.append("Disconnected from server.\n");
             responseTimer.stop();
+            // Remove hardcoded message, rely on server to send any messages if needed
+            // Reset the GUI to the login screen
+            cardLayout.show(mainPanel, "Login");
+            currentCard = "Login"; // Update current card
+            displayArea.setText("");
+            loginDisplayArea.setText("");
+            activeUser = null;
+            connectToServer(); // Reconnect to the server for a new session
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -210,6 +308,7 @@ public class GUI extends JFrame {
             out.println("login user");
             out.println(usernameField.getText());
             out.println(passwordField.getText());
+            activeUser = usernameField.getText(); // Store the active user
         }
     }
 
