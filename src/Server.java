@@ -3,9 +3,7 @@ package src;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A class that establishes a network connection.
@@ -366,9 +364,19 @@ public class Server implements Runnable, ServerInterface {
                                         msg += "\n No posts to show on feed.";
                                     } else {
                                         msg += "\n Feed: ";
+                                        // When sending posts to the client
                                         for (int i = 0; i < feed.size(); i++) {
-                                            msg += feed.get(i).display();
+                                            Post post = feed.get(i);
+                                            msg += post.display();
+
+                                            // Include the image URL if the post has an image
+                                            if (post.getUrl() != null && !post.getUrl().isEmpty()) {
+                                                // Construct the full image URL accessible by the client
+                                                String imageUrl = "http://your_server_ip_or_domain/images/" + new File(post.getUrl()).getName();
+                                                msg += "\nIMAGE_URL:" + imageUrl + "\n";
+                                            }
                                         }
+
                                     }
 
 
@@ -388,18 +396,35 @@ public class Server implements Runnable, ServerInterface {
                             s = State.CREATE_POST;
                             break;
 
-                        case CREATE_POST: // creating a new post, asking for content
+                        case CREATE_POST: // creating a new post, expecting image data or NO_IMAGE flag
                             if (activeUser != null) {
-                                if (line.equals("")) {
-                                    line = "null";
+                                String imageFlag = line;
+                                if (imageFlag.equals("IMAGE_ATTACHED")) {
+                                    // Expect the Base64-encoded image data
+                                    String encodedImage = in.readLine();
+                                    // Decode the image data
+                                    byte[] imageBytes = Base64.getDecoder().decode(encodedImage);
+
+                                    // Save the image to the server's file system
+                                    String imageFileName = saveImageToServer(imageBytes);
+
+                                    // Create the post with the image file name as the URL/path
+                                    PostDBDatabase.createPost(activeUser, createPostDesc, imageFileName);
+                                } else if (imageFlag.equals("NO_IMAGE")) {
+                                    // Create the post without an image
+                                    PostDBDatabase.createPost(activeUser, createPostDesc, null);
+                                } else {
+                                    msg = "Invalid image flag.";
+                                    s = State.IDLE;
+                                    break;
                                 }
-                                PostDBDatabase.createPost(activeUser, createPostDesc, line);
                                 msg = "Post created. Returning to IDLE.";
                             } else {
                                 msg = "Please log in to create a post.";
                             }
                             s = State.IDLE;
                             break;
+
 
                         case SELECT_POST_USERNAME:
                             // The user inputs the username to view posts from
@@ -532,8 +557,34 @@ public class Server implements Runnable, ServerInterface {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
     }
+    private String saveImageToServer(byte[] imageBytes) {
+        // Generate a unique file name for the image
+        String imageFileName = "image_" + UUID.randomUUID().toString() + ".png"; // or appropriate extension
+
+        // Define the directory where images will be saved
+        String imageDirectory = "images/";
+
+        // Ensure the directory exists
+        File dir = new File(imageDirectory);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        // Save the image to the file system
+        try (FileOutputStream fos = new FileOutputStream(imageDirectory + imageFileName)) {
+            fos.write(imageBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        // Return the path or URL to the saved image
+        return imageDirectory + imageFileName;
+    }
+
 
     public static void main(String[] args) {
         try (ServerSocket mainSocket = new ServerSocket(Constants.PORT_NUMBER)) {

@@ -18,6 +18,7 @@ import java.sql.Statement;
 
 import static org.junit.Assert.*;
 
+
 /**
  * Test file for Server class setup and basic functionality.
  *

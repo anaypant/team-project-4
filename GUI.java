@@ -3,13 +3,21 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
+import java.net.URL;
+import java.nio.file.Files;
+import java.util.Base64;
+import java.awt.datatransfer.DataFlavor;
+import javax.swing.TransferHandler;
+import java.util.List;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.BadLocationException;
 
 /**
  * A GUI client for the social media application with a login screen.
  * Displays only server messages to the user without adding any hardcoded messages.
  * After successful login, it shows the main application with additional commands and the feed.
  *
- * @version 1.4
+ * @version 1.5
  */
 public class GUI extends JFrame {
     private static final String SERVER_HOST_NAME = "localhost";
@@ -27,11 +35,11 @@ public class GUI extends JFrame {
     private JPanel loginPanel;
     private JButton createUserButton;
     private JButton loginUserButton;
-    private JTextArea loginDisplayArea; // Display server messages on login screen
+    private JTextPane loginDisplayArea; // Changed to JTextPane
 
     // Main application panel components
     private JPanel appPanel;
-    private JTextArea displayArea;
+    private JTextPane displayArea; // Changed to JTextPane
     private JTextField inputField;
     private JButton sendButton;
 
@@ -46,8 +54,6 @@ public class GUI extends JFrame {
     // Dialog fields
     private JTextField usernameField;
     private JTextField passwordField;
-    private JTextField postContentField;
-    private JTextField postUrlField;
 
     // Timer for polling server responses
     private Timer responseTimer;
@@ -117,7 +123,7 @@ public class GUI extends JFrame {
         loginPanel.add(buttonPanel, BorderLayout.NORTH);
 
         // Login display area to show server messages
-        loginDisplayArea = new JTextArea();
+        loginDisplayArea = new JTextPane(); // Changed to JTextPane
         loginDisplayArea.setEditable(false);
         JScrollPane loginScrollPane = new JScrollPane(loginDisplayArea);
         loginPanel.add(loginScrollPane, BorderLayout.CENTER);
@@ -127,7 +133,7 @@ public class GUI extends JFrame {
         appPanel = new JPanel(new BorderLayout());
 
         // Display area for server responses
-        displayArea = new JTextArea();
+        displayArea = new JTextPane(); // Changed to JTextPane
         displayArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(displayArea);
         appPanel.add(scrollPane, BorderLayout.CENTER);
@@ -186,8 +192,7 @@ public class GUI extends JFrame {
             responseTimer = new Timer(100, e -> pollServer());
             responseTimer.start();
 
-            // Since we're in the login screen, append message to loginDisplayArea
-            // Remove hardcoded message, rely on server to send any messages if needed
+            // Since we're in the login screen, rely on server to send any messages if needed
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Failed to connect to server.", "Error",
@@ -217,25 +222,74 @@ public class GUI extends JFrame {
     private void processServerResponse(String response) {
         // Check if we're on the login screen or the app screen
         if (currentCard.equals("Login")) {
-            // We're on the login screen
-            if (response.contains("Login successful.")) {
-                // Show the app panel
-                cardLayout.show(mainPanel, "App");
-                currentCard = "App"; // Update current card
+            try {
+                if (response.contains("Login successful.")) {
+                    // Switch to the main application screen
+                    cardLayout.show(mainPanel, "App");
+                    currentCard = "App"; // Update current card
 
-                // Display the server's response in the main display area
-                displayArea.append(response);
-                displayArea.setCaretPosition(displayArea.getDocument().getLength());
-            } else {
-                // Display server messages on the login screen
-                loginDisplayArea.append(response);
-                loginDisplayArea.setCaretPosition(loginDisplayArea.getDocument().getLength());
+                    // Clear the login display area (optional)
+                    loginDisplayArea.setText("");
+
+                    // Display the server's response in the main display area
+                    StyledDocument doc = displayArea.getStyledDocument();
+                    doc.insertString(doc.getLength(), response, null);
+                    displayArea.setCaretPosition(doc.getLength());
+                } else {
+                    // Display server messages on the login screen
+                    StyledDocument doc = loginDisplayArea.getStyledDocument();
+                    doc.insertString(doc.getLength(), response, null);
+                    loginDisplayArea.setCaretPosition(doc.getLength());
+                }
+            } catch (BadLocationException e) {
+                e.printStackTrace();
             }
         } else {
             // We're on the app screen
-            // Append server responses to the display area
-            displayArea.append(response);
-            displayArea.setCaretPosition(displayArea.getDocument().getLength());
+            StyledDocument doc = displayArea.getStyledDocument();
+
+            try {
+                // Split the response into lines to handle multiple messages
+                String[] lines = response.split("\n");
+                for (String line : lines) {
+                    if (line.startsWith("IMAGE_URL:")) {
+                        String imageUrl = line.substring("IMAGE_URL:".length()).trim();
+
+                        // Load image from URL
+                        URL url = new URL(imageUrl);
+                        ImageIcon imageIcon = new ImageIcon(url);
+
+                        // Optionally, scale the image to fit the display area
+                        Image image = imageIcon.getImage();
+                        Image scaledImage = image.getScaledInstance(300, -1, Image.SCALE_SMOOTH);
+                        imageIcon = new ImageIcon(scaledImage);
+
+                        JLabel imageLabel = new JLabel(imageIcon);
+
+                        // Insert a newline before the image
+                        doc.insertString(doc.getLength(), "\n", null);
+
+                        // Insert the image component
+                        displayArea.setCaretPosition(doc.getLength());
+                        displayArea.insertComponent(imageLabel);
+
+                        // Insert a newline after the image
+                        doc.insertString(doc.getLength(), "\n", null);
+                    } else {
+                        // Append the text response
+                        doc.insertString(doc.getLength(), line + "\n", null);
+                    }
+                }
+                displayArea.setCaretPosition(doc.getLength());
+            } catch (Exception e) {
+                e.printStackTrace();
+                try {
+                    doc.insertString(doc.getLength(), "Failed to load image from URL.\n", null);
+                    displayArea.setCaretPosition(doc.getLength());
+                } catch (BadLocationException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
     }
 
@@ -256,7 +310,6 @@ public class GUI extends JFrame {
         try {
             socket.close();
             responseTimer.stop();
-            // Remove hardcoded message, rely on server to send any messages if needed
             // Reset the GUI to the login screen
             cardLayout.show(mainPanel, "Login");
             currentCard = "Login"; // Update current card
@@ -313,14 +366,60 @@ public class GUI extends JFrame {
     }
 
     private void createPost() {
-        // Dialog to input post content and URL
-        JPanel panel = new JPanel(new GridLayout(2, 2));
-        panel.add(new JLabel("Post Content:"));
-        postContentField = new JTextField();
-        panel.add(postContentField);
-        panel.add(new JLabel("Image URL (optional):"));
-        postUrlField = new JTextField();
-        panel.add(postUrlField);
+        // Dialog to input post content and accept image drop
+        JPanel panel = new JPanel(new BorderLayout());
+
+        // Text area for post content
+        JTextArea postContentArea = new JTextArea(5, 20);
+        JScrollPane contentScrollPane = new JScrollPane(postContentArea);
+        panel.add(new JLabel("Post Content:"), BorderLayout.NORTH);
+        panel.add(contentScrollPane, BorderLayout.CENTER);
+
+        // Panel for image drop
+        JPanel imageDropPanel = new JPanel();
+        imageDropPanel.setBorder(BorderFactory.createTitledBorder("Drag and drop an image here"));
+        imageDropPanel.setPreferredSize(new Dimension(200, 200));
+        panel.add(imageDropPanel, BorderLayout.SOUTH);
+
+        // Variable to hold the image file
+        final File[] imageFile = new File[1];
+
+        // Enable drag and drop on the image panel
+        imageDropPanel.setTransferHandler(new TransferHandler() {
+            @Override
+            public boolean canImport(TransferSupport support) {
+                return support.isDataFlavorSupported(DataFlavor.javaFileListFlavor);
+            }
+
+            @Override
+            public boolean importData(TransferSupport support) {
+                try {
+                    List<File> files = (List<File>) support.getTransferable()
+                            .getTransferData(DataFlavor.javaFileListFlavor);
+                    if (files.size() > 0) {
+                        File file = files.get(0);
+                        // Check if the file is an image
+                        if (isImageFile(file)) {
+                            imageFile[0] = file;
+                            // Display the image in the panel (optional)
+                            ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+                            JLabel imageLabel = new JLabel(icon);
+                            imageDropPanel.removeAll();
+                            imageDropPanel.add(imageLabel);
+                            imageDropPanel.revalidate();
+                            imageDropPanel.repaint();
+                            return true;
+                        } else {
+                            JOptionPane.showMessageDialog(panel, "Please drop an image file.");
+                            return false;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
 
         int result = JOptionPane.showConfirmDialog(this, panel, "Create Post",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -328,9 +427,46 @@ public class GUI extends JFrame {
         if (result == JOptionPane.OK_OPTION) {
             // Send create post commands to server
             out.println("create post");
-            out.println(postContentField.getText());
-            out.println(postUrlField.getText());
+
+            // Send post content
+            out.println(postContentArea.getText());
+
+            // Send image data
+            if (imageFile[0] != null) {
+                try {
+                    // Read the image file into a byte array
+                    byte[] imageBytes = Files.readAllBytes(imageFile[0].toPath());
+
+                    // Encode the image bytes as a Base64 string
+                    String encodedImage = Base64.getEncoder().encodeToString(imageBytes);
+
+                    // Send a flag indicating that an image is included
+                    out.println("IMAGE_ATTACHED");
+
+                    // Send the encoded image
+                    out.println(encodedImage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Failed to read the image file.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                // Indicate that no image is attached
+                out.println("NO_IMAGE");
+            }
         }
+    }
+
+    // Helper method to check if the file is an image
+    private boolean isImageFile(File file) {
+        String[] imageExtensions = { "png", "jpg", "jpeg", "gif", "bmp" };
+        String fileName = file.getName().toLowerCase();
+        for (String ext : imageExtensions) {
+            if (fileName.endsWith(ext)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void selectPost() {
