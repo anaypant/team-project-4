@@ -184,7 +184,7 @@ public class Post implements Serializable, PostInterface {
         String msg = "\n --- Post ID: " + this.id + " ---\n";
         msg += "Created by: " + this.creator + "\n";
         msg += "Description: " + this.caption + "\n";
-        msg += "URL to image: " + this.url + "\n";
+        msg += "IMAGE_URL: " + this.url + "\n";
         msg += "Date Created: " + this.dateCreated + "\n";
         msg += "Number of Up Votes: " + this.upVotes + "\n";
         msg += "Number of Down Votes: " + this.downVotes + "\n";

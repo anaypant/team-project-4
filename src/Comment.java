@@ -1,5 +1,13 @@
 package src;
 
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+import java.awt.*;
+import java.io.File;
+import java.nio.file.Files;
+import java.util.Base64;
+
 public class Comment {
     private int upvotes;
     private int downvotes;
@@ -78,4 +86,6 @@ public class Comment {
         return this.creator + ": " + this.comment + " --- Upvotes: " +
                 this.upvotes + " --- Downvotes: " + this.downvotes;
     }
+
+
 }

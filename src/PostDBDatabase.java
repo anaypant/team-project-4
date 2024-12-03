@@ -293,6 +293,7 @@ public class PostDBDatabase implements PostDBInterface {
     }
 
 
+
     // Allows user to upvote a post
     // gets Post object by calling getAndDeletePost
     // increments the number of upvotes by calling the respective methods

@@ -57,7 +57,9 @@ public class Server implements Runnable, ServerInterface {
 
             while ((line = in.readLine()) != null) {
                 line = line.trim();
+                System.out.println(line);
                 String msg = ""; // output message
+                System.out.println("You: " + line);
 
                 // if the user wants help
                 if (line.equals("help") && s == State.IDLE) {
@@ -95,7 +97,6 @@ public class Server implements Runnable, ServerInterface {
                                     if (selectedPost != null &&
                                             PostDBDatabase.upvotePost(selectedPost.getId())) {
                                         msg = "Post upvoted!";
-                                        selectedPost = null;
                                     } else {
                                         msg = "No post selected to upvote.";
                                     }
@@ -224,8 +225,7 @@ public class Server implements Runnable, ServerInterface {
                                 case "downvote comment":
                                     if (selectedPost != null && comments != null) {
                                         try {
-                                            Comment targetComment = comments.get(Integer.parseInt(line) - 1);
-                                            boolean result = PostDBDatabase.downvoteComment(selectedPost.getId(), targetComment);
+                                            boolean result = PostDBDatabase.downvoteComment(selectedPost.getId(), selectedComment);
                                             msg = result ? "Comment downvoted successfully." : "Failed to downvote comment.";
                                         } catch (Exception e) {
                                             msg = "Error downvoting comment: " + e.getMessage();
@@ -304,6 +304,15 @@ public class Server implements Runnable, ServerInterface {
                                     }
                                     break;
 
+                                case "display post":
+                                    if (selectedPost != null) {
+                                        msg = selectedPost.display();
+                                    }
+                                    else {
+                                        msg = "No post selected.";
+                                    }
+                                    break;
+
                                 default:
                                     msg = "Invalid command. Please try again.";
                                     break;
@@ -370,11 +379,11 @@ public class Server implements Runnable, ServerInterface {
                                             msg += post.display();
 
                                             // Include the image URL if the post has an image
-                                            if (post.getUrl() != null && !post.getUrl().isEmpty()) {
-                                                // Construct the full image URL accessible by the client
-                                                String imageUrl = "http://your_server_ip_or_domain/images/" + new File(post.getUrl()).getName();
-                                                msg += "\nIMAGE_URL:" + imageUrl + "\n";
-                                            }
+//                                            if (post.getUrl() != null && !post.getUrl().isEmpty()) {
+//                                                // Construct the full image URL accessible by the client
+//                                                String imageUrl = "http://your_server_ip_or_domain/images/" + new File(post.getUrl()).getName();
+//                                                msg += "\nIMAGE_URL:" + imageUrl + "\n";
+//                                            }
                                         }
 
                                     }
@@ -461,7 +470,7 @@ public class Server implements Runnable, ServerInterface {
                                 }
                                 selectedPost = PostDBDatabase.selectPost(selectedUsername, choice, activeUser);
                                 if (selectedPost != null) {
-                                    msg = "Post selected. You can now like, dislike, or comment.";
+                                    msg = "Post selected. " + selectedPost.getId();
                                 } else {
                                     msg = "Invalid selection.";
                                 }
@@ -520,8 +529,7 @@ public class Server implements Runnable, ServerInterface {
                                     int commentIndex = Integer.parseInt(line); // Select the comment
                                     if (commentIndex >= 0 && commentIndex < comments.size()) {
                                         selectedComment = comments.get(commentIndex);
-                                        msg = "Selected comment: " + selectedComment +
-                                                "\nCommands: upvote comment, downvote comment.";
+                                        msg = "Selected comment: " + selectedComment;
                                         s = State.IDLE; // Transition to comment interaction state
                                     } else {
                                         msg = "Invalid comment index. Please try again.";
@@ -541,9 +549,11 @@ public class Server implements Runnable, ServerInterface {
                             break;
                     }
                 }
-                if (s.equals(State.IDLE)) { // print out main menu message if idle
-                    msg += "\n" + Constants.MAIN_MENU_MSG;
-                }
+//                if (s.equals(State.IDLE)) { // print out main menu message if idle
+//                    msg += "\n" + Constants.MAIN_MENU_MSG;
+//                }
+                msg = line + "\n" + msg;
+                System.out.println("Us:\n" + msg);
                 out.println(msg); // Send response to client
                 out.println("EOM"); // Send an "END OF MESSAGE" indicator to
                 // indicate end of response

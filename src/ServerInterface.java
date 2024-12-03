@@ -20,7 +20,6 @@ public interface ServerInterface {
 
     // Accepted User Commands
     String[] COMMANDS = {
-            "help",
             "Create user",
             "Login user",
             "Create post",
