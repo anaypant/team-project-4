@@ -4,7 +4,15 @@ import javax.swing.*;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 
-public class PostPage extends JFrame {
+/**
+ *  Class to describe the Post Page of the GUI
+ *  Handles upvoting, downvoting, commenting, selecting comments, using JButton objects
+ *  Can View Posts from Feed
+ *
+ *
+ * */
+
+public class PostPage extends JFrame implements PostPageInterface{
     private JPanel appPanel;
     private JTextPane displayArea; // Changed to JTextPane
     private JTextField inputField;
@@ -35,7 +43,7 @@ public class PostPage extends JFrame {
         init();
     }
 
-    private void init() {
+    public void init() {
         appPanel = new JPanel(new BorderLayout());
 
         // Display area for server responses
@@ -127,15 +135,15 @@ public class PostPage extends JFrame {
         this.setSize(1200, 900);
     }
 
-    private void upVote() {
+    public void upVote() {
         sm.handleUpvote();
     }
 
-    private void downVote() {
+    public void downVote() {
         sm.handleDownvote();
     }
 
-    private void comment() {
+    public void comment() {
         JPanel panel = new JPanel(new GridLayout(1, 1));
         panel.add(new JLabel("Enter Comment: "));
         JTextField field = new JTextField();
@@ -151,44 +159,44 @@ public class PostPage extends JFrame {
 
     }
 
-    private void selectComment() {
+    public void selectComment() {
         sm.handleSelectComment();
     }
 
 
-    private void upVoteComment() {
+    public void upVoteComment() {
         sm.handleUpVoteComment();
     }
 
-    private void downVoteComment() {
+    public void downVoteComment() {
         sm.handleDownVoteComment();
 
     }
 
-    private void hidePost() {
+    public void hidePost() {
         sm.handleHidePost();
 
     }
 
-    private void unhidePost() {
+    public void unhidePost() {
         sm.handleUnhidePost();
 
     }
 
-    private void enableComments() {
+    public void enableComments() {
         sm.handleEnableComments();
 
     }
 
-    private void disableComments() {
+    public void disableComments() {
         sm.handleDisableComments();
     }
 
-    private void ret() {
+    public void ret() {
         sm.returnMainPage();
     }
 
-    private void sendMessage() {
+    public void sendMessage() {
         String msg = inputField.getText().trim();
         if (!msg.isEmpty()) {
             sm.sendMessage(msg);

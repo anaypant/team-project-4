@@ -8,7 +8,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.Base64;
 
-public class Comment {
+public class Comment implements CommentInterface{
     private int upvotes;
     private int downvotes;
     private String comment;

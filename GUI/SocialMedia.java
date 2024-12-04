@@ -8,7 +8,17 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class SocialMedia {
+
+/**
+ * A client class that handles the GUI..
+ * Keeps track of the pages (Sign In, Posts, and Main)
+ *
+ * @author CS180 L2 Team 5
+ * @version 2.0
+ **/
+
+
+public class SocialMedia implements SocialMediaInterface{
     private JFrame current;
     private SignInPage signInPage;
     private MainPage mainPage;
@@ -112,7 +122,7 @@ public class SocialMedia {
 
 
 
-    private void pollServer() {
+    public void pollServer() {
         try {
             // Check if data is available without blocking
             if (connection.ready()) {
@@ -129,7 +139,7 @@ public class SocialMedia {
         }
     }
 
-    private void displayImg(String imagePath, boolean postPage) {
+    public void displayImg(String imagePath, boolean postPage) {
         try {
             StyledDocument doc;
             if (postPage) {
@@ -202,7 +212,7 @@ public class SocialMedia {
         }
     }
 
-    private void processServerResponse(String response) throws BadLocationException {
+    public void processServerResponse(String response) throws BadLocationException {
         // Check if we're on the login screen or the app screen
         if (currentTitle.equals("Login")) {
             if (response.contains("Login successful.")) {

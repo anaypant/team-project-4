@@ -8,30 +8,41 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Base64;
 
-public class MainPage extends JFrame{
-    private JPanel appPanel;
-    private JTextPane displayArea; // Changed to JTextPane
-    private JTextField inputField;
-    private JButton sendButton;
 
-    private JButton createPostButton;
-    private JButton selectPostButton;
-    private JButton logoutButton;
-    private JButton addFriendButton;
-    private JButton removeFriendButton;
-    private JButton blockButton;
-    private JButton removeSelfButton;
+/**
+ *  Class to describe the Main Menu Page of the GUI
+ *  Handles Post Selection, Adding/Removing/Blocking Friends
+ *  Can View Posts from Feed
+ * @author CS180 Team 5
+ * @version 1
+ * */
+
+public class MainPage extends JFrame implements MainPageInterface{
+
+    private JPanel appPanel; // Panel to display everything
+    private JTextPane displayArea; // Displays the server output
+    private JTextField inputField; // The input field where you enter a message to send
+    private JButton sendButton; // Button to send message
+
+    private JButton createPostButton; // Button to create posts
+    private JButton selectPostButton; // Button to select a post
+    private JButton logoutButton; // Button to log out
+    private JButton addFriendButton; // Button to add friend
+    private JButton removeFriendButton; // Button to remove friend
+    private JButton blockButton; // Button to block user
+    private JButton removeSelfButton; // Button to permanently delete user
 
 
-    private SocialMedia sm;
+    private SocialMedia sm; // Reference to Main Social Media App
 
 
     public MainPage(SocialMedia sm){
-        this.sm = sm;
-        this.init();
+        this.sm = sm; // Connect to Social Media Context
+        this.init(); // Create GUI environment
 
     }
 
+    // Creates GUI environment
     public void init() {
         appPanel = new JPanel(new BorderLayout());
 
@@ -91,7 +102,10 @@ public class MainPage extends JFrame{
         // Add button panel to the app panel
         appPanel.add(buttonPanel, BorderLayout.NORTH);
 
+
         this.setContentPane(appPanel);
+
+        // Set the title of the Page to the username
         if (sm.getActiveUser() == null) {
             this.setTitle("null");
         } else {
@@ -100,7 +114,8 @@ public class MainPage extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void sendMessage() {
+    // Sends a message to the server if the button is clicked
+    public void sendMessage() {
         String msg = inputField.getText().trim();
         if (!msg.isEmpty()) {
             sm.sendMessage(msg);
@@ -108,7 +123,8 @@ public class MainPage extends JFrame{
         }
     }
 
-    private void createPost() {
+    // Creates a post after button click
+    public void createPost() {
         // Dialog to input post content and accept image upload
         JPanel panel = new JPanel(new BorderLayout());
 
@@ -185,7 +201,7 @@ public class MainPage extends JFrame{
     }
 
     // Helper method to check if the file is an image
-    private boolean isImageFile(File file) {
+    public boolean isImageFile(File file) {
         String[] imageExtensions = {"png", "jpg", "jpeg", "gif", "bmp"};
         String fileName = file.getName().toLowerCase();
         for (String ext : imageExtensions) {
@@ -196,35 +212,41 @@ public class MainPage extends JFrame{
         return false;
     }
 
+    // Gets the styled document for Social Media App
     public StyledDocument getStyledDocument() {
         return displayArea.getStyledDocument();
     }
 
+    // Update the location to write the next message
     public void setCaretPosition(int position) {
         displayArea.setCaretPosition(position);
     }
 
-    private void selectPost() {
+    // Select post logic after button is clicked
+    public void selectPost() {
         // Input username to view posts from
         String username = JOptionPane.showInputDialog(this, "Enter username to view posts from:",
                 "Select Post", JOptionPane.PLAIN_MESSAGE);
 
+        // Ensures that a username is selected
         if (username != null && !username.trim().isEmpty()) {
             sm.sendMessage("select post");
             sm.sendMessage(username.trim());
         }
     }
 
-    private void logout() {
+    // Logs out after button is clicked
+    public void logout() {
         try {
             displayArea.setText("");
-            sm.reset(false);
+            sm.reset(false); // Calls reset() function which resets to login page
         } catch (Exception e) {
             this.setVisible(false);
         }
     }
 
-    private void addFriend() {
+    // Add friend button clicked
+    public void addFriend() {
         JPanel panel = new JPanel(new GridLayout(1, 1));
         panel.add(new JLabel("Enter Friend Username: "));
         JTextField field = new JTextField();
@@ -239,7 +261,8 @@ public class MainPage extends JFrame{
         }
     }
 
-    private void removeFriend() {
+    // Remove friend button clicked
+    public void removeFriend() {
         JPanel panel = new JPanel(new GridLayout(1, 1));
         panel.add(new JLabel("Enter Friend Username: "));
         JTextField field = new JTextField();
@@ -254,7 +277,8 @@ public class MainPage extends JFrame{
         }
     }
 
-    private void block() {
+    // Block user button clicked
+    public void block() {
         JPanel panel = new JPanel(new GridLayout(1, 1));
         panel.add(new JLabel("Enter Username: "));
         JTextField field = new JTextField();
@@ -269,11 +293,12 @@ public class MainPage extends JFrame{
         }
     }
 
-    private void removeSelf() {
-        sm.reset(true);
+    // Permanently delete user
+    public void removeSelf() {
+        sm.reset(true); // Calls reset() with true boolean, indicating permanent delete user
     }
 
-
+    // Insert an image into the display area (for posts)
     public void insertComponent(JLabel imageLabel) {
         this.displayArea.insertComponent(imageLabel);
     }

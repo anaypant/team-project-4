@@ -4,7 +4,13 @@ import javax.swing.*;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 
-public class SignInPage extends JFrame {
+/**
+ * Class to describe the Sign In Page of the GUI
+ * Handles displaying the log in page, creating users, validating login details
+ * Can View Posts from Feed
+ */
+
+public class SignInPage extends JFrame implements SignInPageInterface {
     // Login panel components
     private JPanel loginPanel;
     private JButton createUserButton;
@@ -62,7 +68,7 @@ public class SignInPage extends JFrame {
         this.sm = sm;
     }
 
-    private void createUser() {
+    public void createUser() {
         JPanel panel = new JPanel(new GridLayout(2, 2));
         panel.add(new JLabel("Username:"));
         usernameField = new JTextField();
@@ -80,7 +86,7 @@ public class SignInPage extends JFrame {
         }
     }
 
-    private void loginUser() {
+    public void loginUser() {
         // Dialog to input username and password
         JPanel panel = new JPanel(new GridLayout(2, 2));
         panel.add(new JLabel("Username:"));
@@ -107,8 +113,6 @@ public class SignInPage extends JFrame {
     public void setCaretPosition(int position) {
         loginDisplayArea.setCaretPosition(position);
     }
-
-
 
 
 }
