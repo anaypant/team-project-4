@@ -7,40 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="vocareum check">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/MainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/MainPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/MainPageInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/MainPageInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/PostPage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/PostPageInterface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/SignInPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SignInPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/SignInPageInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SignInPageInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/SocialMedia.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/SocialMediaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SocialMediaInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/image_10b6f4ef-e4c3-445d-9bfc-420aeef0248f.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/image_18ad3d5c-26d9-4def-9183-3b39493940e0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/posts.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CommentInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CommentInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostDBInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ServerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/State.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserDBInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/CommentTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/CommentTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/PostTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/PostTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite" afterDir="false" />
-    </list>
+    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="should be final code" />
     <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
     <list id="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" name="Changes by utsie" comment="" />
     <list id="f21eb0b6-abcb-4943-9fac-651c23a1a073" name="Changes by vishwa" comment="Changes by vishwa" />
@@ -324,7 +291,7 @@
       <workItem from="1733278022908" duration="8069000" />
       <workItem from="1733302167032" duration="1077000" />
       <workItem from="1733320353556" duration="14598000" />
-      <workItem from="1733404386671" duration="7853000" />
+      <workItem from="1733404386671" duration="7938000" />
     </task>
     <task id="LOCAL-00001" summary="final phase 1">
       <option name="closed" value="true" />
@@ -382,7 +349,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732127072849</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="should be final code">
+      <option name="closed" value="true" />
+      <created>1733412289600</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1733412289600</updated>
+    </task>
+    <task id="LOCAL-00009" summary="should be final code">
+      <option name="closed" value="true" />
+      <created>1733412303057</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1733412303057</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -408,7 +391,8 @@
     <MESSAGE value="Changes by vishwa" />
     <MESSAGE value="phase 2 final" />
     <MESSAGE value="vocareum check" />
-    <option name="LAST_COMMIT_MESSAGE" value="vocareum check" />
+    <MESSAGE value="should be final code" />
+    <option name="LAST_COMMIT_MESSAGE" value="should be final code" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
