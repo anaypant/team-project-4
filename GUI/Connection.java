@@ -6,9 +6,10 @@ import java.net.Socket;
 /**
  * Class to handle the Server/GUI Connection.
  * Managed by SocialMedia Class
+ *
  * @author CS180 Team 5
  * @version 1
- * */
+ */
 
 public class Connection implements ConnectionInterface {
 

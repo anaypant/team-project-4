@@ -4,12 +4,19 @@ import javax.swing.*;
 import javax.swing.text.StyledDocument;
 import java.io.File;
 
+
+/**
+ * Interface to describe the Main Menu Page of the GUI
+ * Handles Post Selection, Adding/Removing/Blocking Friends
+ * Can View Posts from Feed
+ *
+ * @author CS180 Team 5
+ * @version 1
+ */
+
 public interface MainPageInterface {
     //sets up the gui and creates all the buttons
     void init();
-
-    // method that handles when the user is trying to send a message
-    void sendMessage();
 
     // method that handles when the user is trying to create a post
     void createPost();
@@ -28,18 +35,6 @@ public interface MainPageInterface {
 
     // method that handles when the user is trying to logout
     void logout();
-
-    // method that handles when the user is trying to add a friend
-    void addFriend();
-
-    // method that handles when the user is trying to remove a friend
-    void removeFriend();
-
-    // method that handles when the user is trying to block a user
-    void block();
-
-    // method that handles when the user is trying to remove themsleves a user
-    void removeSelf();
 
     // method that handles when the client needs to insert  JLabel
     void insertComponent(JLabel imageLabel);

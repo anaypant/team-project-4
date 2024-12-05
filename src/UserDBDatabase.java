@@ -11,7 +11,6 @@ import java.util.*;
  * Logging in, adding friends, creating users.
  *
  * @author CS180 L2 Team 5
- *
  * @version 2.0
  **/
 
@@ -43,7 +42,7 @@ public class UserDBDatabase implements UserDBInterface {
     // Inserts user into the database
     // returns true if user is created successfully, false otherwise
     // returns false if user already exists
-    public static synchronized boolean createUser(User u) {
+    public static synchronized int createUser(User u) {
         String username = u.getUsername();
         String password = u.getPassword();
         try (Connection connection = DriverManager.getConnection(DB_PATH)) {
@@ -52,11 +51,11 @@ public class UserDBDatabase implements UserDBInterface {
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 if (result.getString(2).equals(username)) {
-                    return false;
+                    return 2;
                 }
             }
         } catch (SQLException e) {
-            return false;
+            return 2;
         }
         String createQuery = "INSERT INTO users (username, password, friends, blocked)" +
                 " VALUES (?, ?, ?, ?)";
@@ -72,29 +71,31 @@ public class UserDBDatabase implements UserDBInterface {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return 2;
         }
-        return true;
+        return 0;
 
     }
 
     // Creates a user and writes it to the file
     // creates user given username and password parameters
     // again, returns false if user already exists and calls createUser() method with User object
-    public static synchronized boolean createUser(String username, String password) {
+    public static synchronized int createUser(String username, String password) {
         String selectQuery = "SELECT * FROM users";
         try (Connection conn = DriverManager.getConnection(DB_PATH)) {
             PreparedStatement statement = conn.prepareStatement(selectQuery);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 if (result.getString(2).equals(username)) {
-                    return false;
+                    return 2;
                 }
             }
         } catch (Exception e) {
-            return false;
+            return 1;
         }
-
+        if (username.length() < 4 || password.length() < 4) {
+            return 1;
+        }
         User u = new User(username, password);
         return createUser(u);
 
@@ -332,7 +333,7 @@ public class UserDBDatabase implements UserDBInterface {
         if (user == null) {
             return false;
         }
-        if (!createUser(user)) { // attempts to recreate the user after deleting them,
+        if (createUser(user) != 0) { // attempts to recreate the user after deleting them,
             // returns false if unsuccessful
             return false;
         }
@@ -377,5 +378,63 @@ public class UserDBDatabase implements UserDBInterface {
         return null;
     }
 
+    public static synchronized User getUserByUsername(String uName) {
+        String selectQuery = "SELECT * FROM users";
+        ArrayList<String> friends = new ArrayList<>();
+        ArrayList<String> blocked = new ArrayList<>();
+        String friendsList = "";
+        String blockedList = "";
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+            ResultSet result = pstmt.executeQuery();
+            while (result.next()) {
+                if (result.getString(2).equals(uName)) {
+                    friendsList = result.getString(4);
+                    friends = Utils.arrayFromString(friendsList);
 
+                    blockedList = result.getString(5);
+                    blocked = Utils.arrayFromString(blockedList);
+
+                    User u = new User(result.getString(2),
+                            result.getString(3), result.getString(6),
+                            friends, blocked);
+                    return (u);
+                }
+            }
+
+        } catch (SQLException e) {
+            return null;
+        }
+        return null;
+    }
+
+    public static synchronized ArrayList<User> getUsers() {
+        String selectQuery = "SELECT * FROM users";
+        ArrayList<String> friends = new ArrayList<>();
+        ArrayList<String> blocked = new ArrayList<>();
+        String friendsList = "";
+        String blockedList = "";
+        ArrayList<User> users = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+            ResultSet result = pstmt.executeQuery();
+            while (result.next()) {
+                friendsList = result.getString(4);
+                friends = Utils.arrayFromString(friendsList);
+
+                blockedList = result.getString(5);
+                blocked = Utils.arrayFromString(blockedList);
+
+                User u = new User(result.getString(2),
+                        result.getString(3), result.getString(6),
+                        friends, blocked);
+                users.add(u);
+            }
+
+        } catch (SQLException e) {
+            return new ArrayList<>();
+        }
+        return users;
+
+    }
 }

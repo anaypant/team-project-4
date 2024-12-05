@@ -1,5 +1,13 @@
 package src;
 
+/**
+ * Class to describe the Comments
+ * Author, caption, upvotes, downvotes
+ *
+ * @author cs180 Lab 2 Team 5
+ * @version 1
+ */
+
 public interface CommentInterface {
     //gets the upvotes for a comment
     int getUpvotes();

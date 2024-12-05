@@ -8,7 +8,6 @@ import java.util.ArrayList;
  * Each user has a username, password, and profile picture path.
  *
  * @author CS180 L2 Team 5
- *
  * @version 2.0
  **/
 

@@ -3,9 +3,7 @@ package src;
 /**
  * An interface that defines how the PostDBDatabase class will act.
  *
- *
  * @author CS180 L2 Team 5
- *
  * @version 2.0
  **/
 

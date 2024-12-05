@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A class that defines how the database deals with Post methods
@@ -293,7 +294,6 @@ public class PostDBDatabase implements PostDBInterface {
     }
 
 
-
     // Allows user to upvote a post
     // gets Post object by calling getAndDeletePost
     // increments the number of upvotes by calling the respective methods
@@ -405,27 +405,26 @@ public class PostDBDatabase implements PostDBInterface {
         return null;
     }
 
-    public static synchronized boolean upvoteComment(String postId, Comment targetComment) {
-        return modifyCommentVotes(postId, targetComment, true);
+    public static synchronized boolean upvoteComment(String targetComment) {
+        return modifyCommentVotes(targetComment, true);
     }
 
-    public static synchronized boolean downvoteComment(String postId, Comment targetComment) {
-        return modifyCommentVotes(postId, targetComment, false);
+    public static synchronized boolean downvoteComment(String targetComment) {
+        return modifyCommentVotes(targetComment, false);
     }
 
-    private static synchronized boolean modifyCommentVotes(String postId, Comment targetComment, boolean upvote) {
-        String selectQuery = "SELECT * FROM posts WHERE id = ?";
-        String updateQuery = "UPDATE posts SET comments = ? WHERE id = ?";
+    private static synchronized boolean modifyCommentVotes(String targetComment, boolean upvote) {
+        String selectQuery = "SELECT * FROM posts";
+        String updateQuery = "UPDATE posts SET comments = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_PATH)) {
             PreparedStatement selectStmt = conn.prepareStatement(selectQuery);
-            selectStmt.setString(1, postId);
             ResultSet result = selectStmt.executeQuery();
 
             if (result.next()) {
                 ArrayList<Comment> comments = Utils.arrayCommentFromString(result.getString("comments"));
                 for (Comment comment : comments) {
-                    if (comment.equals(targetComment)) {
+                    if (comment.toString().equals(targetComment)) {
                         if (upvote) {
                             comment.setUpvotes(comment.getUpvotes() + 1);
                         } else {
@@ -436,7 +435,6 @@ public class PostDBDatabase implements PostDBInterface {
 
                 PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
                 updateStmt.setString(1, Utils.arrListCommentToString(comments));
-                updateStmt.setString(2, postId);
                 updateStmt.executeUpdate();
                 return true;
             }
@@ -482,6 +480,7 @@ public class PostDBDatabase implements PostDBInterface {
 
 
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return false;
@@ -511,4 +510,50 @@ public class PostDBDatabase implements PostDBInterface {
     }
 
 
+    public static ArrayList<Post> getFeedForUser(User activeUser) {
+        String selectQuery = "SELECT * FROM posts WHERE creator = ? ORDER BY datecreated;";
+        ArrayList<Post> posts = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(DB_PATH);
+             PreparedStatement pstmt = conn.prepareStatement(selectQuery)) {
+            ArrayList<String> x = activeUser.getFriendsList();
+            x.add(activeUser.getUsername());
+            for (String u : x) {
+
+                // Bind the username parameter to the query
+                pstmt.setString(1, u);
+
+                // Execute the query
+                ResultSet rs = pstmt.executeQuery();
+
+                // Iterate over the result set and populate the posts list
+                while (rs.next()) {
+                    Post post = new Post(
+                            rs.getString("id"),
+                            rs.getString("creator"),
+                            rs.getString("caption"),
+                            rs.getString("url"),
+                            rs.getString("datecreated"),
+                            rs.getInt("upvotes"),
+                            rs.getInt("downvotes"),
+                            Utils.arrayCommentFromString(rs.getString("comments")),
+                            Boolean.parseBoolean(rs.getString("commentsEnabled")),
+                            Boolean.parseBoolean(rs.getString("hidden"))
+                    );
+                    User creator = UserDBDatabase.getUserByUsername(post.getCreator());
+                    if (!creator.getBlockedList().contains(activeUser.getUsername())) {
+                        if (!post.isHidden() || post.getCreator().equals(activeUser.getUsername())) {
+                            posts.add(post);
+                        }
+                    }
+
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return posts; // Return the list of posts (empty if no posts were found)
+    }
 }

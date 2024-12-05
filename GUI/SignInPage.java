@@ -74,7 +74,7 @@ public class SignInPage extends JFrame implements SignInPageInterface {
         usernameField = new JTextField();
         panel.add(usernameField);
         panel.add(new JLabel("Password:"));
-        passwordField = new JPasswordField();
+        passwordField = new JTextField();
         panel.add(passwordField);
 
         int result = JOptionPane.showConfirmDialog(this, panel, "Create User",
@@ -93,7 +93,7 @@ public class SignInPage extends JFrame implements SignInPageInterface {
         usernameField = new JTextField();
         panel.add(usernameField);
         panel.add(new JLabel("Password:"));
-        passwordField = new JPasswordField();
+        passwordField = new JTextField();
         panel.add(passwordField);
 
         int result = JOptionPane.showConfirmDialog(this, panel, "Login User",

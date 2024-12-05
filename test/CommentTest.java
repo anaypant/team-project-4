@@ -69,7 +69,7 @@ public class CommentTest {
     public void testEncode() {
         setUp();
         String encoded = comment.encode();
-        String expected = "TestUser:::This is a test comment.:::5:::2";
+        String expected = "TestUser~~~This is a test comment.~~~5~~~2";
         assertEquals(expected, encoded);
     }
 
@@ -77,7 +77,7 @@ public class CommentTest {
     @Test
     public void testParseCommentFromString() {
         setUp();
-        String encodedComment = "AnotherUser:::Parsed comment:::8:::1";
+        String encodedComment = "AnotherUser~~~Parsed comment~~~8~~~1";
         Comment parsedComment = Comment.parseCommentFromString(encodedComment);
 
         assertEquals("AnotherUser", parsedComment.getCreator());

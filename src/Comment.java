@@ -8,6 +8,13 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.Base64;
 
+/**
+ * Class to describe the Comments
+ * Author, caption, upvotes, downvotes
+ * @author cs180 Lab 2 Team 5
+ * @version 1
+ */
+
 public class Comment implements CommentInterface{
     private int upvotes;
     private int downvotes;
@@ -66,18 +73,21 @@ public class Comment implements CommentInterface{
     }
 
     public static Comment parseCommentFromString(String c) {
-        String[] parts = c.split(Constants.DELIMITER);
+        String[] parts = c.split(Constants.COMMENT_DELIMITER);
         return new Comment(Integer.parseInt(parts[2]), Integer.parseInt(parts[3]), parts[1], parts[0]);
     }
 
     public String encode() {
-        return this.creator + Constants.DELIMITER + this.comment + Constants.DELIMITER + this.upvotes + Constants.DELIMITER + this.downvotes;
+        return this.creator + Constants.COMMENT_DELIMITER + this.comment +
+                Constants.COMMENT_DELIMITER + this.upvotes +
+                Constants.COMMENT_DELIMITER + this.downvotes;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Comment c) {
-            return c.comment.equals(this.comment) && c.upvotes == this.upvotes && c.downvotes == this.downvotes;
+            return c.comment.equals(this.comment) && c.upvotes == this.upvotes
+                    && c.downvotes == this.downvotes;
         }
         return false;
     }

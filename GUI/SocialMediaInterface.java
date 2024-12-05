@@ -2,6 +2,13 @@ package GUI;
 
 import javax.swing.text.BadLocationException;
 
+/**
+ * A client class that handles the GUI.
+ * Keeps track of the pages (Sign In, Posts, and Main)
+ *
+ * @author CS180 L2 Team 5
+ * @version 2.0
+ **/
 public interface SocialMediaInterface {
     // method that helps the main GUI handle the create user function
     void handleCreateUser(String username, String password);
@@ -37,16 +44,16 @@ public interface SocialMediaInterface {
     void handleDownVoteComment();
 
     // method that helps the main GUI handle the hide post function
-    void handleHidePost();
+    void handleHidePost(String postId);
 
     // method that helps the main GUI handle the unhide post function
-    void handleUnhidePost();
+    void handleUnhidePost(String postId);
 
     // method that helps the main GUI handle the enable comment on a post function
-    void handleEnableComments();
+    void handleEnableComments(String postId);
 
     // method that helps the main GUI handle the disable comment on a post function
-    void handleDisableComments();
+    void handleDisableComments(String postId);
 
     // method that helps the main GUI handle the server connection
     void pollServer();

@@ -89,7 +89,7 @@ public class PostTest {
         String expected = "12345" + Constants.DELIMITER + "TestUser" + Constants.DELIMITER +
                 "Test Caption" + Constants.DELIMITER + "test.jpg" + Constants.DELIMITER +
                 "11-25-2024" + Constants.DELIMITER + "10" + Constants.DELIMITER +
-                "2" + Constants.DELIMITER + "[\"UserA:::Great post!:::5:::1\",\"UserB:::Nice picture:::3:::0\"]" +
+                "2" + Constants.DELIMITER + "[\"UserA~~~Great post!~~~5~~~1\",\"UserB~~~Nice picture~~~3~~~0\"]" +
                 Constants.DELIMITER + "true" + Constants.DELIMITER + "false";
 
         assertEquals(expected, post.toString());
@@ -101,7 +101,7 @@ public class PostTest {
         String expected = "\n --- Post ID: 12345 ---\n" +
                 "Created by: TestUser\n" +
                 "Description: Test Caption\n" +
-                "URL to image: test.jpg\n" +
+                "IMAGE_URL: test.jpg\n" +
                 "Date Created: 11-25-2024\n" +
                 "Number of Up Votes: 10\n" +
                 "Number of Down Votes: 2\n" +
