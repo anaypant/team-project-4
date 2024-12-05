@@ -3,16 +3,12 @@ package src;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A class that establishes a network connection.
  * Creates the interface for the user to call commands.
  * Creates a Thread for each active user
- *
- * @author CS180 L2 Team 5
  *
  * @version 2.0
  **/
@@ -25,333 +21,443 @@ public class Server implements Runnable, ServerInterface {
     private Post selectedPost;
     private State s;
     private String activeUser = null;
-    private String selectedUsername = null; // Username for viewing posts
-    private String createPostDesc = null;
+    private String selectedUsername = null;
+    private ArrayList<Comment> comments = null;
+    private Comment selectedComment = null;
 
-    // Creates a new server that connects to a client
     public Server(Socket socket) throws IOException {
         this.socket = socket;
         this.selectedPost = null;
         this.s = State.IDLE;
     }
 
-    // Run method, run in each serve
+    private void reset() {
+        this.selectedPost = null;
+        this.s = State.IDLE;
+        this.comments = null;
+        this.selectedComment = null;
+    }
+
     @Override
     public void run() {
-        try {
-            // Creates a reader and writer to respond to the client
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
-
-            String line; // the reader's input and output message
-            String tempUsername = null; // Temporary storage for username during creation
-            String loginUsername = null; // tracks the username after the password is entered
+            String line;
 
             while ((line = in.readLine()) != null) {
-                String msg = ""; // output message
+                line = line.trim();
+                System.out.println("Received: " + line);
+                String msg;
 
-                // if the user wants help
-                if (line.equals("help") && s == State.IDLE) {
-                    msg = "Commands: ";
-                    for (String item : COMMANDS) {
-                        msg += item + ", ";
-                    }
-                    msg = msg.substring(0, msg.length() - 2); // return the list of commands,
-                    // with the last comma removed
-                } else {
-                    switch (s) {
-
-                        // IDLE: main menu, no command has been entered
-                        case IDLE:
-                            // based on the command, check to see what command they want
-                            switch (line.toLowerCase()) {
-                                case "create user":
-                                    s = State.CREATE_USER;
-                                    msg = "Please enter a username: ";
-                                    break;
-                                case "login user":
-                                    s = State.LOGIN_USER;
-                                    msg = "Please enter your username: ";
-                                    break;
-                                case "create post":
-                                    s = State.CREATE_POST_IMG;
-                                    msg = "Please enter post content: ";
-                                    break;
-                                case "select post":
-                                    s = State.SELECT_POST_USERNAME;
-                                    msg = "Please enter the username to view posts from: ";
-                                    break;
-                                case "upvote":
-                                    System.out.println(selectedPost);
-                                    if (selectedPost != null &&
-                                            PostDBDatabase.upvotePost(selectedPost.getId())) {
-                                        msg = "Post upvoted!";
-                                        selectedPost = null;
-                                    } else {
-                                        msg = "No post selected to upvote.";
-                                    }
-                                    break;
-                                case "downvote":
-                                    if (selectedPost != null &&
-                                            PostDBDatabase.downvotePost(selectedPost.getId())) {
-                                        msg = "Post downvoted!";
-                                    } else {
-                                        msg = "No post selected to downvote.";
-                                    }
-                                    break;
-                                case "comment":
-                                    if (selectedPost != null) {
-                                        s = State.ADD_COMMENT;
-                                        msg = "Enter your comment: ";
-                                    } else {
-                                        msg = "No post selected to comment on.";
-                                    }
-                                    break;
-                                case "add friend":
-                                    if (activeUser == null) {
-                                        msg = "Not logged in.";
-                                    } else {
-                                        s = State.ADD_FRIEND;
-                                        msg = "Please enter username of friend to add: ";
-                                    }
-                                    break;
-                                case "block":
-                                    if (activeUser == null) {
-                                        msg = "Not logged in.";
-                                    } else {
-                                        s = State.BLOCK;
-                                        msg = "Please enter username of user to block: ";
-                                    }
-                                    break;
-                                case "remove friend":
-                                    if (activeUser == null) {
-                                        msg = "Not logged in.";
-                                    } else {
-                                        s = State.REMOVE_FRIEND;
-                                        msg = "Please enter username of friend to remove: ";
-                                    }
-                                    break;
-                                case "remove user":
-                                    if (activeUser == null) {
-                                        msg = "Not logged in.";
-                                    } else {
-                                        boolean res = UserDBDatabase.deleteUser(activeUser);
-                                        if (res) {
-                                            msg = "Successfully removed user.";
-                                        } else {
-                                            msg = "Unable to remove user.";
-                                        }
-                                    }
-                                    break;
-                                default:
-                                    msg = "Invalid command. Please try again.";
-                                    break;
-                            }
-                            break;
-
-                        case CREATE_USER: // user is being created, username already entered
-                            if (tempUsername == null) {
-                                // Expecting username
-                                tempUsername = line;
-                                msg = "Please enter a password: ";
-                            } else {
-                                // Expecting password
-                                String password = line;
-                                if (UserDBDatabase.createUser(tempUsername, password)) {
-                                    msg = "User created successfully.";
-                                } else {
-                                    msg = "User creation failed.";
-                                }
-                                tempUsername = null; // Reset for next user creation
-                                s = State.IDLE;
-                            }
-                            break;
-
-                        case LOGIN_USER: // logging in a user, asking for password
-                            loginUsername = line;
-                            msg = "Please enter your password: ";
-                            s = State.LOGIN_USER_PASSWORD; // Move to a new sub-state
-                            break;
-
-                        case LOGIN_USER_PASSWORD: // logging in with username and password
-                            String password = line;
-                            if (loginUsername != null) {
-                                User u = UserDBDatabase.loginUser(loginUsername, password);
-                                if (u != null) {
-                                    this.activeUser = u.getUsername();
-                                    msg = "Login successful.";
-
-
-                                    // If login is successful, show feed of all friends
-                                    // Get all Friends and get posts by friends
-                                    ArrayList<Post> feed = new ArrayList<>();
-                                    for (String friend : u.getFriendsList()) {
-                                        ArrayList<Post> posts =
-                                                PostDBDatabase.getPostsByUsername(friend);
-                                        feed.addAll(posts);
-                                    }
-                                    feed = Utils.sortPostsByDateDesc(feed);
-
-                                    if (feed.size() == 0) {
-                                        msg += "\n No posts to show on feed.";
-                                    } else {
-                                        msg += "\n Feed: ";
-                                        for (int i = 0; i < feed.size(); i++) {
-                                            msg += feed.get(i).display();
-                                        }
-                                    }
-
-
-                                } else {
-                                    msg = "Login failed.";
-                                }
-                                s = State.IDLE;
-                            } else {
-                                msg = "Fatal: loginUsername is null (LOGIN_USER_PASSWORD)";
-                                s = State.IDLE;
-                            }
-                            break;
-
-                        case CREATE_POST_IMG: // asking for image url
-                            createPostDesc = line;
-                            msg = "Please enter valid URL (empty for no URL)";
-                            s = State.CREATE_POST;
-                            break;
-
-                        case CREATE_POST: // creating a new post, asking for content
-                            if (activeUser != null) {
-                                if (line.equals("")) {
-                                    line = "null";
-                                }
-                                PostDBDatabase.createPost(activeUser, createPostDesc, line);
-                                msg = "Post created. Returning to IDLE.";
-                            } else {
-                                msg = "Please log in to create a post.";
-                            }
-                            s = State.IDLE;
-                            break;
-
-                        case SELECT_POST_USERNAME:
-                            // The user inputs the username to view posts from
-                            selectedUsername = line;
-                            if (!UserDBDatabase.isFriend(activeUser, selectedUsername) &&
-                                    !Objects.equals(activeUser, selectedUsername)) {
-                                msg = line + " is not your friend. You can only view posts from friends.";
-                                s = State.IDLE;
-                            } else {
-                                List<Post> userPosts = PostDBDatabase.getPostsByUsername(selectedUsername);
-                                if (userPosts.isEmpty()) {
-                                    msg = "No posts found for user: " + selectedUsername;
-                                    s = State.IDLE;
-                                } else {
-                                    msg = "Select a post by entering the number:\n";
-                                    for (int i = 0; i < userPosts.size(); i++) {
-                                        msg += "----  OPTION " + (i + 1) + ". ----\n" +
-                                                userPosts.get(i).display() + "\n";
-                                    }
-                                    msg += "\nPlease select the desired post by " +
-                                            "typing in the respective option number.\n";
-                                    s = State.SELECT_POST_CHOICE;
-                                }
-                            }
-                            break;
-
-                        case SELECT_POST_CHOICE: // asking for which post they want to select
-                            try {
-                                int choice = Integer.parseInt(line) - 1;
-                                if (choice == -1) {
-                                    msg = "Invalid input. Please enter a valid number.";
-                                    break;
-                                }
-                                selectedPost = PostDBDatabase.selectPost(selectedUsername, choice);
-                                if (selectedPost != null) {
-                                    msg = "Post selected. You can now like, dislike, or comment.";
-                                } else {
-                                    msg = "Invalid selection.";
-                                }
-                            } catch (NumberFormatException e) {
-                                msg = "Invalid input. Please enter a number.";
-                            }
-                            s = State.IDLE;
-                            break;
-
-                        case ADD_COMMENT: // adding comment to selected post
-                            if (selectedPost != null) {
-                                PostDBDatabase.addComment(selectedPost.getId(), activeUser, line);
-                                msg = "Comment added.";
-                            } else {
-                                msg = "Failed to add comment. No post selected.";
-                            }
-                            s = State.IDLE;
-                            break;
-
-                        case ADD_FRIEND: // adding a friend based on target post
-                            boolean res = UserDBDatabase.addFriend(activeUser, line);
-                            if (res) {
-                                msg = "Successfully added friend " + line;
-                            } else {
-                                msg = "Could not add friend " + line;
-                            }
-                            s = State.IDLE;
-                            break;
-
-                        case BLOCK: // Blocked friend
-                            boolean res2 = UserDBDatabase.addBlocked(activeUser, line);
-                            if (res2) {
-                                msg = "Successfully blocked " + line;
-                            } else {
-                                msg = "Could not block " + line;
-                            }
-                            s = State.IDLE;
-                            break;
-                        case REMOVE_FRIEND: // removed friend
-                            boolean res3 = UserDBDatabase.removeFriend(activeUser, line);
-                            if (res3) {
-                                msg = "Successfully removed friend " + line;
-                            } else {
-                                msg = "Could not remove friend " + line;
-                            }
-                            s = State.IDLE;
-                            break;
-
-
-                        default:
-                            msg = "Unrecognized state.";
-                            s = State.IDLE;
-                            break;
-                    }
+                switch (s) {
+                    case IDLE:
+                        msg = handleIdleState(line, in);
+                        break;
+                    case CREATE_USER:
+                        s = State.IDLE;
+                        msg = handleCreateUser(line);
+                        break;
+                    case LOGIN_USER:
+                        s = State.IDLE;
+                        msg = handleLoginUser(line, in);
+                        break;
+                    case CREATE_POST_IMG:
+                        s = State.IDLE;
+                        msg = handleCreatePost(line, in);
+                        break;
+                    case ADD_COMMENT:
+                        s = State.IDLE;
+                        msg = handleAddComment(line);
+                        break;
+                    case SELECT_POST_USERNAME:
+                        s = State.IDLE;
+                        msg = handleSelectPostUsername(line);
+                        break;
+                    case SELECT_POST_CHOICE:
+                        s = State.IDLE;
+                        msg = handleSelectPostChoice(line);
+                        break;
+                    case SELECT_COMMENT:
+                        s = State.IDLE;
+                        msg = handleSelectComment(line);
+                        break;
+                    case HIDE_POST:
+                        s = State.IDLE;
+                        msg = handleHidePost(line);
+                        break;
+                    case UNHIDE_POST:
+                        s = State.IDLE;
+                        msg = handleUnhidePost(line);
+                        break;
+                    case DELETE_COMMENT:
+                        s = State.IDLE;
+                        msg = handleDeleteComment(line);
+                        break;
+                    case ENABLE_COMMENTS:
+                        s = State.IDLE;
+                        msg = handleEnableComments(line);
+                        break;
+                    case DISABLE_COMMENTS:
+                        s = State.IDLE;
+                        msg = handleDisableComments(line);
+                        break;
+                    case ADD_FRIEND:
+                        s = State.IDLE;
+                        msg = handleAddFriend(line);
+                        break;
+                    case REMOVE_FRIEND:
+                        s = State.IDLE;
+                        msg = handleRemoveFriend(line);
+                        break;
+                    case BLOCK:
+                        s = State.IDLE;
+                        msg = handleBlock(line);
+                        break;
+                    default:
+                        msg = "Invalid state.";
+                        reset();
+                        break;
                 }
-                if (s.equals(State.IDLE)) { // print out main menu message if idle
-                    msg += "\n" + Constants.MAIN_MENU_MSG;
-                }
-                out.println(msg); // Send response to client
-                out.println("EOM"); // Send an "END OF MESSAGE" indicator to
-                // indicate end of response
+
+                out.println(msg);
+                out.println("EOM");
                 out.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    public static void main(String[] args) {
-        try (ServerSocket mainSocket = new ServerSocket(Constants.PORT_NUMBER)) {
-            System.out.println("Server is listening on port " + Constants.PORT_NUMBER);
-            while (true) {
-                Socket socket = mainSocket.accept();
-                System.out.println("New client connected");
-                Server s = new Server(socket);
-                new Thread(s).start();
-            }
+    private String handleIdleState(String line, BufferedReader in) throws IOException {
+        switch (line.toLowerCase()) {
+            case "fetch posts":
+                return fetchPosts();
+            case "upvote post":
+            case "downvote post":
+                return handleVotePost(line, in.readLine());
+            case "upvote comment":
+            case "downvote comment":
+                return handleVoteComment(line, in.readLine());
+            case "create user":
+                s = State.CREATE_USER;
+                return "Please enter a username: ";
+            case "login user":
+                s = State.LOGIN_USER;
+                return "Please enter your username: ";
+            case "create post":
+                s = State.CREATE_POST_IMG;
+                return "Please enter post content: ";
+            case "add comment":
+                if (activeUser != null) {
+                    String postId = in.readLine(); // Read the post ID
+                    String commentData = in.readLine(); // Read the encoded comment data
+                    Comment newComment = Comment.parseCommentFromString(commentData);
+                    boolean success = PostDBDatabase.addComment(postId, newComment.getCreator(),
+                            newComment.getComment());
+                    return success ? "Comment added successfully." : "Failed to add comment.";
+                } else {
+                    return "Please log in to add a comment.";
+                }
+            case "select post":
+                s = State.SELECT_POST_USERNAME;
+                return "Enter the username to view posts: ";
+            case "hide post":
+                s = State.HIDE_POST;
+                return "post id:";
+            case "unhide post":
+                s = State.UNHIDE_POST;
+                return "post id:";
+            case "delete comment":
+                s = State.DELETE_COMMENT;
+                return "comment to delete:";
+            case "enable comments":
+                s = State.ENABLE_COMMENTS;
+                return "post to enable";
+            case "disable comments":
+                s = State.DISABLE_COMMENTS;
+                return "post to enable";
+            case "add friend":
+                s = State.ADD_FRIEND;
+                return "friend to add";
+            case "remove friend":
+                s = State.REMOVE_FRIEND;
+                return "friend to remove";
+            case "block":
+                s = State.BLOCK;
+                return "user to block";
+            case "remove user":
+                return handleDeleteUser(activeUser);
+            case "get all users":
+                return handleGetAllUsers();
+            default:
+                return "Invalid command. Type 'help' for a list of commands.";
+        }
+    }
+
+    private String handleGetAllUsers() {
+
+        ArrayList<User> users = UserDBDatabase.getUsers();
+        if (users.isEmpty()) {
+            return "USER_LIST:~~~No~~~users~~~available.";
+        }
+
+        StringBuilder feed = new StringBuilder("USER_LIST:");
+        for (User u : users) {
+            feed.append(u.toString() + "|");
+        }
+        return feed.toString();
+    }
+
+    private String handleDeleteUser(String line) {
+        boolean res = UserDBDatabase.deleteUser(line);
+        boolean res2 = PostDBDatabase.deletePostsByUsername(line);
+        if (res && res2) {
+            return "Successfully deleted user.";
+        } else {
+            return "Failed to delete user.";
+        }
+    }
+
+    private String handleBlock(String line) {
+        boolean resp = UserDBDatabase.addBlocked(activeUser, line);
+        if (resp) {
+            return "Successfully blocked user.";
+        } else {
+            return "Failed to block user.";
+        }
+    }
+
+    private String handleRemoveFriend(String line) {
+        boolean resp = UserDBDatabase.removeFriend(activeUser, line);
+        if (resp) {
+            return "Successfully removed friend.";
+        } else {
+            return "Failed to remove friend.";
+        }
+    }
+
+    private String handleAddFriend(String line) {
+        boolean resp = UserDBDatabase.addFriend(activeUser, line);
+        if (resp) {
+            return "Successfully added friend.";
+        } else {
+            return "Failed to add friend.";
+        }
+    }
+
+    private String handleEnableComments(String line) {
+        boolean res = PostDBDatabase.enableComments(line);
+        if (res) {
+            return "Comment enabled successfully.";
+        } else {
+            return "Could not enable comments.";
+        }
+    }
+
+    private String handleDisableComments(String line) {
+        boolean res = PostDBDatabase.disableComments(line);
+        if (res) {
+            return "Comment disabled successfully.";
+        } else {
+            return "Could not disable comments.";
+        }
+    }
+
+    private String handleDeleteComment(String line) {
+        String[] resp = line.split(Constants.DELIMITER);
+        System.out.println(Arrays.toString(resp));
+        boolean res = PostDBDatabase.deleteComment(resp[0], resp[1], resp[2]);
+        if (res) {
+            return "Successfully deleted comment";
+        } else {
+            return "Failed to delete comment";
+        }
+    }
+
+    private String handleHidePost(String postId) {
+        boolean res = PostDBDatabase.hidePost(postId);
+        if (res) {
+            return "Successfully hidden post.";
+        } else {
+            return "Failed to hide post.";
+        }
+    }
+
+    private String handleUnhidePost(String postId) {
+        boolean res = PostDBDatabase.unhidePost(postId);
+        if (res) {
+            return "Successfully unhid post.";
+        } else {
+            return "Failed to unhide post.";
+        }
+    }
+
+    private String handleVoteComment(String action, String commentId) {
+        if (activeUser == null) {
+            return "Please log in to vote on comments.";
+        }
+
+        // Upvote or downvote the comment
+        boolean success = action.equals("upvote comment")
+                ? PostDBDatabase.upvoteComment(commentId)
+                : PostDBDatabase.downvoteComment(commentId);
+
+        return success ? "Comment vote updated successfully." : "Failed to update comment vote.";
+    }
+
+
+    private String handleCreateUser(String line) {
+        // Logic to create user
+        String[] resp = line.split(Constants.DELIMITER);
+        if (resp[0].isEmpty()) {
+            reset();
+            return "User creation failed. Try again.";
+        }
+        // Assume database interaction
+        int response = UserDBDatabase.createUser(resp[0], resp[1]);
+        if (response == 1) {
+            return "User creation failed. Username must be at least 4 characters, " +
+                    "Password must be at least 4 characters.";
+        } else if (response == 2) {
+            return "User creation failed. Username already exists.";
+        }
+        reset();
+        return "User created successfully.";
+    }
+
+    private String handleLoginUser(String line, BufferedReader in) throws IOException {
+        // Logic to login user
+        // Assume validation with database
+        String[] resp = line.split(Constants.DELIMITER);
+        User u = UserDBDatabase.loginUser(resp[0], resp[1]);
+        if (u == null) {
+            return "Login failed.";
+        }
+        if (u.getUsername() != null) {
+            activeUser = u.getUsername();
+            reset();
+            return "Login successful.";
+        }
+        return "Login failed.";
+    }
+
+    private String fetchPosts() {
+        if (activeUser == null) {
+            return "Please log in to view posts.";
+        }
+        System.out.println(activeUser);
+
+        ArrayList<Post> posts = PostDBDatabase.getFeedForUser(UserDBDatabase.getUserByUsername(activeUser));
+        if (posts.isEmpty()) {
+            return "POST_LIST:~~~No~~~posts~~~available.";
+        }
+
+        StringBuilder feed = new StringBuilder("POST_LIST:");
+        for (Post post : posts) {
+            feed.append(post.toString() + "|");
+        }
+        return feed.toString();
+    }
+
+
+    private String handleVotePost(String action, String postId) {
+        if (activeUser == null) {
+            return "Please log in to vote on posts.";
+        }
+        boolean success = action.equals("upvote post") ?
+                PostDBDatabase.upvotePost(postId) :
+                PostDBDatabase.downvotePost(postId);
+        return success ? "Post vote updated successfully." : "Failed to update post vote.";
+    }
+
+    private String handleCreatePost(String line, BufferedReader in) throws IOException {
+        // Read the encoded image from the client
+        String[] resp = line.split(Constants.DELIMITER);
+
+
+        // Check if the encoded image is valid or if it is marked as "NO_IMAGE"
+        if (resp.length == 2) {
+            // If no image is provided, create the post without an image
+            PostDBDatabase.createPost(activeUser, resp[0], null);
+            reset();
+            return "Post created successfully without an image.";
+        }
+
+        try {
+            // Decode the Base64 string into bytes
+            byte[] imageBytes = Base64.getDecoder().decode(resp[2]);
+
+            // Save the decoded image to the server
+            String imagePath = saveImageToServer(imageBytes);
+
+            // Create the post with the image path
+            PostDBDatabase.createPost(activeUser, resp[0], imagePath);
+
+            reset();
+            return "Post created successfully with an image.";
+        } catch (IllegalArgumentException e) {
+            // Handle invalid Base64 strings
+            return "Failed to create post: Invalid image encoding.";
+        }
+    }
+
+    private String handleAddComment(String comment) {
+        if (selectedPost == null) {
+            reset();
+            return "No post selected.";
+        }
+        PostDBDatabase.addComment(selectedPost.getId(), activeUser, comment);
+        reset();
+        return "Comment added.";
+    }
+
+    private String handleSelectPostUsername(String username) {
+        selectedUsername = username;
+        s = State.SELECT_POST_CHOICE;
+        return "Enter the number of the post to select: ";
+    }
+
+    private String handleSelectPostChoice(String choice) {
+        // Logic to select post
+        reset();
+        return "Post selected.";
+    }
+
+    private String handleSelectComment(String line) {
+        // Logic to handle selecting comments
+        reset();
+        return "Comment selected.";
+    }
+
+    private String saveImageToServer(byte[] imageBytes) {
+        String imageFileName = "image_" + UUID.randomUUID().toString() + ".png";
+        String imageDirectory = "images/";
+
+        File dir = new File(imageDirectory);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(imageDirectory + imageFileName)) {
+            fos.write(imageBytes);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        return imageDirectory + imageFileName;
+    }
+
+    public static void main(String[] args) {
+        try (ServerSocket serverSocket = new ServerSocket(Constants.PORT_NUMBER)) {
+            System.out.println("Server listening on port " + Constants.PORT_NUMBER);
+            while (true) {
+                Socket socket = serverSocket.accept();
+                new Thread(new Server(socket)).start();
+            }
+        } catch (IOException e) {
+            // do nothing
+            // notethat a client disonnected
+            System.out.println("Client disconnected.");
         }
     }
 }

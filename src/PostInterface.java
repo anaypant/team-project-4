@@ -5,9 +5,7 @@ import java.util.ArrayList;
 /**
  * An interface that defines what the Post class will look like.
  *
- *
  * @author CS180 L2 Team 5
- *
  * @version 2.0
  **/
 
@@ -52,9 +50,9 @@ public interface PostInterface {
     void setDownVotes(int downVotes);
 
     // gets list of comments
-    ArrayList<String> getComments();
+    ArrayList<Comment> getComments();
 
     // sets list of comments
-    void setComments(ArrayList<String> comments);
+    void setComments(ArrayList<Comment> comments);
 
 }

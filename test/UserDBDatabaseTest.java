@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
  * Test file for UserDBDatabase
  *
  * @author CS180 L2 Team 5
- *
  * @version 2.0
  **/
 
@@ -44,8 +43,8 @@ public class UserDBDatabaseTest {
     @Test
     // checks that the createUser() database method is working correctly when passing in a username and password
     public void testCreateUser() {
-        assertTrue("User should be successfully created", UserDBDatabase.createUser("testUser123", "password123"));
-        assertFalse("Duplicate user creation should fail", UserDBDatabase.createUser("testUser123", "password123"));
+        assertEquals(0, UserDBDatabase.createUser("testUser123", "password123"));
+        assertEquals(2, UserDBDatabase.createUser("testUser123", "password123"));
     }
 
     @Test

@@ -16,5 +16,6 @@ public interface Constants {
     String MAIN_MENU_MSG = "Please enter a command ('help' for a list of commands): "; // message for when user needs to
     String USER_DB = "jdbc:sqlite:users.sqlite";
     String POST_DB = "jdbc:sqlite:posts.sqlite";
+    String COMMENT_DELIMITER= "~~~";
 
 }

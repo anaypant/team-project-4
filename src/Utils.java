@@ -11,7 +11,6 @@ import java.util.Date;
  * arrListToString(), replaceLineInFile()
  *
  * @author CS180 L2 Team 5
- *
  * @version 2.0
  **/
 
@@ -51,80 +50,57 @@ public class Utils {
         return result;
     }
 
-    //takes in a file and id then
-    // reads the post file and as long as each post doesn't
-    // have the specified id it will add it to an arrayList
-    // then once its added all but the specified one it will
-    // rewrite the arrayList out essentialy deleting
-    //a specified Post and returns nothing
-    public static void deletePost(String postId, String fileName) {
-        ArrayList<String> lines = new ArrayList<>();
+    public static ArrayList<Comment> arrayCommentFromString(String s) {
 
-        // Step 1: Read all lines except the line to delete
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String currentLine;
-
-            while ((currentLine = reader.readLine()) != null) {
-                if (!currentLine.split(Constants.DELIMITER)[0].equals(postId)) {
-                    lines.add(currentLine);
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("An error occurred while reading the file: " + e.getMessage());
-            return;
+        if (s.isEmpty()) {
+            return new ArrayList<>();
         }
 
-        // Step 2: Write back all lines except the deleted one
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            for (String line : lines) {
-                writer.write(line);
-                writer.newLine();
+        ArrayList<Comment> result = new ArrayList<>();
+        String st = s.substring(1, s.length() - 1);
+
+        String currentElement = "";
+        boolean inQuotes = false;
+
+        for (int i = 0; i < st.length(); i++) {
+            char c = st.charAt(i);
+
+            if (c == '"') {
+                inQuotes = !inQuotes;
+            } else if (c == ',' && !inQuotes) {
+                result.add(Comment.parseCommentFromString(currentElement.trim()));
+                currentElement = "";
+            } else {
+                currentElement += c;
             }
-            System.out.println("Line deleted successfully.");
-        } catch (IOException e) {
-            System.err.println("An error occurred while writing to the file: " + e.getMessage());
         }
-    }
-
-    //takes in a file and username then
-    // reads the user file and as long as each user
-    // doesn't have the specified username it will add it to
-    // an arrayList
-    // then once its added all but the specified one
-    // it will rewrite the arrayList out essentialy deleting
-    //a specified User and returns nothing
-    public static void deleteUser(String username, String fileName) {
-        ArrayList<String> lines = new ArrayList<>();
-
-        // Step 1: Read all lines except the line to delete
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String currentLine;
-
-            while ((currentLine = reader.readLine()) != null) {
-                if (!currentLine.split(Constants.DELIMITER)[0].equals(username)) {
-                    lines.add(currentLine);
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("An error occurred while reading the file: " + e.getMessage());
-            return;
+        if (!currentElement.isEmpty()) {
+            result.add(Comment.parseCommentFromString(currentElement.trim()));
         }
 
-        // Step 2: Write back all lines except the deleted one
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            for (String line : lines) {
-                writer.write(line);
-                writer.newLine();
-            }
-            System.out.println("Line deleted successfully.");
-        } catch (IOException e) {
-            System.err.println("An error occurred while writing to the file: " + e.getMessage());
-        }
+        return result;
     }
 
     //takes an arrayList and goes through each element and
     // writes it to a string so that we can convert an ArrayList
     //to a string and pit it into a file later.
+
+    public static String arrListCommentToString(ArrayList<Comment> arr) {
+        String result = "[";
+
+        for (int i = 0; i < arr.size(); i++) {
+            result += "\"" + arr.get(i).encode() + "\"";
+
+            // Add a comma and space if it's not the last element
+            if (i < arr.size() - 1) {
+                result += ",";
+            }
+        }
+
+        result += "]";
+        return result;
+    }
+
     public static String arrListToString(ArrayList<String> arr) {
         String result = "[";
 

@@ -18,6 +18,7 @@ import java.sql.Statement;
 
 import static org.junit.Assert.*;
 
+
 /**
  * Test file for Server class setup and basic functionality.
  *
@@ -83,6 +84,6 @@ public class ServerTest {
         assertNotNull("User creation should succeed", UserDBDatabase.loginUser("testUser", "password123"));
 
         PostDBDatabase.createPost("testUser", "Test Caption", "http://test.url");
-        assertFalse("Post list should not be empty", PostDBDatabase.getPostsByUsername("testUser").isEmpty());
+        assertFalse("Post list should not be empty", PostDBDatabase.getPostsByUsername("testUser", "testUser").isEmpty());
     }
 }

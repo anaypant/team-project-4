@@ -1,145 +1,138 @@
 package test;
 
+import org.junit.Before;
 import org.junit.Test;
+import src.Comment;
 import src.Post;
+import src.Constants;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
- * Test file for Post
- *
- * @author CS180 L2 Team 5
+ * Test file for Post class
  *
  * @version 2.0
- **/
-
+ */
 public class PostTest {
     private Post post;
-    private ArrayList<String> comments;
+    private ArrayList<Comment> comments;
 
-    // Formats post with username, caption, content, date, and comments with usernames
+    @Before
     public void setUp() {
-        comments = new ArrayList<>(Arrays.asList("user: comment", "user2: comment2"));
-        post = new Post("user", "caption", "null", "11-03-2024");
-        post.setUpVotes(1);
-        post.setDownVotes(1);
-        post.setComments(comments);
+        comments = new ArrayList<>();
+        comments.add(new Comment(5, 1, "Great post!", "UserA"));
+        comments.add(new Comment(3, 0, "Nice picture", "UserB"));
+
+        post = new Post("12345", "TestUser", "Test Caption", "test.jpg",
+                "11-25-2024", 10, 2, comments, true, false);
     }
 
-    // Tests a post with postId users, date, comments, upvotes/downvotes
     @Test
     public void testConstructorWithId() {
-        setUp();
-        Post postWithId = new Post("doesn't matter", "user2", "caption2",
-                "null", "11-03-2024", 1, 1, comments);
-        assertEquals("user2", postWithId.getCreator());
-        assertEquals("caption2", postWithId.getCaption());
-        assertEquals("null", postWithId.getUrl());
-        assertEquals("11-03-2024", postWithId.getDateCreated());
-        assertEquals(1, postWithId.getUpVotes());
-        assertEquals(1, postWithId.getDownVotes());
-        assertEquals(comments, postWithId.getComments());
+        assertEquals("12345", post.getId());
+        assertEquals("TestUser", post.getCreator());
+        assertEquals("Test Caption", post.getCaption());
+        assertEquals("test.jpg", post.getUrl());
+        assertEquals("11-25-2024", post.getDateCreated());
+        assertEquals(10, post.getUpVotes());
+        assertEquals(2, post.getDownVotes());
+        assertEquals(comments, post.getComments());
+        assertTrue(post.isCommentsEnabled());
     }
 
-    // Tests a post without postId, with users, date, comments, upvotes/downvotes
     @Test
     public void testConstructorWithoutId() {
-        setUp();
-        assertNotNull(post.getId());
-        assertEquals("user", post.getCreator());
-        assertEquals("caption", post.getCaption());
-        assertEquals("null", post.getUrl());
-        assertEquals("11-03-2024", post.getDateCreated());
-        assertEquals(1, post.getUpVotes());
-        assertEquals(1, post.getDownVotes());
-        assertEquals(comments, post.getComments());
+        Post newPost = new Post("AnotherUser", "Another Caption", "another.jpg", "11-26-2024");
+
+        assertNotNull(newPost.getId());
+        assertEquals("AnotherUser", newPost.getCreator());
+        assertEquals("Another Caption", newPost.getCaption());
+        assertEquals("another.jpg", newPost.getUrl());
+        assertEquals("11-26-2024", newPost.getDateCreated());
+        assertEquals(0, newPost.getUpVotes());
+        assertEquals(0, newPost.getDownVotes());
+        assertTrue(newPost.getComments().isEmpty());
+        assertTrue(newPost.isCommentsEnabled());
     }
 
-    // Setters and Getters for post contents, grabs username, caption, content,
-    // date posted, and upvotes/downvotes
     @Test
     public void testSettersAndGetters() {
-        setUp();
-        post.setCreator("newUser");
+        post.setCreator("UpdatedUser");
         post.setCaption("Updated Caption");
-        post.setUrl("testImg.png");
-        post.setDateCreated("11-04-2024");
+        post.setUrl("updated.jpg");
+        post.setDateCreated("11-27-2024");
         post.setUpVotes(20);
-        post.setDownVotes(4);
+        post.setDownVotes(5);
 
-        assertEquals("newUser", post.getCreator());
+        assertEquals("UpdatedUser", post.getCreator());
         assertEquals("Updated Caption", post.getCaption());
-        assertEquals("testImg.png", post.getUrl());
-        assertEquals("11-04-2024", post.getDateCreated());
+        assertEquals("updated.jpg", post.getUrl());
+        assertEquals("11-27-2024", post.getDateCreated());
         assertEquals(20, post.getUpVotes());
-        assertEquals(4, post.getDownVotes());
+        assertEquals(5, post.getDownVotes());
     }
 
-    // Tests that values are equal to the other post
     @Test
-    public void testEquals() {
-        setUp();
-        Post anotherPost = new Post(post.getId(), "user", "caption",
-                "null", "11-03-2024", 1, 1, comments);
-        assertEquals(post, anotherPost);
+    public void testCommentsManagement() {
+        ArrayList<Comment> newComments = new ArrayList<>();
+        newComments.add(new Comment(2, 0, "New comment!", "UserC"));
+        post.setComments(newComments);
+
+        assertEquals(1, post.getComments().size());
+        assertEquals("New comment!", post.getComments().get(0).getComment());
     }
 
-    // Tests that postId is matched
     @Test
     public void testToString() {
-        setUp();
-        String expected = post.getId() +
-                ":::user:::caption:::null:::11-03-2024:::1:::1:::" +
-                "[\"user: comment\",\"user2: comment2\"]";
+        String expected = "12345" + Constants.DELIMITER + "TestUser" + Constants.DELIMITER +
+                "Test Caption" + Constants.DELIMITER + "test.jpg" + Constants.DELIMITER +
+                "11-25-2024" + Constants.DELIMITER + "10" + Constants.DELIMITER +
+                "2" + Constants.DELIMITER + "[\"UserA~~~Great post!~~~5~~~1\",\"UserB~~~Nice picture~~~3~~~0\"]" +
+                Constants.DELIMITER + "true" + Constants.DELIMITER + "false";
+
         assertEquals(expected, post.toString());
     }
 
-    // Displays test post
     @Test
     public void testDisplay() {
-        setUp();
-        String expected = "\n --- Post ID: " + post.getId() + " ---\n" +
-                "Created by: user\n" +
-                "Description: caption\n" +
-                "URL to image: null\n" +
-                "Date Created: 11-03-2024\n" +
-                "Number of Up Votes: 1\n" +
-                "Number of Down Votes: 1\n" +
+        System.out.println(post.display());
+        String expected = "\n --- Post ID: 12345 ---\n" +
+                "Created by: TestUser\n" +
+                "Description: Test Caption\n" +
+                "IMAGE_URL: test.jpg\n" +
+                "Date Created: 11-25-2024\n" +
+                "Number of Up Votes: 10\n" +
+                "Number of Down Votes: 2\n" +
                 "Comments: \n" +
-                "user: comment\n" +
-                "user2: comment2\n" +
+                "UserA: Great post! --- Upvotes: 5 --- Downvotes: 1\n" +
+                "UserB: Nice picture --- Upvotes: 3 --- Downvotes: 0\n" +
                 "----------";
+
         assertEquals(expected, post.display());
     }
 
-    @Test
-    public void testParseString() {
-        setUp();
-        String postString = post.getId() + ":::user:::caption:::null:::" +
-                "11-03-2024:::1:::1:::[\"user: comment\",\"user2: comment2\"]";
-        Post parsedPost = Post.parseString(postString);
 
-        assertEquals(post.getId(), parsedPost.getId());
-        assertEquals(post.getCreator(), parsedPost.getCreator());
-        assertEquals(post.getCaption(), parsedPost.getCaption());
-        assertEquals(post.getUrl(), parsedPost.getUrl());
-        assertEquals(post.getDateCreated(), parsedPost.getDateCreated());
-        assertEquals(post.getUpVotes(), parsedPost.getUpVotes());
-        assertEquals(post.getDownVotes(), parsedPost.getDownVotes());
-        assertEquals(post.getComments(), parsedPost.getComments());
+
+    @Test
+    public void testEquals() {
+        Post samePost = new Post("12345", "AnotherUser", "Another Caption", null,
+                "11-26-2024", 5, 3, new ArrayList<>(), false, false);
+
+        Post differentPost = new Post("67890", "DifferentUser", "Different Caption", null,
+                "11-26-2024", 1, 1, new ArrayList<>(), true, false);
+
+        assertEquals(post, samePost);
+        assertNotEquals(post, differentPost);
     }
 
-    // Formats comments on test post
     @Test
-    public void testCommentsFormat() {
-        setUp();
-        post.getComments().add("user3: New comment!");
-        String lastComment = post.getComments().get(post.getComments().size() - 1);
-        assertEquals("user3: New comment!", lastComment);
+    public void testCommentsEnabled() {
+        post.setCommentsEnabled(false);
+        assertFalse(post.isCommentsEnabled());
+
+        post.setCommentsEnabled(true);
+        assertTrue(post.isCommentsEnabled());
     }
 }
