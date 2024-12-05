@@ -295,18 +295,12 @@ public class SocialMedia implements SocialMediaInterface {
                 currentTitle = "Main Page";
                 current.setVisible(true);
             } else if (response.contains("User created successfully.")) {
-                StyledDocument doc = signInPage.getStyledDocument();
-                doc.insertString(doc.getLength(), response, null);
-                signInPage.setCaretPosition(doc.getLength());
+                displayMessage("User created successfully.");
             } else if (response.contains("Login failed.")) {
                 activeUser = null;
-                StyledDocument doc = signInPage.getStyledDocument();
-                doc.insertString(doc.getLength(), response, null);
-                signInPage.setCaretPosition(doc.getLength());
+                displayMessage("Login failed.");
             } else if (response.contains("User creation failed.")) {
-                StyledDocument doc = signInPage.getStyledDocument();
-                doc.insertString(doc.getLength(), response, null);
-                signInPage.setCaretPosition(doc.getLength());
+                displayMessage("User creation failed.");
             }
 
             if (currentTitle.equals("Main Page")) {
@@ -343,11 +337,8 @@ public class SocialMedia implements SocialMediaInterface {
                     this.posts.clear();
                     this.mainPage.refresh();
                     System.out.println("No posts");
+                    displayMessage("No posts on your feed.");
 
-                    JPanel panel = new JPanel(new GridLayout(2, 2));
-                    panel.add(new JLabel("No Posts on Your Feed."));
-
-                    JOptionPane.showMessageDialog(mainPage, panel);
 
                 } else if (line.startsWith("IMAGE_URL:")) {
                     String imagePath = line.substring("IMAGE_URL:".length()).trim();
@@ -370,6 +361,12 @@ public class SocialMedia implements SocialMediaInterface {
         }
     }
 
+    private void displayMessage(String message) {
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        panel.add(new JLabel(message));
+
+        JOptionPane.showMessageDialog(current, panel);
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

@@ -15,7 +15,6 @@ public class SignInPage extends JFrame implements SignInPageInterface {
     private JPanel loginPanel;
     private JButton createUserButton;
     private JButton loginUserButton;
-    private JTextPane loginDisplayArea; // Changed to JTextPane
 
     // Dialog fields
     private JTextField usernameField;
@@ -51,13 +50,9 @@ public class SignInPage extends JFrame implements SignInPageInterface {
         buttonPanel.add(loginUserButton, gbc);
 
         // Add button panel to the top of login panel
-        loginPanel.add(buttonPanel, BorderLayout.NORTH);
+        loginPanel.add(buttonPanel, BorderLayout.CENTER);
 
         // Login display area to show server messages
-        loginDisplayArea = new JTextPane(); // Changed to JTextPane
-        loginDisplayArea.setEditable(false);
-        JScrollPane loginScrollPane = new JScrollPane(loginDisplayArea);
-        loginPanel.add(loginScrollPane, BorderLayout.CENTER);
 
         this.add(loginPanel);
         this.setTitle("Sign In");
@@ -106,13 +101,6 @@ public class SignInPage extends JFrame implements SignInPageInterface {
         }
     }
 
-    public StyledDocument getStyledDocument() {
-        return loginDisplayArea.getStyledDocument();
-    }
-
-    public void setCaretPosition(int position) {
-        loginDisplayArea.setCaretPosition(position);
-    }
 
 
 }

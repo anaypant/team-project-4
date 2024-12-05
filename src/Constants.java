@@ -10,7 +10,7 @@ package src;
  **/
 
 public interface Constants {
-    int PORT_NUMBER = 4343; // specific port number for this server
+    int PORT_NUMBER = 2412; // specific port number for this server
     String SERVER_HOST_NAME = "localhost"; //the Servers host name which wil stay constant
     String DELIMITER = ":::"; // specific delimiter we set so when we parse we know what to parse by
     String MAIN_MENU_MSG = "Please enter a command ('help' for a list of commands): "; // message for when user needs to

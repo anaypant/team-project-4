@@ -458,6 +458,7 @@ public class Server implements Runnable, ServerInterface {
             // do nothing
             // notethat a client disonnected
             System.out.println("Client disconnected.");
+            e.printStackTrace();
         }
     }
 }

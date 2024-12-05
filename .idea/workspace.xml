@@ -9,36 +9,14 @@
   <component name="ChangeListManager">
     <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="vocareum check">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/MainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/MainPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/MainPageInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/MainPageInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/PostPage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/PostPageInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/ProfilePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/ProfilePage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI/SignInPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SignInPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI/SignInPageInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SignInPageInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/SocialMedia.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/SocialMediaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SocialMediaInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/image_10b6f4ef-e4c3-445d-9bfc-420aeef0248f.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/image_18ad3d5c-26d9-4def-9183-3b39493940e0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SocialMedia.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/posts.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/posts.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CommentInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CommentInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PostDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostDBInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ServerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/State.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserDBInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/CommentTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/CommentTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/PostTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/PostTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserDBDatabaseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite" afterDir="false" />
     </list>
     <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
@@ -72,12 +50,12 @@
     &quot;assignee&quot;: &quot;anaypant&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/anaypant/team-project-4.git&quot;,
-    &quot;accountId&quot;: &quot;a7a9c81b-9be2-4a5d-8443-b7b4dd0e1e7c&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/anaypant/team-project-4.git",
+    "accountId": "a7a9c81b-9be2-4a5d-8443-b7b4dd0e1e7c"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -90,66 +68,66 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Client.executor": "Run",
-    "Application.ClientApp.executor": "Run",
-    "Application.ClientGUI.executor": "Run",
-    "Application.GUI.executor": "Run",
-    "Application.Server.executor": "Run",
-    "Application.SocialMedia.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.CommentTest and 6 more.executor": "Run",
-    "JUnit.CommentTest.executor": "Run",
-    "JUnit.CommentTest.testEncode.executor": "Run",
-    "JUnit.CommentTest.testParseCommentFromString.executor": "Run",
-    "JUnit.PostDBDatabaseTest and 4 more.executor": "Run",
-    "JUnit.PostDBDatabaseTest and 5 more.executor": "Run",
-    "JUnit.PostDBDatabaseTest.executor": "Run",
-    "JUnit.PostDBDatabaseTest.testAddComment.executor": "Run",
-    "JUnit.PostDBDatabaseTest.testCreatePostWithFields.executor": "Run",
-    "JUnit.PostDBDatabaseTest.testCreatePostWithoutImage.executor": "Run",
-    "JUnit.PostDBDatabaseTest.testDeleteComment.executor": "Run",
-    "JUnit.PostDBDatabaseTest.testDeletePost.executor": "Run",
-    "JUnit.PostDBDatabaseTest.testDownvotePost.executor": "Run",
-    "JUnit.PostDBDatabaseTest.testEnableAndDisableComments.executor": "Run",
-    "JUnit.PostDBDatabaseTest.testGetPostsByUsername.executor": "Run",
-    "JUnit.PostDBDatabaseTest.testUpvotePost.executor": "Run",
-    "JUnit.PostTest.executor": "Run",
-    "JUnit.PostTest.testParseString.executor": "Run",
-    "JUnit.PostTest.testToString.executor": "Run",
-    "JUnit.ServerTest.executor": "Run",
-    "JUnit.SocialMediaTest.executor": "Run",
-    "JUnit.UserDBDatabaseTest.executor": "Run",
-    "JUnit.UserDBDatabaseTest.testAddBlocked.executor": "Run",
-    "JUnit.UserDBDatabaseTest.testCreateUser.executor": "Run",
-    "JUnit.UserTest.executor": "Run",
-    "JUnit.test in team-project-4.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "anay-comments",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/anayp/Downloads/Phase2Repair-main/Phase2Repair-main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "copyright",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ClientApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ClientGUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SocialMedia.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.CommentTest and 6 more.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CommentTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CommentTest.testEncode.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CommentTest.testParseCommentFromString.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest and 4 more.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest and 5 more.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.testAddComment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.testCreatePostWithFields.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.testCreatePostWithoutImage.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.testDeleteComment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.testDeletePost.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.testDownvotePost.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.testEnableAndDisableComments.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.testGetPostsByUsername.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostDBDatabaseTest.testUpvotePost.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostTest.testParseString.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PostTest.testToString.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ServerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SocialMediaTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserDBDatabaseTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserDBDatabaseTest.testAddBlocked.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserDBDatabaseTest.testCreateUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.test in team-project-4.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/anayp/Downloads/Phase2Repair-main/Phase2Repair-main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;copyright&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
-  <component name="RunManager" selected="JUnit.CommentTest and 6 more">
+}</component>
+  <component name="RunManager" selected="Compound.Social Media">
     <configuration name="Client" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Client" />
       <module name="team-project-4" />
@@ -325,6 +303,11 @@
       <workItem from="1733302167032" duration="1077000" />
       <workItem from="1733320353556" duration="14598000" />
       <workItem from="1733404386671" duration="7853000" />
+      <workItem from="1733417896874" duration="153000" />
+      <workItem from="1733418079017" duration="795000" />
+      <workItem from="1733418994346" duration="213000" />
+      <workItem from="1733419217620" duration="17000" />
+      <workItem from="1733419297766" duration="1488000" />
     </task>
     <task id="LOCAL-00001" summary="final phase 1">
       <option name="closed" value="true" />

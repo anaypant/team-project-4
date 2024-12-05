@@ -166,6 +166,9 @@ public class PostDBDatabase implements PostDBInterface {
                             Boolean.parseBoolean(result.getString(9)),
                             Boolean.parseBoolean(result.getString(10))
                     );
+                    if (!p.isCommentsEnabled()) {
+                        return false;
+                    }
                     ArrayList<Comment> comments = p.getComments();
                     comments.add(new Comment(comment, username));
                     p.setComments(comments);

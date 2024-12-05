@@ -1,9 +1,6 @@
 package GUI;
 
-import src.Post;
-import src.PostDBDatabase;
-import src.PostGUI;
-import src.User;
+import src.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +30,8 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
     private SocialMedia sm; // Reference to Main Social Media App
     private User user;
     private boolean adminMode;
+    private JScrollPane scrollPane;
+    private JPanel centerPanel;
 
 
     public ProfilePage(SocialMedia sm, User u) {
@@ -69,10 +68,11 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
         retButton.addActionListener(e -> ret());
 
         // Add buttons to the panel
-        if (adminMode) {
+        if (!adminMode) {
             buttonPanel.add(addFriendButton);
             buttonPanel.add(removeFriendButton);
             buttonPanel.add(blockButton);
+        } else {
             buttonPanel.add(removeSelfButton);
         }
 
@@ -83,37 +83,7 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
 
         if (user != null) {
             // Add username and posts
-            JPanel centerPanel = new JPanel();
-            centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-
-            // Add username to the center panel
-            JLabel usernameLabel = new JLabel("Profile: " + user.getUsername());
-            usernameLabel.setFont(new Font("Arial", Font.BOLD, 18));
-            usernameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            centerPanel.add(usernameLabel);
-            centerPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add some spacing
-
-            // Add user's posts to the center panel
-            ArrayList<Post> userPosts = PostDBDatabase.getPostsByUsername(
-                    user.getUsername(), sm.getActiveUser());
-            if (!userPosts.isEmpty()) {
-                for (Post post : userPosts) {
-                    PostGUI postGUI = new PostGUI(post, 0, this.sm, true);
-
-                    centerPanel.add(postGUI.getPostPanel());
-                    centerPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-                    // Add spacing between posts
-                }
-            } else {
-                JLabel noPostsLabel = new JLabel("No posts to display.");
-                noPostsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                centerPanel.add(noPostsLabel);
-            }
-
-            appPanel.add(new JScrollPane(centerPanel), BorderLayout.CENTER);
-
-            this.setContentPane(appPanel);
-
+            refreshFeed();
         }
 
 
@@ -130,52 +100,81 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
 
     }
 
+    public void refreshFeed() {
+        centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+        // Add username to the center panel
+        if (user != null) {
+            JLabel usernameLabel = new JLabel("Profile: " + user.getUsername());
+            usernameLabel.setFont(new Font("Arial", Font.BOLD, 18));
+            usernameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            centerPanel.add(usernameLabel);
+            centerPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add some spacing
+
+            // Add user's posts to the center panel
+            ArrayList<Post> userPosts = PostDBDatabase.getPostsByUsername(
+                    user.getUsername(), sm.getActiveUser());
+            User u = UserDBDatabase.getUserByUsername(sm.getActiveUser());
+            if (user != null && u != null && (u.getFriendsList().contains(user.getUsername())
+                    || u.getUsername().equals(user.getUsername()))) {
+                if (!userPosts.isEmpty()) {
+                    for (Post post : userPosts) {
+                        PostGUI postGUI = new PostGUI(post, 0, this.sm, true);
+
+                        centerPanel.add(postGUI.getPostPanel());
+                        centerPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+                        // Add spacing between posts
+                    }
+                } else {
+                    JLabel noPostsLabel = new JLabel("No posts to display.");
+                    noPostsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    centerPanel.add(noPostsLabel);
+                }
+            }
+
+        }
+
+
+        scrollPane = new JScrollPane(centerPanel);
+        appPanel.add(scrollPane, BorderLayout.CENTER);
+
+
+        this.setContentPane(appPanel);
+        appPanel.revalidate(); // Revalidate the panel to account for the new component
+        appPanel.repaint();    // Repaint the panel to update the display
+
+
+    }
+
     // Add friend button clicked
     public void addFriend() {
-        JPanel panel = new JPanel(new GridLayout(1, 1));
-        panel.add(new JLabel("Enter Friend Username: "));
-        JTextField field = new JTextField();
-        panel.add(field);
-
-        int result = JOptionPane.showConfirmDialog(this, panel, "Add Friend",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            // Send create user commands to server
-            sm.handleAddFriend(sm.getActiveUser(), field.getText());
+        if (user == null) {
+            return;
         }
+        sm.handleAddFriend(sm.getActiveUser(), user.getUsername());
+        ret();
+
+
     }
 
     // Remove friend button clicked
     public void removeFriend() {
-        JPanel panel = new JPanel(new GridLayout(1, 1));
-        panel.add(new JLabel("Enter Friend Username: "));
-        JTextField field = new JTextField();
-        panel.add(field);
-
-        int result = JOptionPane.showConfirmDialog(this, panel, "Remove Friend",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            // Send create user commands to server
-            sm.handleRemoveFriend(sm.getActiveUser(), field.getText());
+        if (user == null) {
+            return;
         }
+        sm.handleRemoveFriend(sm.getActiveUser(), user.getUsername());
+        ret();
     }
 
     // Block user button clicked
     public void block() {
-        JPanel panel = new JPanel(new GridLayout(1, 1));
-        panel.add(new JLabel("Enter Username: "));
-        JTextField field = new JTextField();
-        panel.add(field);
-
-        int result = JOptionPane.showConfirmDialog(this, panel, "Block User",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            // Send create user commands to server
-            sm.handleBlockUser(sm.getActiveUser(), field.getText());
+        if (user == null) {
+            return;
         }
+        sm.handleBlockUser(sm.getActiveUser(), user.getUsername());
+        ret();
+
     }
 
     // Permanently delete user
