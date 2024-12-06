@@ -1,5 +1,7 @@
 package GUI;
 
+import src.Constants;
+
 import java.io.IOException;
 
 /**
@@ -10,7 +12,7 @@ import java.io.IOException;
 public interface ConnectionInterface {
     //constants for the server host name and port number used to connect to server
     String SERVER_HOST_NAME = "localhost";
-    int PORT_NUMBER = 4343;
+    int PORT_NUMBER = Constants.PORT_NUMBER;
 
     // method used to write to the server
     void println(String message);
