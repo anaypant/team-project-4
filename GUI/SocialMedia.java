@@ -180,6 +180,12 @@ public class SocialMedia implements SocialMediaInterface {
         resetFeed();
     }
 
+    public void handleDeletePost(String postId) {
+        connection.println("delete post");
+        connection.println(postId);
+        resetFeed();
+    }
+
     public ArrayList<User> getUsersThatContain(String key) {
         ArrayList<User> us = new ArrayList<>();
 

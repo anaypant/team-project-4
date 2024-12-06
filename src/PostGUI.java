@@ -142,10 +142,16 @@ public class PostGUI implements PostGUIInterface {
                     unhideButton.setEnabled(false);
                 });
 
+                JButton deletePost = new JButton("Delete Post");
+                deletePost.addActionListener(e -> {
+                   sm.handleDeletePost(post.getId());
+                });
+
                 adminPanel.add(enableCommentsButton);
                 adminPanel.add(disableCommentsButton);
                 adminPanel.add(hideButton);
                 adminPanel.add(unhideButton);
+                adminPanel.add(deletePost);
 
                 actionPanel.add(adminPanel, BorderLayout.SOUTH);
             }

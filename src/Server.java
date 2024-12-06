@@ -47,8 +47,8 @@ public class Server implements Runnable, ServerInterface {
 
             while ((line = in.readLine()) != null) {
                 line = line.trim();
-                System.out.println("Received: " + line);
                 String msg;
+                System.out.println(line);
 
                 switch (s) {
                     case IDLE:
@@ -113,6 +113,10 @@ public class Server implements Runnable, ServerInterface {
                     case BLOCK:
                         s = State.IDLE;
                         msg = handleBlock(line);
+                        break;
+                    case DELETE_POST:
+                        s = State.IDLE;
+                        msg = handleDeletePost(line);
                         break;
                     default:
                         msg = "Invalid state.";
@@ -190,8 +194,20 @@ public class Server implements Runnable, ServerInterface {
                 return handleDeleteUser(activeUser);
             case "get all users":
                 return handleGetAllUsers();
+            case "delete post":
+                s = State.DELETE_POST;
+                return "post to delete";
             default:
                 return "Invalid command. Type 'help' for a list of commands.";
+        }
+    }
+
+    private String handleDeletePost(String line) {
+        boolean res = PostDBDatabase.deletePost(line);
+        if (res) {
+            return "Successfully deleted post.";
+        } else {
+            return "Failed to delete post.";
         }
     }
 
@@ -457,8 +473,6 @@ public class Server implements Runnable, ServerInterface {
         } catch (IOException e) {
             // do nothing
             // notethat a client disonnected
-            System.out.println("Client disconnected.");
-            e.printStackTrace();
         }
     }
 }

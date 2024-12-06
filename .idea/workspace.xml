@@ -7,16 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="vocareum check">
+    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="more adjustments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/ProfilePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/ProfilePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/SignInPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SignInPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/SignInPageInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SignInPageInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SocialMedia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/posts.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PostGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ServerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite" afterDir="false" />
     </list>
     <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
@@ -50,12 +46,12 @@
     &quot;assignee&quot;: &quot;anaypant&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/anaypant/team-project-4.git",
-    "accountId": "a7a9c81b-9be2-4a5d-8443-b7b4dd0e1e7c"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/anaypant/team-project-4.git&quot;,
+    &quot;accountId&quot;: &quot;a7a9c81b-9be2-4a5d-8443-b7b4dd0e1e7c&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -307,7 +303,8 @@
       <workItem from="1733418079017" duration="795000" />
       <workItem from="1733418994346" duration="213000" />
       <workItem from="1733419217620" duration="17000" />
-      <workItem from="1733419297766" duration="1488000" />
+      <workItem from="1733419297766" duration="1714000" />
+      <workItem from="1733461479432" duration="768000" />
     </task>
     <task id="LOCAL-00001" summary="final phase 1">
       <option name="closed" value="true" />
@@ -365,7 +362,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732127072849</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="more adjustments">
+      <option name="closed" value="true" />
+      <created>1733420925925</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1733420925925</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,7 +396,8 @@
     <MESSAGE value="Changes by vishwa" />
     <MESSAGE value="phase 2 final" />
     <MESSAGE value="vocareum check" />
-    <option name="LAST_COMMIT_MESSAGE" value="vocareum check" />
+    <MESSAGE value="more adjustments" />
+    <option name="LAST_COMMIT_MESSAGE" value="more adjustments" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
