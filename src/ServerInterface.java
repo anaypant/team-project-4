@@ -38,7 +38,7 @@ public interface ServerInterface {
             "remove user",
             "hide post",
             "unhide post",
-            "remove post"
+            "delete post"
     };
 
 

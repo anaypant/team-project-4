@@ -7,10 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="more adjustments">
+    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="fixed some stuff">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/Connection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SocialMedia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PostGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/posts.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/posts.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ServerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite" afterDir="false" />
@@ -304,7 +306,7 @@
       <workItem from="1733418994346" duration="213000" />
       <workItem from="1733419217620" duration="17000" />
       <workItem from="1733419297766" duration="1714000" />
-      <workItem from="1733461479432" duration="768000" />
+      <workItem from="1733461479432" duration="2692000" />
     </task>
     <task id="LOCAL-00001" summary="final phase 1">
       <option name="closed" value="true" />
@@ -370,7 +372,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733420925925</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fixed some stuff">
+      <option name="closed" value="true" />
+      <created>1733465192771</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1733465192771</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -397,7 +407,8 @@
     <MESSAGE value="phase 2 final" />
     <MESSAGE value="vocareum check" />
     <MESSAGE value="more adjustments" />
-    <option name="LAST_COMMIT_MESSAGE" value="more adjustments" />
+    <MESSAGE value="fixed some stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed some stuff" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

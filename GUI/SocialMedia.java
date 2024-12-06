@@ -181,7 +181,7 @@ public class SocialMedia implements SocialMediaInterface {
     }
 
     public void handleDeletePost(String postId) {
-        connection.println("delete post");
+        connection.println("abcde");
         connection.println(postId);
         resetFeed();
     }

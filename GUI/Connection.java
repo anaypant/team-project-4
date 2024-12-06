@@ -38,6 +38,7 @@ public class Connection implements ConnectionInterface {
     // Sends a message to the server
     public void println(String message) {
         out.println(message);
+        out.flush();
     }
 
     // Checks if a new message has been sent from the server

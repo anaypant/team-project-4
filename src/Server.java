@@ -45,10 +45,12 @@ public class Server implements Runnable, ServerInterface {
 
             String line;
 
+
             while ((line = in.readLine()) != null) {
                 line = line.trim();
                 String msg;
-                System.out.println(line);
+                System.out.println("Current state: " + s);
+                System.out.println("Received command: " + line);
 
                 switch (s) {
                     case IDLE:
@@ -134,7 +136,11 @@ public class Server implements Runnable, ServerInterface {
     }
 
     private String handleIdleState(String line, BufferedReader in) throws IOException {
+        System.out.println(line);
         switch (line.toLowerCase()) {
+            case "abcde":
+                s = State.DELETE_POST;
+                return "post to delete: ";
             case "fetch posts":
                 return fetchPosts();
             case "upvote post":
@@ -194,11 +200,8 @@ public class Server implements Runnable, ServerInterface {
                 return handleDeleteUser(activeUser);
             case "get all users":
                 return handleGetAllUsers();
-            case "delete post":
-                s = State.DELETE_POST;
-                return "post to delete";
             default:
-                return "Invalid command. Type 'help' for a list of commands.";
+                return line;
         }
     }
 
@@ -467,12 +470,13 @@ public class Server implements Runnable, ServerInterface {
         try (ServerSocket serverSocket = new ServerSocket(Constants.PORT_NUMBER)) {
             System.out.println("Server listening on port " + Constants.PORT_NUMBER);
             while (true) {
+                System.out.println("Waiting for client connection...");
                 Socket socket = serverSocket.accept();
+                System.out.println("Client connected.");
                 new Thread(new Server(socket)).start();
             }
         } catch (IOException e) {
-            // do nothing
-            // notethat a client disonnected
+            e.printStackTrace();
         }
     }
 }
