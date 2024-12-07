@@ -437,4 +437,58 @@ public class UserDBDatabase implements UserDBInterface {
         return users;
 
     }
+
+    public static synchronized boolean unblockUser(String username, String targetUsername) {
+        if (!usernameExists(targetUsername)) {
+            return false;
+        }
+
+        String selectQuery = "SELECT friends, blocked FROM users WHERE username = ?";
+        String updateQuery = "UPDATE users SET friends = ?, blocked = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_PATH)) {
+            String friendsList = "";
+            String blockedList = "";
+            ArrayList<String> friends = new ArrayList<>();
+            ArrayList<String> blocked = new ArrayList<>();
+
+            // Step 1: Retrieve the current friends and blocked lists
+            PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+            pstmt.setString(1, username);
+            ResultSet result = pstmt.executeQuery();
+
+            if (result.next()) { // User exists
+                friendsList = result.getString("friends");
+                blockedList = result.getString("blocked");
+
+                blocked = Utils.arrayFromString(blockedList);
+                // Step 4: Add the target user to the blocked list if not already there
+                if (blocked.contains(targetUsername)) {
+                    blocked.remove(targetUsername);
+                } else {
+                    return false; // User is not in blocked list
+                }
+
+                // Step 5: Convert updated lists back to strings
+                friendsList = Utils.arrListToString(friends);
+                blockedList = Utils.arrListToString(blocked);
+            } else {
+                return false; // User does not exist
+            }
+
+            // Step 6: Update the friends and blocked lists in the database
+            PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+            updateStmt.setString(1, friendsList); // Updated friends list
+            updateStmt.setString(2, blockedList); // Updated blocked list
+            updateStmt.setString(3, username);   // Target username
+            updateStmt.executeUpdate();
+
+            return true; // Successfully updated
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }

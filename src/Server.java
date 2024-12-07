@@ -120,6 +120,10 @@ public class Server implements Runnable, ServerInterface {
                         s = State.IDLE;
                         msg = handleDeletePost(line);
                         break;
+                    case UNBLOCK_USER:
+                        s = State.IDLE;
+                        msg = handleUnblockUser(line);
+                        break;
                     default:
                         msg = "Invalid state.";
                         reset();
@@ -163,9 +167,15 @@ public class Server implements Runnable, ServerInterface {
                     String postId = in.readLine(); // Read the post ID
                     String commentData = in.readLine(); // Read the encoded comment data
                     Comment newComment = Comment.parseCommentFromString(commentData);
-                    boolean success = PostDBDatabase.addComment(postId, newComment.getCreator(),
+                    int success = PostDBDatabase.addComment(postId, newComment.getCreator(),
                             newComment.getComment());
-                    return success ? "Comment added successfully." : "Failed to add comment.";
+                    if (success == 1) {
+                        return "successfully added comment";
+                    } else if (success == -1) {
+                        return "DISABLED_COMMENT";
+                    } else {
+                        return "failed to add comment";
+                    }
                 } else {
                     return "Please log in to add a comment.";
                 }
@@ -200,8 +210,20 @@ public class Server implements Runnable, ServerInterface {
                 return handleDeleteUser(activeUser);
             case "get all users":
                 return handleGetAllUsers();
+            case "unblock user":
+                s = State.UNBLOCK_USER;
+                return "user to unblock";
             default:
                 return line;
+        }
+    }
+
+    private String handleUnblockUser(String line) {
+        boolean res = UserDBDatabase.unblockUser(activeUser, line);
+        if (res) {
+            return "Successfully unblocked user.";
+        } else {
+            return "Failed to unblock user.";
         }
     }
 
@@ -426,7 +448,7 @@ public class Server implements Runnable, ServerInterface {
             reset();
             return "No post selected.";
         }
-        PostDBDatabase.addComment(selectedPost.getId(), activeUser, comment);
+        int val = PostDBDatabase.addComment(selectedPost.getId(), activeUser, comment);
         reset();
         return "Comment added.";
     }

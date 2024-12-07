@@ -26,6 +26,7 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
     private JButton blockButton; // Button to block user
     private JButton removeSelfButton; // Button to permanently delete user
     private JButton retButton;
+    private JButton unblockUserButton;
 
     private SocialMedia sm; // Reference to Main Social Media App
     private User user;
@@ -59,6 +60,7 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
         blockButton = new JButton("Block User");
         removeSelfButton = new JButton("Delete Account");
         retButton = new JButton("Return");
+        unblockUserButton = new JButton("Unblock User");
 
         // Add action listeners for command buttons
         addFriendButton.addActionListener(e -> addFriend());
@@ -66,12 +68,18 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
         blockButton.addActionListener(e -> block());
         removeSelfButton.addActionListener(e -> removeSelf());
         retButton.addActionListener(e -> ret());
+        unblockUserButton.addActionListener(e -> unblockUser());
 
         // Add buttons to the panel
         if (!adminMode) {
             buttonPanel.add(addFriendButton);
             buttonPanel.add(removeFriendButton);
-            buttonPanel.add(blockButton);
+            User u = UserDBDatabase.getUserByUsername(sm.getActiveUser());
+            if (user != null && u != null && u.getBlockedList().contains(user.getUsername())) {
+                buttonPanel.add(unblockUserButton);
+            } else {
+                buttonPanel.add(blockButton);
+            }
         } else {
             buttonPanel.add(removeSelfButton);
         }
@@ -118,7 +126,7 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
             User u = UserDBDatabase.getUserByUsername(sm.getActiveUser());
             if (user != null && u != null && (u.getFriendsList().contains(user.getUsername())
                     || u.getUsername().equals(user.getUsername()))) {
-                if (!userPosts.isEmpty()) {
+                if (!userPosts.isEmpty() && u.getBlockedList().contains(sm.getActiveUser())) {
                     for (Post post : userPosts) {
                         PostGUI postGUI = new PostGUI(post, 0, this.sm, true);
 
@@ -184,5 +192,10 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
 
     public void ret() {
         sm.returnMainPage();
+    }
+
+    public void unblockUser(){
+        sm.handleUnblockUser(user.getUsername());
+        ret();
     }
 }

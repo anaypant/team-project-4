@@ -150,7 +150,7 @@ public class PostDBDatabase implements PostDBInterface {
     // Allows user to add a comment to a post, displays postId, username, and comments
     // uses select and update queries to search for a specific post of
     // postId and then post a comment from a given username
-    public static synchronized boolean addComment(String postId, String username, String comment) {
+    public static synchronized int addComment(String postId, String username, String comment) {
         String selectQuery = "SELECT * FROM posts";
         String updateQuery = "UPDATE posts SET comments = ? WHERE id = ?";
         try (Connection conn = DriverManager.getConnection(DB_PATH)) {
@@ -167,7 +167,7 @@ public class PostDBDatabase implements PostDBInterface {
                             Boolean.parseBoolean(result.getString(10))
                     );
                     if (!p.isCommentsEnabled()) {
-                        return false;
+                        return -1;
                     }
                     ArrayList<Comment> comments = p.getComments();
                     comments.add(new Comment(comment, username));
@@ -176,15 +176,15 @@ public class PostDBDatabase implements PostDBInterface {
                     second.setString(2, p.getId());
                     second.setString(1, Utils.arrListCommentToString(p.getComments()));
                     second.executeUpdate();
-                    return true;
+                    return 1;
                 }
             }
 
 
         } catch (Exception e) {
-            return false;
+            return 0;
         }
-        return false;
+        return 0;
     }
 
     // Allows user to delete comments from their own post, displays postId and comments

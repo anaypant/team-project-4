@@ -91,7 +91,7 @@ public class PostDBDatabaseTest {
         Post post = new Post("TestUser", "Post with Comments", null, "11-25-2024");
         PostDBDatabase.createPost(post);
 
-        assertTrue("Comment should be added successfully",
+        assertEquals(1,
                 PostDBDatabase.addComment(post.getId(), "Commenter", "This is a comment"));
 
         ArrayList<Comment> comments = PostDBDatabase.getCommentsFromPost(post.getId());

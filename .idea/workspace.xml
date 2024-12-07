@@ -8,9 +8,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="fixed some stuff">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/ConnectionInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/ConnectionInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/ProfilePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/ProfilePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/SocialMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/SocialMedia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/posts.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/posts.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PostDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PostDBDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ServerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UserDBDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserDBDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/PostDBDatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/PostDBDatabaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite" afterDir="false" />
     </list>
     <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
     <list id="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" name="Changes by utsie" comment="" />
@@ -120,7 +127,7 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Application.SocialMedia">
+  <component name="RunManager" selected="Compound.Social Media">
     <configuration name="Client" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Client" />
       <module name="team-project-4" />
@@ -302,7 +309,7 @@
       <workItem from="1733419217620" duration="17000" />
       <workItem from="1733419297766" duration="1714000" />
       <workItem from="1733461479432" duration="2692000" />
-      <workItem from="1733501601344" duration="195000" />
+      <workItem from="1733501601344" duration="3506000" />
     </task>
     <task id="LOCAL-00001" summary="final phase 1">
       <option name="closed" value="true" />
@@ -376,7 +383,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733465192771</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fixed some stuff">
+      <option name="closed" value="true" />
+      <created>1733501836741</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1733501836741</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

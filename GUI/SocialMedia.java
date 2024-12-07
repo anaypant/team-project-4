@@ -186,6 +186,11 @@ public class SocialMedia implements SocialMediaInterface {
         resetFeed();
     }
 
+    public void handleUnblockUser(String target) {
+        connection.println("unblock user");
+        connection.println(target);
+    }
+
     public ArrayList<User> getUsersThatContain(String key) {
         ArrayList<User> us = new ArrayList<>();
 
@@ -358,6 +363,8 @@ public class SocialMedia implements SocialMediaInterface {
                         this.allUsers.add(us);
                     }
 
+                } else if (line.startsWith("DISABLED_COMMENT")) {
+                    displayMessage("Comments disabled for this post.");
                 } else {
                     StyledDocument doc = mainPage.getStyledDocument();
                     doc.insertString(doc.getLength(), line + "\n", null);
