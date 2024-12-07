@@ -351,7 +351,7 @@ public class Server implements Runnable, ServerInterface {
     private String handleCreateUser(String line) {
         // Logic to create user
         String[] resp = line.split(Constants.DELIMITER);
-        if (resp[0].isEmpty()) {
+        if (resp.length != 2 || resp[0].isEmpty()) {
             reset();
             return "User creation failed. Try again.";
         }
@@ -371,6 +371,9 @@ public class Server implements Runnable, ServerInterface {
         // Logic to login user
         // Assume validation with database
         String[] resp = line.split(Constants.DELIMITER);
+        if (resp.length != 2) {
+            return "Login failed.";
+        }
         User u = UserDBDatabase.loginUser(resp[0], resp[1]);
         if (u == null) {
             return "Login failed.";

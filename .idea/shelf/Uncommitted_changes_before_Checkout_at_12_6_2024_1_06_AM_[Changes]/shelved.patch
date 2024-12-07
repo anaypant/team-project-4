@@ -1,0 +1,165 @@
+Index: .idea/dataSources.local.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"dataSourceStorageLocal\" created-in=\"IU-242.23726.103\">\r\n    <data-source name=\"posts\" uuid=\"3880492f-13cf-4dae-8804-3f94a1eab8be\">\r\n      <database-info product=\"SQLite\" version=\"3.45.1\" jdbc-version=\"4.2\" driver-name=\"SQLite JDBC\" driver-version=\"3.45.1.0\" dbms=\"SQLITE\" exact-version=\"3.45.1\" exact-driver-version=\"3.45\">\r\n        <identifier-quote-string>&quot;</identifier-quote-string>\r\n      </database-info>\r\n      <case-sensitivity plain-identifiers=\"mixed\" quoted-identifiers=\"mixed\" />\r\n      <secret-storage>master_key</secret-storage>\r\n      <auth-provider>no-auth</auth-provider>\r\n      <schema-mapping>\r\n        <introspection-scope>\r\n          <node kind=\"schema\" qname=\"@\" />\r\n        </introspection-scope>\r\n      </schema-mapping>\r\n    </data-source>\r\n    <data-source name=\"users\" uuid=\"61abc5e8-6f4e-413b-9db4-1a7ae0564227\">\r\n      <database-info product=\"SQLite\" version=\"3.45.1\" jdbc-version=\"4.2\" driver-name=\"SQLite JDBC\" driver-version=\"3.45.1.0\" dbms=\"SQLITE\" exact-version=\"3.45.1\" exact-driver-version=\"3.45\">\r\n        <identifier-quote-string>&quot;</identifier-quote-string>\r\n      </database-info>\r\n      <case-sensitivity plain-identifiers=\"mixed\" quoted-identifiers=\"mixed\" />\r\n      <secret-storage>master_key</secret-storage>\r\n      <auth-provider>no-auth</auth-provider>\r\n      <schema-mapping>\r\n        <introspection-scope>\r\n          <node kind=\"schema\" qname=\"@\" />\r\n        </introspection-scope>\r\n      </schema-mapping>\r\n    </data-source>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/dataSources.local.xml b/.idea/dataSources.local.xml
+--- a/.idea/dataSources.local.xml	(revision 41a54bdd6632da42cff9f288bb66edaa0c1cb959)
++++ b/.idea/dataSources.local.xml	(date 1733432220539)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="dataSourceStorageLocal" created-in="IU-242.23726.103">
++  <component name="dataSourceStorageLocal" created-in="IU-242.20224.419">
+     <data-source name="posts" uuid="3880492f-13cf-4dae-8804-3f94a1eab8be">
+       <database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
+         <identifier-quote-string>&quot;</identifier-quote-string>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AnalysisUIOptions\">\r\n    <option name=\"ANALYZE_INJECTED_CODE\" value=\"false\" />\r\n  </component>\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"4ddabe72-0e67-462a-a82f-e0f8d7fede35\" name=\"Changes\" comment=\"should be final code\" />\r\n    <list id=\"6c86d7e3-70d5-4061-a0b6-421bf60a0eb2\" name=\"Changes by sharvali\" comment=\"\" />\r\n    <list id=\"6234db78-89c7-41f8-b8d0-40cd8cfb90f7\" name=\"Changes by utsie\" comment=\"\" />\r\n    <list id=\"f21eb0b6-abcb-4943-9fac-651c23a1a073\" name=\"Changes by vishwa\" comment=\"Changes by vishwa\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Enum\" />\r\n        <option value=\"Class\" />\r\n        <option value=\"Interface\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"Comment-fixing\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;anaypant&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/anaypant/team-project-4.git&quot;,\r\n    &quot;accountId&quot;: &quot;a7a9c81b-9be2-4a5d-8443-b7b4dd0e1e7c&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 1\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2oMu8ZbnB2rXDDHXEgT6EjeXfzo\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Client.executor\": \"Run\",\r\n    \"Application.ClientApp.executor\": \"Run\",\r\n    \"Application.ClientGUI.executor\": \"Run\",\r\n    \"Application.GUI.executor\": \"Run\",\r\n    \"Application.Server.executor\": \"Run\",\r\n    \"Application.SocialMedia.executor\": \"Run\",\r\n    \"Downloaded.Files.Path.Enabled\": \"false\",\r\n    \"JUnit.CommentTest and 6 more.executor\": \"Run\",\r\n    \"JUnit.CommentTest.executor\": \"Run\",\r\n    \"JUnit.CommentTest.testEncode.executor\": \"Run\",\r\n    \"JUnit.CommentTest.testParseCommentFromString.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest and 4 more.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest and 5 more.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest.testAddComment.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest.testCreatePostWithFields.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest.testCreatePostWithoutImage.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest.testDeleteComment.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest.testDeletePost.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest.testDownvotePost.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest.testEnableAndDisableComments.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest.testGetPostsByUsername.executor\": \"Run\",\r\n    \"JUnit.PostDBDatabaseTest.testUpvotePost.executor\": \"Run\",\r\n    \"JUnit.PostTest.executor\": \"Run\",\r\n    \"JUnit.PostTest.testParseString.executor\": \"Run\",\r\n    \"JUnit.PostTest.testToString.executor\": \"Run\",\r\n    \"JUnit.ServerTest.executor\": \"Run\",\r\n    \"JUnit.SocialMediaTest.executor\": \"Run\",\r\n    \"JUnit.UserDBDatabaseTest.executor\": \"Run\",\r\n    \"JUnit.UserDBDatabaseTest.testAddBlocked.executor\": \"Run\",\r\n    \"JUnit.UserDBDatabaseTest.testCreateUser.executor\": \"Run\",\r\n    \"JUnit.UserTest.executor\": \"Run\",\r\n    \"JUnit.test in team-project-4.executor\": \"Run\",\r\n    \"Repository.Attach.Annotations\": \"false\",\r\n    \"Repository.Attach.JavaDocs\": \"false\",\r\n    \"Repository.Attach.Sources\": \"false\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"git-widget-placeholder\": \"anay-comments\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/anayp/Downloads/Phase2Repair-main/Phase2Repair-main\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Modules\",\r\n    \"project.structure.proportion\": \"0.15\",\r\n    \"project.structure.side.proportion\": \"0.2\",\r\n    \"run.code.analysis.last.selected.profile\": \"pProject Default\",\r\n    \"settings.editor.selected.configurable\": \"copyright\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  },\r\n  \"keyToStringList\": {\r\n    \"DatabaseDriversLRU\": [\r\n      \"sqlite\"\r\n    ]\r\n  }\r\n}]]></component>\r\n  <component name=\"RunManager\" selected=\"JUnit.CommentTest and 6 more\">\r\n    <configuration name=\"Client\" type=\"Application\" factoryName=\"Application\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"GUI.Client\" />\r\n      <module name=\"team-project-4\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"GUI.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ClientApp\" type=\"Application\" factoryName=\"Application\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"src.ClientApp\" />\r\n      <module name=\"team-project-4\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"src.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Server\" type=\"Application\" factoryName=\"Application\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"src.Server\" />\r\n      <module name=\"team-project-4\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"src.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"SocialMedia\" type=\"Application\" factoryName=\"Application\" singleton=\"false\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"GUI.SocialMedia\" />\r\n      <module name=\"team-project-4\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"GUI.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Social Media\" type=\"CompoundRunConfigurationType\">\r\n      <toRun name=\"Server\" type=\"Application\" />\r\n      <toRun name=\"SocialMedia\" type=\"Application\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"CommentTest and 6 more\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"team-project-4\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"\" />\r\n      <option name=\"METHOD_NAME\" value=\"\" />\r\n      <option name=\"TEST_OBJECT\" value=\"pattern\" />\r\n      <patterns>\r\n        <pattern testClass=\"test.CommentTest\" />\r\n        <pattern testClass=\"test.PostDBDatabaseTest\" />\r\n        <pattern testClass=\"test.PostTest\" />\r\n        <pattern testClass=\"test.ServerTest\" />\r\n        <pattern testClass=\"test.SocialMediaTest\" />\r\n        <pattern testClass=\"test.UserDBDatabaseTest\" />\r\n        <pattern testClass=\"test.UserTest\" />\r\n      </patterns>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"PostDBDatabaseTest.testEnableAndDisableComments\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"team-project-4\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"test.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"test\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"test.PostDBDatabaseTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"testEnableAndDisableComments\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"PostDBDatabaseTest.testGetPostsByUsername\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"team-project-4\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"test.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"test\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"test.PostDBDatabaseTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"testGetPostsByUsername\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"UserDBDatabaseTest.testCreateUser\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"team-project-4\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"test.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"test\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"test.UserDBDatabaseTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"testCreateUser\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <list>\r\n      <item itemvalue=\"Application.ClientApp\" />\r\n      <item itemvalue=\"Application.Server\" />\r\n      <item itemvalue=\"Application.Client\" />\r\n      <item itemvalue=\"Application.SocialMedia\" />\r\n      <item itemvalue=\"Compound.Social Media\" />\r\n      <item itemvalue=\"JUnit.UserDBDatabaseTest.testCreateUser\" />\r\n      <item itemvalue=\"JUnit.CommentTest and 6 more\" />\r\n      <item itemvalue=\"JUnit.PostDBDatabaseTest.testEnableAndDisableComments\" />\r\n      <item itemvalue=\"JUnit.PostDBDatabaseTest.testGetPostsByUsername\" />\r\n    </list>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"JUnit.CommentTest and 6 more\" />\r\n        <item itemvalue=\"JUnit.UserDBDatabaseTest.testCreateUser\" />\r\n        <item itemvalue=\"JUnit.PostDBDatabaseTest.testGetPostsByUsername\" />\r\n        <item itemvalue=\"JUnit.PostDBDatabaseTest.testEnableAndDisableComments\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"4ddabe72-0e67-462a-a82f-e0f8d7fede35\" name=\"Changes\" comment=\"\" />\r\n      <created>1730677784295</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1730677784295</updated>\r\n      <workItem from=\"1731883600041\" duration=\"10366000\" />\r\n      <workItem from=\"1731961142201\" duration=\"993000\" />\r\n      <workItem from=\"1732076732059\" duration=\"5474000\" />\r\n      <workItem from=\"1732443348225\" duration=\"2205000\" />\r\n      <workItem from=\"1732583769255\" duration=\"9114000\" />\r\n      <workItem from=\"1732605732597\" duration=\"969000\" />\r\n      <workItem from=\"1732659137150\" duration=\"3220000\" />\r\n      <workItem from=\"1732733688906\" duration=\"294000\" />\r\n      <workItem from=\"1732734081743\" duration=\"8301000\" />\r\n      <workItem from=\"1732830437342\" duration=\"4638000\" />\r\n      <workItem from=\"1732937280051\" duration=\"3241000\" />\r\n      <workItem from=\"1733201672833\" duration=\"787000\" />\r\n      <workItem from=\"1733278022908\" duration=\"8069000\" />\r\n      <workItem from=\"1733302167032\" duration=\"1077000\" />\r\n      <workItem from=\"1733320353556\" duration=\"14598000\" />\r\n      <workItem from=\"1733404386671\" duration=\"7938000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"final phase 1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730691665693</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730691665693</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"user edit\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730862896871</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730862896871</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"utils edit\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1731882713244</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1731882713244</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"some changes before intellij ultimate\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1731883549111</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1731883549111</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"sql and network io done\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1731890141369</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1731890141369</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"phase 2 final\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1731895176901</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1731895176902</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"vocareum check\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1732127072849</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1732127072849</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"should be final code\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1733412289600</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1733412289600</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"should be final code\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1733412303057</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1733412303057</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"10\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"final phase 1\" />\r\n    <MESSAGE value=\"user edit\" />\r\n    <MESSAGE value=\"utils edit\" />\r\n    <MESSAGE value=\"some changes before intellij ultimate\" />\r\n    <MESSAGE value=\"sql and network io done\" />\r\n    <MESSAGE value=\"Changes by vishwa\" />\r\n    <MESSAGE value=\"phase 2 final\" />\r\n    <MESSAGE value=\"vocareum check\" />\r\n    <MESSAGE value=\"should be final code\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"should be final code\" />\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 41a54bdd6632da42cff9f288bb66edaa0c1cb959)
++++ b/.idea/workspace.xml	(date 1733432220518)
+@@ -7,7 +7,11 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="should be final code" />
++    <list default="true" id="4ddabe72-0e67-462a-a82f-e0f8d7fede35" name="Changes" comment="should be final code">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/posts.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/posts.sqlite" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/users.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/users.sqlite" afterDir="false" />
++    </list>
+     <list id="6c86d7e3-70d5-4061-a0b6-421bf60a0eb2" name="Changes by sharvali" comment="" />
+     <list id="6234db78-89c7-41f8-b8d0-40cd8cfb90f7" name="Changes by utsie" comment="" />
+     <list id="f21eb0b6-abcb-4943-9fac-651c23a1a073" name="Changes by vishwa" comment="Changes by vishwa" />
+@@ -57,66 +61,66 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Application.Client.executor": "Run",
+-    "Application.ClientApp.executor": "Run",
+-    "Application.ClientGUI.executor": "Run",
+-    "Application.GUI.executor": "Run",
+-    "Application.Server.executor": "Run",
+-    "Application.SocialMedia.executor": "Run",
+-    "Downloaded.Files.Path.Enabled": "false",
+-    "JUnit.CommentTest and 6 more.executor": "Run",
+-    "JUnit.CommentTest.executor": "Run",
+-    "JUnit.CommentTest.testEncode.executor": "Run",
+-    "JUnit.CommentTest.testParseCommentFromString.executor": "Run",
+-    "JUnit.PostDBDatabaseTest and 4 more.executor": "Run",
+-    "JUnit.PostDBDatabaseTest and 5 more.executor": "Run",
+-    "JUnit.PostDBDatabaseTest.executor": "Run",
+-    "JUnit.PostDBDatabaseTest.testAddComment.executor": "Run",
+-    "JUnit.PostDBDatabaseTest.testCreatePostWithFields.executor": "Run",
+-    "JUnit.PostDBDatabaseTest.testCreatePostWithoutImage.executor": "Run",
+-    "JUnit.PostDBDatabaseTest.testDeleteComment.executor": "Run",
+-    "JUnit.PostDBDatabaseTest.testDeletePost.executor": "Run",
+-    "JUnit.PostDBDatabaseTest.testDownvotePost.executor": "Run",
+-    "JUnit.PostDBDatabaseTest.testEnableAndDisableComments.executor": "Run",
+-    "JUnit.PostDBDatabaseTest.testGetPostsByUsername.executor": "Run",
+-    "JUnit.PostDBDatabaseTest.testUpvotePost.executor": "Run",
+-    "JUnit.PostTest.executor": "Run",
+-    "JUnit.PostTest.testParseString.executor": "Run",
+-    "JUnit.PostTest.testToString.executor": "Run",
+-    "JUnit.ServerTest.executor": "Run",
+-    "JUnit.SocialMediaTest.executor": "Run",
+-    "JUnit.UserDBDatabaseTest.executor": "Run",
+-    "JUnit.UserDBDatabaseTest.testAddBlocked.executor": "Run",
+-    "JUnit.UserDBDatabaseTest.testCreateUser.executor": "Run",
+-    "JUnit.UserTest.executor": "Run",
+-    "JUnit.test in team-project-4.executor": "Run",
+-    "Repository.Attach.Annotations": "false",
+-    "Repository.Attach.JavaDocs": "false",
+-    "Repository.Attach.Sources": "false",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "git-widget-placeholder": "anay-comments",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/anayp/Downloads/Phase2Repair-main/Phase2Repair-main",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "Modules",
+-    "project.structure.proportion": "0.15",
+-    "project.structure.side.proportion": "0.2",
+-    "run.code.analysis.last.selected.profile": "pProject Default",
+-    "settings.editor.selected.configurable": "copyright",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
++    &quot;Application.ClientApp.executor&quot;: &quot;Run&quot;,
++    &quot;Application.ClientGUI.executor&quot;: &quot;Run&quot;,
++    &quot;Application.GUI.executor&quot;: &quot;Run&quot;,
++    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
++    &quot;Application.SocialMedia.executor&quot;: &quot;Run&quot;,
++    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
++    &quot;JUnit.CommentTest and 6 more.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.CommentTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.CommentTest.testEncode.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.CommentTest.testParseCommentFromString.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest and 4 more.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest and 5 more.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest.testAddComment.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest.testCreatePostWithFields.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest.testCreatePostWithoutImage.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest.testDeleteComment.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest.testDeletePost.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest.testDownvotePost.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest.testEnableAndDisableComments.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest.testGetPostsByUsername.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostDBDatabaseTest.testUpvotePost.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostTest.testParseString.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.PostTest.testToString.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.ServerTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.SocialMediaTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.UserDBDatabaseTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.UserDBDatabaseTest.testAddBlocked.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.UserDBDatabaseTest.testCreateUser.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.UserTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.test in team-project-4.executor&quot;: &quot;Run&quot;,
++    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
++    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
++    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;anay-comments&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/anayp/Downloads/Phase2Repair-main/Phase2Repair-main&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
++    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;copyright&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   },
+-  "keyToStringList": {
+-    "DatabaseDriversLRU": [
+-      "sqlite"
++  &quot;keyToStringList&quot;: {
++    &quot;DatabaseDriversLRU&quot;: [
++      &quot;sqlite&quot;
+     ]
+   }
+-}]]></component>
+-  <component name="RunManager" selected="JUnit.CommentTest and 6 more">
++}</component>
++  <component name="RunManager" selected="Compound.Social Media">
+     <configuration name="Client" type="Application" factoryName="Application" nameIsGenerated="true">
+       <option name="MAIN_CLASS_NAME" value="GUI.Client" />
+       <module name="team-project-4" />
