@@ -104,7 +104,7 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
             this.setTitle("Welcome, " + sm.getActiveUser() + "!");
         }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
+//        setResizable(false);
 
     }
 
