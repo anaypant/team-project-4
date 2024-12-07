@@ -126,7 +126,7 @@ public class ProfilePage extends JFrame implements ProfilePageInterface {
             User u = UserDBDatabase.getUserByUsername(sm.getActiveUser());
             if (user != null && u != null && (u.getFriendsList().contains(user.getUsername())
                     || u.getUsername().equals(user.getUsername()))) {
-                if (!userPosts.isEmpty() && u.getBlockedList().contains(sm.getActiveUser())) {
+                if (!userPosts.isEmpty() && !u.getBlockedList().contains(sm.getActiveUser())) {
                     for (Post post : userPosts) {
                         PostGUI postGUI = new PostGUI(post, 0, this.sm, true);
 
